@@ -32,10 +32,9 @@
 
 <p>
   <strong>Diffs:</strong>
-  <% @review.diffs.each do |diff| %>
-    <%= link_to diff.path, diff_path(diff) %>
+  <% ["Added", "Modified", "Deleted", "Copied", "Renamed", "Unmerged"].each do |reason| %>
+    <%= render 'files', reason: reason, files: @review.diffs.select{|d| d.reason == reason} %>
   <% end %>
 </p>
 
-<%= link_to 'Edit', edit_review_path(@review) %> |
 <%= link_to 'Back', reviews_path %>

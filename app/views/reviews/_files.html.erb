@@ -1,0 +1,26 @@
+<details><summary><%= reason %></summary>
+  <table>
+  <% files.each do |file| %>
+    <tr>
+      <td>
+    <%= form_with(model: file, local: true) do |form| %>
+
+  <div class="field" hidden>
+    <%= form.text_field :status, value: "Ignored" %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit 'Ignore' %>
+  </div>
+<% end %>
+      </td>
+      <td>
+    <%= file.status %>
+      </td>
+      <td>
+    <%= link_to file.path, diff_path(file.id) %>
+      </td>
+    </tr>
+  <% end %>
+  </table>
+</details>

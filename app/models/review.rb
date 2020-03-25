@@ -6,4 +6,6 @@ class Review < ApplicationRecord
   validates :owner, :presence => true
   validates :old_commit, :presence => true
   validates :new_commit, :presence => true
+  validates :old_commit, exclusion: { in: ->(review) { [review.new_commit] }, message: "and new commit must be different" }
+
 end

@@ -1,0 +1,9 @@
+<%= form_with(model: diff, local: true) do |form| %>
+  <div class="field">
+    <%= form.collection_select :status, ["Not Reviewed", "Ignored", "Vulnerable", "Complete"], :to_s, :to_s, prompt: "Choose a Status" %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit 'Update' %>
+  </div>
+<% end %>

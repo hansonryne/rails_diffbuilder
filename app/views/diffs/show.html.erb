@@ -4,7 +4,7 @@
 
 <p>
 <strong>Review:</strong>
-<%= @diff.review_id %>
+<%= @diff.review.start_date %>
 </p>
 
 <p>
@@ -12,10 +12,7 @@
 <%= @diff.status %>
 </p>
 
-<p>
-<strong>Notes:</strong>
-<%= @diff.notes %>
-</p>
+<%= render 'statusupdate', diff: @diff %>
 
 <p>
 <strong>Path:</strong>
@@ -27,6 +24,11 @@
 <%= @diff.reason %>
 </p>
 
+<p>
+<strong>Notes:</strong>
+<%= render 'notesform', diff: @diff %>
+</p>
+
 <h2>Side-by-Side Patch Viewer v0.4</h2>
 <form id="form_diff">
     <div style="padding-top:.3em" hidden><textarea rows="8" id="diffText">
@@ -35,8 +37,7 @@
 </form>
 <div id="diffResult" class="context"><strong>If you can see this, please reload the page.</strong></div>
 
-<%= link_to 'Edit', edit_diff_path(@diff) %> |
-<%= link_to 'Back', diffs_path %>
+<%= link_to 'Back to Review', review_path(@diff.review_id) %>
 
 <script>
   document.addEventListener("turbolinks:load", function() {

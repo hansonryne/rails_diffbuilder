@@ -10,13 +10,18 @@ class ReviewsController < ApplicationController
   # GET /reviews/1
   # GET /reviews/1.json
   def show
+    @review.status = get_review_status(@review)
   end
 
   # GET /reviews/new
   def new
-    @review = Review.new
-    @review.repository = Repository.find(params[:repo_id])
-    @commits = Git.open(@review.repository.repo_location).log
+    if params[:repo_id]
+      @review = Review.new
+      @review.repository = Repository.find(params[:repo_id])
+      @commits = get_repo_commits(@review)
+    else 
+      redirect_to(select_repository_path)
+    end
   end
 
   # GET /reviews/1/edit
@@ -27,11 +32,9 @@ class ReviewsController < ApplicationController
   # POST /reviews.json
   def create
     @review = Review.new(review_params)
-    @errors = @review.errors.to_a
-    pp @errors
+    @errors = @review.errors
 
     @changed_files = Git.open(@review.repository.repo_location).diff(@review.old_commit, @review.new_commit).name_status
-    pp @changed_files
 
     respond_to do |format|
       if @review.save
@@ -55,9 +58,8 @@ class ReviewsController < ApplicationController
         format.html { redirect_to @review, notice: 'Review was successfully created.' }
         format.json { render :show, status: :created, location: @review }
       else
-        flash[:error] = @errors
-        pp @errors
-        format.html { redirect_to new_review_path(repo_id: @review.repository.id) }
+        @commits = get_repo_commits(@review)
+        format.html { render :new }
         format.json { render json: @review.errors, status: :unprocessable_entity }
       end
     end
@@ -88,6 +90,16 @@ class ReviewsController < ApplicationController
   end
 
   private
+  def get_repo_commits(review)
+    @commits = Git.open(review.repository.repo_location).log
+  end
+
+  def get_review_status(review)
+    total_diffs = review.diffs.count.to_f
+    completed = review.diffs.select { |d| d.status.in? ["Complete", "Vulnerable", "Ignored"] }.count
+    (completed / total_diffs * 100).round.to_s + '%' + " (#{completed}/#{total_diffs.round.to_s})"
+  end
+
   # Use callbacks to share common setup or constraints between actions.
   def set_review
     @review = Review.find(params[:id])

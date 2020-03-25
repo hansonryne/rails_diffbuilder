@@ -29,8 +29,8 @@ class DiffsController < ApplicationController
 
     respond_to do |format|
       if @diff.save
-        format.html { redirect_to @diff, notice: 'Diff was successfully created.' }
-        format.json { render :show, status: :created, location: @diff }
+          format.html { redirect_to @diff, notice: 'Diff was successfully created.' }
+          format.json { render :show, status: :created, location: @diff }
       else
         format.html { render :new }
         format.json { render json: @diff.errors, status: :unprocessable_entity }
@@ -41,12 +41,17 @@ class DiffsController < ApplicationController
   # PATCH/PUT /diffs/1
   # PATCH/PUT /diffs/1.json
   def update
+    @status = diff_params[:status]
     respond_to do |format|
       if @diff.update(diff_params)
-        format.html { redirect_to @diff, notice: 'Diff was successfully updated.' }
+        pp @status
+        if @status == "Vulnerable"
+          format.html { render :show, notice: 'Diff was successfully created.' }
+        end
+        format.html { redirect_to @diff.review, notice: 'Diff was successfully updated.' }
         format.json { render :show, status: :ok, location: @diff }
       else
-        format.html { render :edit }
+        format.html { redirect_to @diff.review, notice: 'An error occurred - please try again.' }
         format.json { render json: @diff.errors, status: :unprocessable_entity }
       end
     end
@@ -63,13 +68,13 @@ class DiffsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_diff
-      @diff = Diff.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_diff
+    @diff = Diff.find(params[:id])
+  end
 
-    # Only allow a list of trusted parameters through.
-    def diff_params
-      params.require(:diff).permit(:review_id, :status, :notes, :path, :reason)
-    end
+  # Only allow a list of trusted parameters through.
+  def diff_params
+    params.require(:diff).permit(:review_id, :status, :notes, :path, :reason)
+  end
 end

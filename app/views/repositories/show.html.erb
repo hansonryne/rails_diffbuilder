@@ -16,11 +16,12 @@
 </p>
 
 <p>
-  <strong>Local copy:</strong>
-  <%= @repository.local_copy %>
+  <strong>Reviews:</strong>
+  <% @repository.reviews.each do |r| %>
+    <p><%= link_to "#{r.start_date}: #{r.owner}", review_path(r.id) %></p>
+  <% end %>
 </p>
+  
 
-<%= link_to 'Create Review of this Repo', new_review_path(repo_id: @repository.id) %>
-
-<%= link_to 'Edit', edit_repository_path(@repository) %> |
+<%= link_to 'Create Review of this Repo', new_review_path(repo_id: @repository.id) %> | 
 <%= link_to 'Back', repositories_path %>

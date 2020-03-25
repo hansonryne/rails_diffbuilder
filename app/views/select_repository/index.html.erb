@@ -1,0 +1,3 @@
+<% @repositories.each do |r| %>
+  <%= link_to r.name, new_review_path(repo_id: r.id) %>
+<% end %>
