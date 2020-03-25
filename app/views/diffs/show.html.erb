@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Review:</strong>
+  <%= @diff.review_id %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @diff.status %>
+</p>
+
+<p>
+  <strong>Notes:</strong>
+  <%= @diff.notes %>
+</p>
+
+<p>
+  <strong>Path:</strong>
+  <%= @diff.path %>
+</p>
+
+<p>
+  <strong>Reason:</strong>
+  <%= @diff.reason %>
+</p>
+
+<%= link_to 'Edit', edit_diff_path(@diff) %> |
+<%= link_to 'Back', diffs_path %>
