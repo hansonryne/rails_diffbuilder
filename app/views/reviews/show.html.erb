@@ -2,7 +2,7 @@
 
 <p>
   <strong>Repository:</strong>
-  <%= @review.repository.name %>
+  <%= link_to @review.repository.name, repository_path(@review.repository_id) %>
 </p>
 
 <p>

@@ -18,7 +18,12 @@ class ReviewsController < ApplicationController
     if params[:repo_id]
       @review = Review.new
       @review.repository = Repository.find(params[:repo_id])
-      @commits = get_repo_commits(@review)
+      begin
+        @commits = get_repo_commits(@review)
+      rescue ArgumentError => e
+        flash[:alert] = "Error: Git repository does not exist."
+        redirect_to repository_path(@review.repository.id)      
+      end
     else 
       redirect_to(select_repository_path)
     end
@@ -32,30 +37,33 @@ class ReviewsController < ApplicationController
   # POST /reviews.json
   def create
     @review = Review.new(review_params)
-    @errors = @review.errors
 
     respond_to do |format|
       if @review.save
-        @changed_files = Git.open(@review.repository.repo_location).diff(@review.old_commit, @review.new_commit).name_status
-        @changed_files.each do |file|
-          pp file
-          case file[1]
-          when "A"
-            Diff.create :path => file[0], :review_id => @review.id, :reason => "Added"
-          when "M"
-            Diff.create :path => file[0], :review_id => @review.id, :reason => "Modified"
-          when "C"
-            Diff.create :path => file[0], :review_id => @review.id, :reason => "Copied"
-          when "R"
-            Diff.create :path => file[0], :review_id => @review.id, :reason => "Renamed"
-          when "D"
-            Diff.create :path => file[0], :review_id => @review.id, :reason => "Deleted"
-          when "U"
-            Diff.create :path => file[0], :review_id => @review.id, :reason => "Unmerged"
+        begin
+          @changed_files = Git.open(@review.repository.repo_location).diff(@review.old_commit, @review.new_commit).name_status
+          @changed_files.each do |file|
+            pp file
+            case file[1]
+            when "A"
+              Diff.create :path => file[0], :review_id => @review.id, :reason => "Added"
+            when "M"
+              Diff.create :path => file[0], :review_id => @review.id, :reason => "Modified"
+            when "C"
+              Diff.create :path => file[0], :review_id => @review.id, :reason => "Copied"
+            when "R"
+              Diff.create :path => file[0], :review_id => @review.id, :reason => "Renamed"
+            when "D"
+              Diff.create :path => file[0], :review_id => @review.id, :reason => "Deleted"
+            when "U"
+              Diff.create :path => file[0], :review_id => @review.id, :reason => "Unmerged"
+            end
           end
+          format.html { redirect_to @review, notice: 'Review was successfully created.' }
+          format.json { render :show, status: :created, location: @review }
+        rescue
+          format.html { render :new, :alert => "Error: #{e.message}" }
         end
-        format.html { redirect_to @review, notice: 'Review was successfully created.' }
-        format.json { render :show, status: :created, location: @review }
       else
         @commits = get_repo_commits(@review)
         format.html { render :new }

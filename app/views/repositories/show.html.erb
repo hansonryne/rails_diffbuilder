@@ -1,27 +1,37 @@
 <p id="notice"><%= notice %></p>
 
+<% if flash[:alert] %>
+  <div id="error_explanation">
+    <ul>
+      <% flash.each do |key, value| %>
+        <li><%= value %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
 <p>
-  <strong>Name:</strong>
-  <%= @repository.name %>
+<strong>Name:</strong>
+<%= @repository.name %>
 </p>
 
 <p>
-  <strong>Project:</strong>
-  <%= @repository.project %>
+<strong>Project:</strong>
+<%= @repository.project %>
 </p>
 
 <p>
-  <strong>Repo location:</strong>
-  <%= @repository.repo_location %>
+<strong>Repo location:</strong>
+<%= @repository.repo_location %>
 </p>
 
 <p>
-  <strong>Reviews:</strong>
-  <% @repository.reviews.each do |r| %>
-    <p><%= link_to "#{r.start_date}: #{r.owner}", review_path(r.id) %></p>
-  <% end %>
+<strong>Reviews:</strong>
+<% @repository.reviews.each do |r| %>
+  <p><%= link_to "#{r.start_date}: #{r.owner}", review_path(r.id) %></p>
+<% end %>
 </p>
-  
+
 
 <%= link_to 'Create Review of this Repo', new_review_path(repo_id: @repository.id) %> | 
 <%= link_to 'Back', repositories_path %>
