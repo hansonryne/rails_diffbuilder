@@ -1,17 +1,13 @@
 <%= form_with(model: review, local: true) do |form| %>
-  <% if flash[:error] %>
+  <% if review.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(flash[:error].count, "error") %> prohibited this review from being saved:</h2>
-      <% flash.each do |key, value|
+      <h2><%= pluralize(review.errors.count, "error") %> prohibited this review from being saved:</h2>
 
-        if value.class == String
-          value = [value]
-        end
-
-        value.each do |value| %>
-        <%= content_tag(:p, value, :class => "error flash #{key}") unless value.empty? %>
-      <% end %>
-    <% end %>
+      <ul>
+        <% review.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
     </div>
   <% end %>
 
@@ -25,11 +21,6 @@
     <%= form.text_field :owner %>
   </div>
 
-  <div class="field" hidden>
-    <%= form.label :repository %>
-    <%= form.text_field :repository_id, :value => repo_id %>
-  </div>
-
   <div class="field">
     <%= form.label "Previous Commit" %>
     <%= form.collection_select :old_commit, commits.reverse_each, :sha, :message %>
@@ -38,6 +29,10 @@
   <div class="field">
     <%= form.label "Current Commit" %>
     <%= form.collection_select :new_commit, commits.reverse_each, :sha, :message %>
+  </div>
+
+  <div class="field" hidden>
+    <%= form.text_field :repository_id, :value => repo_id %>
   </div>
 
   <div class="actions">

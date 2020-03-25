@@ -34,10 +34,9 @@ class ReviewsController < ApplicationController
     @review = Review.new(review_params)
     @errors = @review.errors
 
-    @changed_files = Git.open(@review.repository.repo_location).diff(@review.old_commit, @review.new_commit).name_status
-
     respond_to do |format|
       if @review.save
+        @changed_files = Git.open(@review.repository.repo_location).diff(@review.old_commit, @review.new_commit).name_status
         @changed_files.each do |file|
           pp file
           case file[1]
