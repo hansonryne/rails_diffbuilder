@@ -25,6 +25,9 @@ class RepositoriesController < ApplicationController
   # POST /repositories.json
   def create
     @repository = Repository.new(repository_params)
+    @uri = URI(@repository.repo_location)
+    @repository.secret_path = SecureRandom.hex.to_s + @uri.path.split("/").last.to_s
+    Git.clone(@uri, @repository.secret_path, :path => Rails.root.join("storage", "repositories"))
 
     respond_to do |format|
       if @repository.save
@@ -54,14 +57,18 @@ class RepositoriesController < ApplicationController
   # DELETE /repositories/1
   # DELETE /repositories/1.json
   def destroy
-    @repository.destroy
-    respond_to do |format|
-      format.html { redirect_to repositories_url, notice: 'Repository was successfully destroyed.' }
-      format.json { head :no_content }
+    if @repository.destroy
+      FileUtils.rm_rf(@repository.secret_path, :secure =>true)
+      respond_to do |format|
+        format.html { redirect_to repositories_url, notice: 'Repository was successfully destroyed.' }
+        format.json { head :no_content }
+      end
+    else
+        format.html { redirect_to @repository, notice: 'Repository was not destroyed.' }
     end
   end
 
-  private
+    private
     # Use callbacks to share common setup or constraints between actions.
     def set_repository
       @repository = Repository.find(params[:id])
@@ -71,4 +78,4 @@ class RepositoriesController < ApplicationController
     def repository_params
       params.require(:repository).permit(:name, :project, :repo_location, :local_copy)
     end
-end
+  end

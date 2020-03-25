@@ -40,7 +40,7 @@ class ReviewsController < ApplicationController
 
     respond_to do |format|
       if @review.save
-          @changed_files = Git.open(@review.repository.repo_location).diff(@review.old_commit, @review.new_commit).name_status
+        @changed_files = Git.open(get_secret_path(@review.repository)).diff(@review.old_commit, @review.new_commit).name_status
           @changed_files.each do |file|
             pp file
             case file[1]
@@ -93,8 +93,12 @@ class ReviewsController < ApplicationController
   end
 
   private
+  def get_secret_path(repository)
+    Rails.root.join("storage", "repositories", repository.secret_path)
+  end
+
   def get_repo_commits(review)
-    @commits = Git.open(review.repository.repo_location).log
+    @commits = Git.open(get_secret_path(review.repository)).log
   end
 
   def get_review_status(review)
