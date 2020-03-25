@@ -40,7 +40,6 @@ class ReviewsController < ApplicationController
 
     respond_to do |format|
       if @review.save
-        begin
           @changed_files = Git.open(@review.repository.repo_location).diff(@review.old_commit, @review.new_commit).name_status
           @changed_files.each do |file|
             pp file
@@ -61,9 +60,6 @@ class ReviewsController < ApplicationController
           end
           format.html { redirect_to @review, notice: 'Review was successfully created.' }
           format.json { render :show, status: :created, location: @review }
-        rescue
-          format.html { render :new, :alert => "Error: #{e.message}" }
-        end
       else
         @commits = get_repo_commits(@review)
         format.html { render :new }
