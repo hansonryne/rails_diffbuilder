@@ -30,5 +30,12 @@
   <%= @review.new_commit %>
 </p>
 
+<p>
+  <strong>Diffs:</strong>
+  <% @review.diffs.each do |diff| %>
+    <%= link_to diff.path, diff_path(diff) %>
+  <% end %>
+</p>
+
 <%= link_to 'Edit', edit_review_path(@review) %> |
 <%= link_to 'Back', reviews_path %>

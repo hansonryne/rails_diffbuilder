@@ -20,5 +20,7 @@
   <%= @repository.local_copy %>
 </p>
 
+<%= link_to 'Create Review of this Repo', new_review_path(repo_id: @repository.id) %>
+
 <%= link_to 'Edit', edit_repository_path(@repository) %> |
 <%= link_to 'Back', repositories_path %>

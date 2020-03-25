@@ -1,0 +1,7 @@
+    <h2>Side-by-Side Patch Viewer v0.4</h2>
+    <form id="form_diff">
+      <div class="toolbar"> Paste your diff snippet below then <button type="button"
+                                                                       onclick="diffRender(document.getElementById('diffText').value,document.getElementById('diffResult'))">
+          START </button> ; or load from a file: <input id="diff_file" type="file" autocomplete="off"
+                                                                                   onchange="loadDiff(document.getElementById('diffResult'))" />
+        <div style="padding-top:.3em"><textarea rows="8" id="diffText">

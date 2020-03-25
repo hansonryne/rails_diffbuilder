@@ -1,0 +1,160 @@
+body,
+h1,
+h2,
+h3,
+p {
+    font-family: sans-serif
+}
+
+pre {
+    white-space: pre-wrap;
+    word-break: break-all;
+    word-wrap: break-word;
+    padding: 0;
+    margin: 0
+}
+
+td {
+    padding: 0;
+    margin: 0
+}
+
+textarea {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box
+}
+
+.result_table {
+    padding: 0;
+    margin: 0;
+    border: .1em;
+    border-spacing: 0;
+    border-left-style: solid;
+    border-right-style: none;
+    border-top-style: none;
+    border-bottom-style: solid;
+    border-color: #bfbfbf;
+    color: black;
+    width: 100%
+}
+
+.code_row {
+    width: 100%
+}
+
+.linenum_cell {
+    width: 0;
+    border-right-style: solid;
+    border-right-width: .1em;
+    border-color: #f0f0f0;
+    background-color: #f7f7f7;
+    color: #999;
+    text-align: right;
+    padding-left: .2em;
+    padding-right: .2em
+}
+
+.linenum_text {
+    white-space: nowrap;
+    word-break: normal;
+    word-wrap: normal
+}
+
+.diff_basic {
+    width: 50%;
+    border-right-style: solid;
+    border-right-width: .1em;
+    border-color: #bfbfbf
+}
+
+.diff_context {
+    background-color: white;
+    color: #4d4d4d
+}
+
+.diff_add {
+    background-color: #c0ffc0
+}
+
+.diff_mod {
+    background-color: #ffffb0
+}
+
+.diff_del {
+    background-color: #ffd0d0;
+    color: #4d4d4d
+}
+
+.diff_pad {
+    background-color: #f0f0f0
+}
+
+.diff_info {
+    padding-top: .1em;
+    padding-bottom: .1em;
+    padding-left: .4em;
+    padding-right: .4em
+}
+
+.diff_split {
+    background-color: #eee;
+    color: #4d4d4d;
+    text-align: center;
+    border-top-style: solid;
+    border-top-width: .1em;
+    border-bottom-style: solid;
+    border-bottom-width: .1em
+}
+
+.diff_sec_title {
+    width: 100%;
+    background-color: #ddc;
+    color: #4d4d4d;
+    font-weight: bold;
+    border-top-style: solid;
+    border-top-width: .1em
+}
+
+.toolbar {
+    background-color: #eee;
+    padding: .6em;
+    border-radius: .6em
+}
+
+.nav_filename {
+    font-weight: bold;
+    font-size: large
+}
+
+.nav_filename_bar {
+    padding-top: .5em;
+    padding-bottom: .5em
+}
+
+.nav_link {
+    text-decoration: none;
+    color: black;
+    font-family: monospace;
+    padding-left: .3em;
+    padding-right: .3em
+}
+
+.nav_link_bar {
+    background: #eee;
+    border-radius: .4em;
+    border-style: solid;
+    border-width: .1em;
+    border-color: #bfbfbf
+}
+
+.nav_filelist {
+    font-family: monospace
+}
+
+.nav_filelist_bar {
+    padding-top: .5em
+}

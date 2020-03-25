@@ -1,29 +1,45 @@
+<%= javascript_include_tag 'patchscript' %>
+
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Review:</strong>
-  <%= @diff.review_id %>
+<strong>Review:</strong>
+<%= @diff.review_id %>
 </p>
 
 <p>
-  <strong>Status:</strong>
-  <%= @diff.status %>
+<strong>Status:</strong>
+<%= @diff.status %>
 </p>
 
 <p>
-  <strong>Notes:</strong>
-  <%= @diff.notes %>
+<strong>Notes:</strong>
+<%= @diff.notes %>
 </p>
 
 <p>
-  <strong>Path:</strong>
-  <%= @diff.path %>
+<strong>Path:</strong>
+<%= @diff.path %>
 </p>
 
 <p>
-  <strong>Reason:</strong>
-  <%= @diff.reason %>
+<strong>Reason:</strong>
+<%= @diff.reason %>
 </p>
+
+<h2>Side-by-Side Patch Viewer v0.4</h2>
+<form id="form_diff">
+    <div style="padding-top:.3em" hidden><textarea rows="8" id="diffText">
+        <%= @difftext %>
+      </textarea></div>
+</form>
+<div id="diffResult" class="context"><strong>If you can see this, please reload the page.</strong></div>
 
 <%= link_to 'Edit', edit_diff_path(@diff) %> |
 <%= link_to 'Back', diffs_path %>
+
+<script>
+  document.addEventListener("turbolinks:load", function() {
+    diffRender(document.getElementById('diffText').value,document.getElementById('diffResult'));
+  })
+</script>
