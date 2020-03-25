@@ -68,11 +68,6 @@ class DiffsController < ApplicationController
   end
 
   private
-
-  def get_secret_path(repository)
-    Rails.root.join("storage", "repositories", repository.secret_path)
-  end
-
   # Use callbacks to share common setup or constraints between actions.
   def set_diff
     @diff = Diff.find(params[:id])

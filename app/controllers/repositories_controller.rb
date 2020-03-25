@@ -57,8 +57,10 @@ class RepositoriesController < ApplicationController
   # DELETE /repositories/1
   # DELETE /repositories/1.json
   def destroy
+    @folder_to_delete = get_secret_path(@repository)
     if @repository.destroy
-      FileUtils.rm_rf(@repository.secret_path, :secure =>true)
+      FileUtils.rm_rf(@folder_to_delete, :secure =>true)
+      puts @path
       respond_to do |format|
         format.html { redirect_to repositories_url, notice: 'Repository was successfully destroyed.' }
         format.json { head :no_content }

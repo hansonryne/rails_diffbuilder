@@ -93,12 +93,10 @@ class ReviewsController < ApplicationController
   end
 
   private
-  def get_secret_path(repository)
-    Rails.root.join("storage", "repositories", repository.secret_path)
-  end
-
   def get_repo_commits(review)
+    if review.repository.secret_path
     @commits = Git.open(get_secret_path(review.repository)).log
+    end
   end
 
   def get_review_status(review)
