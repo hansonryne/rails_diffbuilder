@@ -5,6 +5,9 @@ class ReviewsController < ApplicationController
   # GET /reviews.json
   def index
     @reviews = Review.all
+    @reviews.each do |r|
+      r.status = get_review_status(r)
+    end
   end
 
   # GET /reviews/1
@@ -42,7 +45,6 @@ class ReviewsController < ApplicationController
       if @review.save
         @changed_files = Git.open(get_secret_path(@review.repository)).diff(@review.old_commit, @review.new_commit).name_status
           @changed_files.each do |file|
-            pp file
             case file[1]
             when "A"
               Diff.create :path => file[0], :review_id => @review.id, :reason => "Added"
