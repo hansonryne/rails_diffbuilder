@@ -12,8 +12,11 @@
 
 ActiveRecord::Schema.define(version: 2020_03_25_204427) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "diffs", force: :cascade do |t|
-    t.integer "review_id", null: false
+    t.bigint "review_id", null: false
     t.string "status"
     t.text "notes"
     t.string "path"
@@ -34,7 +37,7 @@ ActiveRecord::Schema.define(version: 2020_03_25_204427) do
   end
 
   create_table "reviews", force: :cascade do |t|
-    t.integer "repository_id", null: false
+    t.bigint "repository_id", null: false
     t.date "start_date"
     t.string "status"
     t.string "owner"
