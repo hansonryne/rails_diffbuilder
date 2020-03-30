@@ -59,8 +59,6 @@ RUN yarn install
 COPY Gemfile Gemfile.lock ./
 RUN bundle install
 
-RUN rails db:create
-RUN rails db:migrate
 
 # Allow SSH keys to be mounted (optional, but nice if you use SSH authentication for git)
 #VOLUME /root/.ssh 
@@ -68,6 +66,9 @@ RUN rails db:migrate
 VOLUME /app
 
 WORKDIR /app 
+
+RUN rake db:create
+RUN rake db:migrate
 
 CMD rails s -b 0.0.0.0
 
