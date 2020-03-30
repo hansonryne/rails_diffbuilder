@@ -1,7 +1,7 @@
 <details><summary><%= reason %></summary>
   <table>
   <% files.each do |file| %>
-    <tr>
+    <tr class="file-<%= file.status.parameterize(preserve_case: true) %>">
       <td>
     <%= form_with(model: file, local: true) do |form| %>
 
@@ -18,7 +18,7 @@
     <%= file.status %>
       </td>
       <td>
-    <%= link_to file.path, diff_path(file.id) %>
+        <%= link_to file.path, diff_path(file.id) %>
       </td>
     </tr>
   <% end %>

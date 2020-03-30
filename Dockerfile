@@ -60,7 +60,7 @@ RUN bundle install
 # Allow SSH keys to be mounted (optional, but nice if you use SSH authentication for git)
 #VOLUME /root/.ssh 
 # Setup the directory where we will mount the codebase from the host
-VOLUME /app
+VOLUME ./:/app
 
 WORKDIR /app 
 

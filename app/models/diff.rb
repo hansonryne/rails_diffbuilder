@@ -3,5 +3,5 @@ class Diff < ApplicationRecord
 
   belongs_to :review
 
-  attribute :status, :string, default: "Not Reviewed"
+  attribute :status, :string, default: "Not-Reviewed"
 end

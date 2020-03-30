@@ -4,7 +4,7 @@
 
 <p>
 <strong>Review:</strong>
-<%= @diff.review.start_date %>
+<%= link_to @diff.review.start_date, review_path(@diff.review_id) %>
 </p>
 
 <p>
