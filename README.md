@@ -1,24 +1,47 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### Description
+A tool to help with differential code review.
 
-Things you may want to cover:
+## Docker Installation
 
-* Ruby version
+Clone and move into the repository
 
-* System dependencies
+```
+git clone https://github.com/hansonryne/rails_diffbuilder
+cd rails_diffbuilder
+```
 
-* Configuration
+Configure environment files (.env)
+```
+touch .env
+```
 
-* Database creation
+Add the following environment variables to .env
+```
+DATABASE_USER=whatever
+DATABASE_PASSWORD=youwant
 
-* Database initialization
+DATABASE_NAME=diffbuilder_db
+DATABASE_HOST=database
 
-* How to run the test suite
+REDIS_HOST=redis #not currently being used
 
-* Services (job queues, cache servers, search engines, etc.)
+RAILS_ENV=production #or development if you want more error messages
+RAILS_SERVE_STATIC_FILES=true
 
-* Deployment instructions
+SECRET_KEY_BASE=supers3cr3tpassword
+```
 
-* ...
+Build and run containers
+
+`docker-compose up --build -d`
+
+Run rake commands for database configuration
+
+```
+docker-compose run app rake db:create
+docker-compose run app rake db:migrate
+```
+
+**App should be running on localhost:3000**
