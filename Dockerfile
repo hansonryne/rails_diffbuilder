@@ -44,9 +44,6 @@ ENV BUNDLE_RETRY 3
 ENV GEM_HOME /gems
 ENV GEM_PATH /gems 
 
-# You'll need something here. For development, you don't need anything super secret.
-ENV SECRET_KEY_BASE development123 
-
 # Add /gems/bin to the path so any installed gem binaries are runnable from bash.
 ENV PATH /gems/bin:$PATH 
 
