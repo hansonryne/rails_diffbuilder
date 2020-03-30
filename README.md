@@ -34,10 +34,12 @@ SECRET_KEY_BASE=supers3cr3tpassword
 ```
 
 Build and run containers
+```
+docker-compose build
+docker-compose run -d
+```
 
-`docker-compose up --build -d`
-
-Run rake commands for database configuration
+Run rake commands for database configuration (if needed)
 
 ```
 docker-compose run app rake db:create
@@ -45,3 +47,10 @@ docker-compose run app rake db:migrate
 ```
 
 **App should be running on localhost:3000**
+
+When you are done, shut down and clean up with docker-compose
+```
+docker-compose down
+```
+
+Database should remain in docker volumes
