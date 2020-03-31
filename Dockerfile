@@ -64,9 +64,6 @@ VOLUME ./:/app
 
 WORKDIR /app 
 
-RUN rake db:create
-RUN rake db:migrate
-
 CMD rails s -b 0.0.0.0
 
 
