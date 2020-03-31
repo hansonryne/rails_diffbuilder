@@ -43,8 +43,11 @@ class RepositoriesController < ApplicationController
   # PATCH/PUT /repositories/1
   # PATCH/PUT /repositories/1.json
   def update
+    @git = Git.open(Rails.root.join("storage", "repositories", @repository.secret_path))
+    @git.pull
+
     respond_to do |format|
-      if @repository.update(repository_params)
+      if @repository.update(update_params)
         format.html { redirect_to @repository, notice: 'Repository was successfully updated.' }
         format.json { render :show, status: :ok, location: @repository }
       else
@@ -78,6 +81,11 @@ class RepositoriesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def repository_params
-      params.require(:repository).permit(:name, :project, :repo_location, :local_copy)
+      params.require(:repository).permit(:name, :project, :repo_location)
     end
+
+    def update_params
+      params.require(:repository).permit(:secret_path)
+    end
+
   end

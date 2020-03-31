@@ -44,24 +44,24 @@ class ReviewsController < ApplicationController
     respond_to do |format|
       if @review.save
         @changed_files = Git.open(get_secret_path(@review.repository)).diff(@review.old_commit, @review.new_commit).name_status
-          @changed_files.each do |file|
-            case file[1]
-            when "A"
-              Diff.create :path => file[0], :review_id => @review.id, :reason => "Added"
-            when "M"
-              Diff.create :path => file[0], :review_id => @review.id, :reason => "Modified"
-            when "C"
-              Diff.create :path => file[0], :review_id => @review.id, :reason => "Copied"
-            when "R"
-              Diff.create :path => file[0], :review_id => @review.id, :reason => "Renamed"
-            when "D"
-              Diff.create :path => file[0], :review_id => @review.id, :reason => "Deleted"
-            when "U"
-              Diff.create :path => file[0], :review_id => @review.id, :reason => "Unmerged"
-            end
+        @changed_files.each do |file|
+          case file[1]
+          when "A"
+            Diff.create :path => file[0], :review_id => @review.id, :reason => "Added"
+          when "M"
+            Diff.create :path => file[0], :review_id => @review.id, :reason => "Modified"
+          when "C"
+            Diff.create :path => file[0], :review_id => @review.id, :reason => "Copied"
+          when "R"
+            Diff.create :path => file[0], :review_id => @review.id, :reason => "Renamed"
+          when "D"
+            Diff.create :path => file[0], :review_id => @review.id, :reason => "Deleted"
+          when "U"
+            Diff.create :path => file[0], :review_id => @review.id, :reason => "Unmerged"
           end
-          format.html { redirect_to @review, notice: 'Review was successfully created.' }
-          format.json { render :show, status: :created, location: @review }
+        end
+        format.html { redirect_to @review, notice: 'Review was successfully created.' }
+        format.json { render :show, status: :created, location: @review }
       else
         @commits = get_repo_commits(@review)
         format.html { render :new }
@@ -97,12 +97,16 @@ class ReviewsController < ApplicationController
   private
   def get_repo_commits(review)
     if review.repository.secret_path
-    @commits = Git.open(get_secret_path(review.repository)).log
+      @commits = Git.open(get_secret_path(review.repository)).log
     end
   end
 
   def get_review_status(review)
-    total_diffs = review.diffs.count.to_f
+    if review.diffs.count == 0
+      return "Nothing"
+    else
+      total_diffs = review.diffs.count.to_f 
+    end
     completed = review.diffs.select { |d| d.status.in? ["Complete", "Vulnerable", "Ignored"] }.count
     (completed / total_diffs * 100).round.to_s + '%' + " (#{completed}/#{total_diffs.round.to_s})"
   end

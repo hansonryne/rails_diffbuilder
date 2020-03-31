@@ -32,6 +32,12 @@
 <% end %>
 </p>
 
-
+<div>
 <%= link_to 'Create Review of this Repo', new_review_path(repo_id: @repository.id) %> | 
-<%= link_to 'Back', repositories_path %>
+<%= link_to 'Back', repositories_path %> |
+</div>
+
+<div>
+  <br>
+<%= render 'updaterepo', repository: @repository %>
+</div>
