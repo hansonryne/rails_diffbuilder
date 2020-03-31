@@ -19,17 +19,21 @@ touch .env
 
 Add the following environment variables to .env
 ```
-DATABASE_USER=whatever
-DATABASE_PASSWORD=youwant
+# These values should be changed to a more secure value and then updated to match in the init.sql file in this repository
+DATABASE_USER=sammy
+DATABASE_PASSWORD=shark
 
 DATABASE_NAME=diffbuilder_db
 DATABASE_HOST=database
 
 REDIS_HOST=redis #not currently being used
 
-RAILS_ENV=production #or development if you want more error messages
+RAILS_ENV=production
+#RAILS_ENV=development
+
 RAILS_SERVE_STATIC_FILES=true
 
+# You should make this better too
 SECRET_KEY_BASE=supers3cr3tpassword
 ```
 
