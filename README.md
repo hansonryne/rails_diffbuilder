@@ -28,8 +28,8 @@ DATABASE_HOST=database
 
 REDIS_HOST=redis #not currently being used
 
-RAILS_ENV=production
-#RAILS_ENV=development
+#RAILS_ENV=production
+RAILS_ENV=development
 
 RAILS_SERVE_STATIC_FILES=true
 
