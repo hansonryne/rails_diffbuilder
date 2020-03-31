@@ -29,8 +29,8 @@ class DiffsController < ApplicationController
 
     respond_to do |format|
       if @diff.save
-          format.html { redirect_to @diff, notice: 'Diff was successfully created.' }
-          format.json { render :show, status: :created, location: @diff }
+        format.html { redirect_to @diff, notice: 'Diff was successfully created.' }
+        format.json { render :show, status: :created, location: @diff }
       else
         format.html { render :new }
         format.json { render json: @diff.errors, status: :unprocessable_entity }
