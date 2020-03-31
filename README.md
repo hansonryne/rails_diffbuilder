@@ -36,7 +36,7 @@ SECRET_KEY_BASE=supers3cr3tpassword
 Build and run containers
 ```
 docker-compose build
-docker-compose run -d
+docker-compose up -d
 ```
 
 Run rake commands for database configuration (if needed)
