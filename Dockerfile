@@ -1,5 +1,7 @@
 FROM ruby:alpine3.11
 
+WORKDIR /app 
+
 RUN apk add --update --no-cache \
       bash \
       bash-completion \
@@ -51,18 +53,16 @@ RUN gem install bundler
 RUN gem install rails
 
 COPY yarn.lock package.json ./
+RUN rm -rf ./node_modules
 RUN yarn install
 
 COPY Gemfile Gemfile.lock ./
 RUN bundle install
 
-
 # Allow SSH keys to be mounted (optional, but nice if you use SSH authentication for git)
 #VOLUME /root/.ssh 
 # Setup the directory where we will mount the codebase from the host
 VOLUME ./:/app
-
-WORKDIR /app 
 
 CMD rails s -b 0.0.0.0
 
