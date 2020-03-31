@@ -37,17 +37,19 @@ RAILS_SERVE_STATIC_FILES=true
 SECRET_KEY_BASE=supers3cr3tpassword
 ```
 
-Build and run containers
+Run build script
 ```
-docker-compose build
+./build_containers.sh
+```
+
+Build databases
+```
+./db_build.sh
+```
+
+Run containers in daemon mode
+```
 docker-compose up -d
-```
-
-Run rake commands for database configuration (if needed)
-
-```
-docker-compose run app rake db:create
-docker-compose run app rake db:migrate
 ```
 
 **App should be running on localhost:3000**
