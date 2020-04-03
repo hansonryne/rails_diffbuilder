@@ -94,7 +94,6 @@ class ReviewsController < ApplicationController
     end
   end
 
-  private
   def get_repo_commits(review)
     if review.repository.secret_path
       @commits = Git.open(get_secret_path(review.repository)).log
@@ -110,6 +109,8 @@ class ReviewsController < ApplicationController
     completed = review.diffs.select { |d| d.status.in? ["Complete", "Vulnerable", "Ignored"] }.count
     (completed / total_diffs * 100).round.to_s + '%' + " (#{completed}/#{total_diffs.round.to_s})"
   end
+
+  private
 
   # Use callbacks to share common setup or constraints between actions.
   def set_review

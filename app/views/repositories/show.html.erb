@@ -27,17 +27,34 @@
 
 <p>
 <strong>Reviews:</strong>
-<% @repository.reviews.each do |r| %>
-  <p><%= link_to "#{r.start_date}: #{r.owner}", review_path(r.id) %></p>
-<% end %>
+<table>
+  <thead>
+    <tr>
+      <th>Start date</th>
+      <th>Owner</th>
+      <th>Status</th>
+      <th colspan="1"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @repository.reviews.each do |r| %>
+      <tr>
+        <td><%= r.start_date %></td>
+        <td><%= r.owner %></td>
+        <td><%= r.get_review_status(r) %></td>
+        <td><%= link_to 'View', r %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
 </p>
 
 <div>
-<%= link_to 'Create Review of this Repo', new_review_path(repo_id: @repository.id) %> | 
-<%= link_to 'Back', repositories_path %> |
+  <%= link_to 'Create Review of this Repo', new_review_path(repo_id: @repository.id) %> | 
+  <%= link_to 'Back', repositories_path %> |
 </div>
 
 <div>
   <br>
-<%= render 'updaterepo', repository: @repository %>
+  <%= render 'updaterepo', repository: @repository %>
 </div>
