@@ -1,5 +1,15 @@
+<%= stylesheet_link_tag 'loading_animation' %>
+<%= javascript_include_tag 'loading_animation' %>
+
 <h1>New Repository</h1>
 
 <%= render 'form', repository: @repository %>
 
 <%= link_to 'Back', repositories_path %>
+
+<div id="loading-animation" class="loading-animation-centered" hidden>
+  If this is a large project this might take a minute or two.
+  <br>
+  Please wait and do not click back or close the window.
+  <div class="loading-animation"></div>
+</div>

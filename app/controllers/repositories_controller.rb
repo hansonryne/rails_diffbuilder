@@ -60,7 +60,7 @@ class RepositoriesController < ApplicationController
   # DELETE /repositories/1
   # DELETE /repositories/1.json
   def destroy
-    @folder_to_delete = get_secret_path(@repository)
+    @folder_to_delete = @repository.get_secret_path
     if @repository.destroy
       FileUtils.rm_rf(@folder_to_delete, :secure =>true)
       puts @path
