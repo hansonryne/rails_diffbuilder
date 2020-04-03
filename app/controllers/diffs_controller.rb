@@ -10,7 +10,8 @@ class DiffsController < ApplicationController
   # GET /diffs/1
   # GET /diffs/1.json
   def show
-    @difftext = Git.open(get_secret_path(@diff.review.repository)).diff(@diff.review.old_commit, @diff.review.new_commit).path(@diff.path).to_s
+    @repository = @diff.review.repository
+    @difftext = Git.open(@repository.get_secret_path).diff(@diff.review.old_commit, @diff.review.new_commit).path(@diff.path).to_s
   end
 
   # GET /diffs/new

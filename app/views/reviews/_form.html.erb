@@ -23,12 +23,12 @@
 
   <div class="field">
     <%= form.label "Previous Commit" %>
-    <%= form.collection_select :old_commit, commits.reverse_each, :sha, :message %>
+    <%= form.collection_select :old_commit, review.get_repository.get_commits.reverse_each, :sha, ->(c){ "#{c.date.strftime("%m/%d/%Y")}: #{c.message}" } %>
   </div>
 
   <div class="field">
     <%= form.label "Current Commit" %>
-    <%= form.collection_select :new_commit, commits.reverse_each, :sha, :message %>
+    <%= form.collection_select :new_commit, review.get_repository.get_commits.reverse_each, :sha, ->(c){ "#{c.date.strftime("%m/%d/%Y")}: #{c.message}" } %>
   </div>
 
   <div class="field" hidden>

@@ -6,14 +6,13 @@ class ReviewsController < ApplicationController
   def index
     @reviews = Review.all
     @reviews.each do |r|
-      r.status = get_review_status(r)
+      r.status = r.get_status
     end
   end
 
   # GET /reviews/1
   # GET /reviews/1.json
   def show
-    @review.status = get_review_status(@review)
   end
 
   # GET /reviews/new
@@ -22,7 +21,7 @@ class ReviewsController < ApplicationController
       @review = Review.new
       @review.repository = Repository.find(params[:repo_id])
       begin
-        @commits = get_repo_commits(@review)
+        @commits = @review.repository.get_commits
       rescue ArgumentError => e
         flash[:alert] = "Error: Git repository does not exist."
         redirect_to repository_path(@review.repository.id)      
@@ -43,7 +42,7 @@ class ReviewsController < ApplicationController
 
     respond_to do |format|
       if @review.save
-        @changed_files = Git.open(get_secret_path(@review.repository)).diff(@review.old_commit, @review.new_commit).name_status
+        @changed_files = Git.open(@review.repository.get_secret_path).diff(@review.old_commit, @review.new_commit).name_status
         @changed_files.each do |file|
           case file[1]
           when "A"
@@ -63,7 +62,7 @@ class ReviewsController < ApplicationController
         format.html { redirect_to @review, notice: 'Review was successfully created.' }
         format.json { render :show, status: :created, location: @review }
       else
-        @commits = get_repo_commits(@review)
+        @commits = @review.repository.get_commits
         format.html { render :new }
         format.json { render json: @review.errors, status: :unprocessable_entity }
       end
@@ -94,21 +93,6 @@ class ReviewsController < ApplicationController
     end
   end
 
-  def get_repo_commits(review)
-    if review.repository.secret_path
-      @commits = Git.open(get_secret_path(review.repository)).log
-    end
-  end
-
-  def get_review_status(review)
-    if review.diffs.count == 0
-      return "Nothing"
-    else
-      total_diffs = review.diffs.count.to_f 
-    end
-    completed = review.diffs.select { |d| d.status.in? ["Complete", "Vulnerable", "Ignored"] }.count
-    (completed / total_diffs * 100).round.to_s + '%' + " (#{completed}/#{total_diffs.round.to_s})"
-  end
 
   private
 
