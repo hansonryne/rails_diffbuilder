@@ -27,10 +27,11 @@ class RepositoriesController < ApplicationController
     @repository = Repository.new(repository_params)
     @uri = URI(@repository.repo_location)
     @repository.secret_path = SecureRandom.hex.to_s + @uri.path.split("/").last.to_s
-    Git.clone(@uri, @repository.secret_path, :path => Rails.root.join("storage", "repositories"))
+    @secret_path_to_clone_to = @repository.secret_path
 
     respond_to do |format|
       if @repository.save
+        Git.clone(@uri, @secret_path_to_clone_to, :path => Rails.root.join("storage", "repositories"))
         format.html { redirect_to @repository, notice: 'Repository was successfully created.' }
         format.json { render :show, status: :created, location: @repository }
       else
@@ -69,23 +70,23 @@ class RepositoriesController < ApplicationController
         format.json { head :no_content }
       end
     else
-        format.html { redirect_to @repository, notice: 'Repository was not destroyed.' }
+      format.html { redirect_to @repository, notice: 'Repository was not destroyed.' }
     end
   end
 
-    private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_repository
-      @repository = Repository.find(params[:id])
-    end
-
-    # Only allow a list of trusted parameters through.
-    def repository_params
-      params.require(:repository).permit(:name, :project, :repo_location)
-    end
-
-    def update_params
-      params.require(:repository).permit(:secret_path)
-    end
-
+  private
+  # Use callbacks to share common setup or constraints between actions.
+  def set_repository
+    @repository = Repository.find(params[:id])
   end
+
+  # Only allow a list of trusted parameters through.
+  def repository_params
+    params.require(:repository).permit(:name, :project, :repo_location)
+  end
+
+  def update_params
+    params.require(:repository).permit(:secret_path)
+  end
+
+end
