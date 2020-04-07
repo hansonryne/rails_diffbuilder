@@ -66,7 +66,7 @@ Repositories can be either on the local machine or accessible via a remote git s
 
 Remote repositories can be added by simply using their public URL in the "Repo location" field.
 
-![](https://github.com/hansonryne/assets/diffbuilder/new_repo.png)
+![](https://github.com/hansonryne/assets/blob/master/diffbuilder/new_repo.png?raw=true)
 
 Local repositories must be saved within the scope of the application. Typically using the "storage" directory works best since this directory is in the .gitignore file.
 
@@ -82,11 +82,17 @@ Then the "Repo location" field in the application would be 'storage/your_repo'
 ## Creating a review
  Once a repository is saved to the application, reviews can be made. Most of the fields are self explanatory, but to ensure desired results, know that the **commit selection boxes are ordered from oldest commit to newest commit, top to bottom**.
 
+ ![](https://github.com/hansonryne/assets/blob/master/diffbuilder/new_review.png?raw=true)
+
 ## Working with Diffs
 Once a review is created, the files that changed between commits are listed on the "Show Review" page in dropdown tags. Files can be filtered by their review status of either "Not reviewed", "Vulnerable", "Complete", or "Ignored".
+
+![](https://github.com/hansonryne/assets/blob/master/diffbuilder/view_review.png?raw=true)
 
 To review a file, click on the filename.
 
 Once in the file, you can change the status, update notes, or go back to the review.
+
+![](https://github.com/hansonryne/assets/blob/master/diffbuilder/view_diff.png?raw=true)
 
 **Occasionally the fill diff will not show up right away and the page must be reloaded.**
