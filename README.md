@@ -6,7 +6,6 @@ A tool to help with differential code review.
 ## Docker Installation
 
 Clone and move into the repository
-
 ```
 git clone https://github.com/hansonryne/rails_diffbuilder
 cd rails_diffbuilder
@@ -60,3 +59,32 @@ docker-compose down
 ```
 
 Database should remain in docker volumes
+
+# Basic Use
+## Creating a repository
+Repositories can be either on the local machine or accessible via a remote git service (Github/Gitlab/etc.).
+
+Remote repositories can be added by simply using their public URL in the "Repo location" field.
+
+Local repositories must be saved within the scope of the application. Typically using the "storage" directory works best since this directory is in the .gitignore file.
+
+For example:
+```
+cp -R /path/to/your/repo {ProjectRoot}/storage/
+```
+
+Then the "Repo location" field in the application would be 'storage/your_repo'
+
+**Large repositories may take a while for the application to process so be patient.**
+
+## Creating a review
+ Once a repository is saved to the application, reviews can be made. Most of the fields are self explanatory, but to ensure desired results, know that the **commit selection boxes are ordered from oldest commit to newest commit, top to bottom**.
+
+## Working with Diffs
+Once a review is created, the files that changed between commits are listed on the "Show Review" page in dropdown tags. Files can be filtered by their review status of either "Not reviewed", "Vulnerable", "Complete", or "Ignored".
+
+To review a file, click on the filename.
+
+Once in the file, you can change the status, update notes, or go back to the review.
+
+**Occasionally the fill diff will not show up right away and the page must be reloaded.**
