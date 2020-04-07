@@ -42,9 +42,6 @@ class DiffsController < ApplicationController
   # PATCH/PUT /diffs/1
   # PATCH/PUT /diffs/1.json
   def update
-    if diff_params[:status] == "Not Reviewed"
-      diff_params[:status] = "Not-Reviewed"
-    end
     @status = diff_params[:status]
     respond_to do |format|
       if @diff.update(diff_params)

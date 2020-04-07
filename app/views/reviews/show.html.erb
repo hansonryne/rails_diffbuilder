@@ -38,7 +38,7 @@ Filter by file status:
 <%= check_box_tag "Ignored", 1, true, { onchange: "toggle_file_vis(this.name)"}  %>Ignored
 <%= check_box_tag "Complete", 1, true, { onchange: "toggle_file_vis(this.name)"}  %>Complete
 <%= check_box_tag "Vulnerable", 1, true, { onchange: "toggle_file_vis(this.name)"}  %>Vulnerable
-<%= check_box_tag "Not-Reviewed", 1, true, { onchange: "toggle_file_vis(this.name)"}  %>Not Reviewed
+<%= check_box_tag "Incomplete", 1, true, { onchange: "toggle_file_vis(this.name)"}  %>Incomplete
 <% ["Added", "Modified", "Deleted", "Copied", "Renamed", "Unmerged"].each do |reason| %>
   <%= render 'files', reason: reason, files: @review.diffs.select{|d| d.reason == reason} %>
 <% end %>
