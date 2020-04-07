@@ -66,6 +66,8 @@ Repositories can be either on the local machine or accessible via a remote git s
 
 Remote repositories can be added by simply using their public URL in the "Repo location" field.
 
+![](https://github.com/hansonryne/assets/diffbuilder/new_repo.png)
+
 Local repositories must be saved within the scope of the application. Typically using the "storage" directory works best since this directory is in the .gitignore file.
 
 For example:
