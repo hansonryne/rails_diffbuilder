@@ -1,7 +1,7 @@
-<details><summary><%= reason %></summary>
+<details open><summary><%= reason %></summary>
   <table>
   <% files.each do |file| %>
-    <tr class="file-<%= file.status.parameterize(preserve_case: true) %>">
+    <tr class="file-<%= file.status.parameterize(preserve_case: true) %>" <%=raw file.status == "Incomplete" ? '' : 'style="display: none"' %>>
       <td>
     <%= form_with(model: file, local: true) do |form| %>
 

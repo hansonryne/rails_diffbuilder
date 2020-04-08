@@ -45,10 +45,11 @@ class DiffsController < ApplicationController
     @status = diff_params[:status]
     respond_to do |format|
       if @diff.update(diff_params)
-        if @status != "Ignored"
-          format.html { redirect_to @diff, notice: 'Diff was successfully updated.' }
+        redirect_status = ["Complete", "Ignored", "Vulnerable"]
+        if @status.in? redirect_status
+          format.html { redirect_to @diff.review, notice: "Diff was marked #{@status}." }
         end
-        format.html { redirect_to @diff.review, notice: 'Diff was successfully updated.' }
+        format.html { redirect_to @diff, notice: 'Diff was successfully updated.' }
         format.json { render :show, status: :ok, location: @diff }
       else
         format.html { redirect_to @diff.review, notice: 'An error occurred - please try again.' }
