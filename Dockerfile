@@ -29,18 +29,21 @@ RUN apk add --update --no-cache \
       vim \
       yarn
 
+RUN adduser -D railsuser
+
+USER railsuser
+RUN mkdir /home/railsuser/app
+
 # Create and define the node_modules's cache directory.
-RUN mkdir -p /node_cache
-WORKDIR /node_cache
+RUN mkdir -p /home/railsuser/node_cache
+WORKDIR /home/railsuser/node_cache
 
 # Install the application's dependencies into the node_modules's cache directory.
 COPY package.json ./
 RUN yarn install
 
-RUN adduser -D railsuser
-USER railsuser
 # Create and define the application's working directory.
-WORKDIR /app
+WORKDIR /home/railsuser/app
 
 RUN mkdir -p /home/railsuser/gems
 #Point Bundler at /home/railsuser/gems. This will cause Bundler to re-use gems that have already been installed on the gems volume
@@ -60,5 +63,8 @@ RUN gem install bundler -v 2.1.4
 RUN gem install rails
 
 COPY . ./
+USER root
+RUN chown -R railsuser:railsuser ./*
+USER railsuser
 
 ENTRYPOINT ["./entrypoint.sh"]
