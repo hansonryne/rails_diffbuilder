@@ -6,7 +6,7 @@ services:
     depends_on:
       - database
     volumes:
-      - ./:/app
+      - ./:/home/railsuser/app
       - gem_cache:/home/railsuser/gems
     ports:
      - 3000:3000
