@@ -5,8 +5,8 @@
 <table>
   <thead>
     <tr>
-      <th>Name</th>
       <th>Rule</th>
+      <th>Tag</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -14,8 +14,8 @@
   <tbody>
     <% @rule_tags.each do |rule_tag| %>
       <tr>
-        <td><%= rule_tag.name %></td>
         <td><%= rule_tag.rule_id %></td>
+        <td><%= rule_tag.tag_id %></td>
         <td><%= link_to 'Show', rule_tag %></td>
         <td><%= link_to 'Edit', edit_rule_tag_path(rule_tag) %></td>
         <td><%= link_to 'Destroy', rule_tag, method: :delete, data: { confirm: 'Are you sure?' } %></td>

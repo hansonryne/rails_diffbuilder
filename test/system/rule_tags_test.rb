@@ -14,8 +14,8 @@ class RuleTagsTest < ApplicationSystemTestCase
     visit rule_tags_url
     click_on "New Rule Tag"
 
-    fill_in "Name", with: @rule_tag.name
     fill_in "Rule", with: @rule_tag.rule_id
+    fill_in "Tag", with: @rule_tag.tag_id
     click_on "Create Rule tag"
 
     assert_text "Rule tag was successfully created"
@@ -26,8 +26,8 @@ class RuleTagsTest < ApplicationSystemTestCase
     visit rule_tags_url
     click_on "Edit", match: :first
 
-    fill_in "Name", with: @rule_tag.name
     fill_in "Rule", with: @rule_tag.rule_id
+    fill_in "Tag", with: @rule_tag.tag_id
     click_on "Update Rule tag"
 
     assert_text "Rule tag was successfully updated"

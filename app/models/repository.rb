@@ -1,5 +1,6 @@
 class Repository < ApplicationRecord
   has_many :reviews, :dependent => :destroy
+  has_many :languages
 
   validates :name, :presence => true
   validates :project, :presence => true

@@ -69,6 +69,6 @@ class RuleTagsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def rule_tag_params
-      params.require(:rule_tag).permit(:name, :rule_id)
+      params.require(:rule_tag).permit(:rule_id, :tag_id)
     end
 end

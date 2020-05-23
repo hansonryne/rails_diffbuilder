@@ -21,6 +21,15 @@
 </p>
 
 <p>
+<strong>Languages:</strong>
+<% @repository.languages.each do |l| %>
+  <p>
+  <%= l.name %>
+  </p>
+<% end %>
+</p>
+
+<p>
 <strong>Repo location:</strong>
 <%= @repository.repo_location %>
 </p>

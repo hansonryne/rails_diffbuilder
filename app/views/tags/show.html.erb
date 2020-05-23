@@ -1,0 +1,16 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @tag.name %>
+</p>
+
+<p>
+  <strong>Rules:</strong>
+  <% @tag.rules.each do |r| %>
+    <%= link_to r.title, rule_path(r) %>
+  <% end %>
+</p>
+
+<%= link_to 'Edit', edit_tag_path(@tag) %> |
+<%= link_to 'Back', tags_path %>

@@ -69,6 +69,6 @@ class RulesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def rule_params
-      params.require(:rule).permit(:language_id, :category, :title, :body, :more_info_links, :severity)
+      params.require(:rule).permit(:language_id, :category, :title, :body, :more_info_links, :severity, :all_tags)
     end
 end

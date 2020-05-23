@@ -17,7 +17,7 @@ class RuleTagsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create rule_tag" do
     assert_difference('RuleTag.count') do
-      post rule_tags_url, params: { rule_tag: { name: @rule_tag.name, rule_id: @rule_tag.rule_id } }
+      post rule_tags_url, params: { rule_tag: { rule_id: @rule_tag.rule_id, tag_id: @rule_tag.tag_id } }
     end
 
     assert_redirected_to rule_tag_url(RuleTag.last)
@@ -34,7 +34,7 @@ class RuleTagsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update rule_tag" do
-    patch rule_tag_url(@rule_tag), params: { rule_tag: { name: @rule_tag.name, rule_id: @rule_tag.rule_id } }
+    patch rule_tag_url(@rule_tag), params: { rule_tag: { rule_id: @rule_tag.rule_id, tag_id: @rule_tag.tag_id } }
     assert_redirected_to rule_tag_url(@rule_tag)
   end
 

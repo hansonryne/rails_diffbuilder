@@ -30,5 +30,12 @@
   <%= @rule.severity %>
 </p>
 
+<p>
+  <strong>Tags:</strong>
+  <% @rule.tags.each do |t| %>
+    <%= link_to t.name, tag_path(t) %>
+  <% end %>
+</p>
+
 <%= link_to 'Edit', edit_rule_path(@rule) %> |
 <%= link_to 'Back', rules_path %>

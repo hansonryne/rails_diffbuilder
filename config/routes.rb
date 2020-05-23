@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   resources :rule_tags
+  resources :tags
   resources :rules
   resources :languages
   resources :diffs
