@@ -1,10 +1,7 @@
-FROM ruby:alpine3.11
-
-WORKDIR /app 
+FROM ruby:alpine3.10
 
 RUN apk add --update --no-cache \
       bash \
-      bash-completion \
       binutils-gold \
       build-base \
       curl \
@@ -12,7 +9,6 @@ RUN apk add --update --no-cache \
       g++ \
       gcc \
       git \
-      git-bash-completion \
       less \
       libstdc++ \
       libffi-dev \
@@ -28,43 +24,41 @@ RUN apk add --update --no-cache \
       pkgconfig \
       postgresql-dev \
       python \
-      sqlite-dev \
+      rsync \
       tzdata \
       vim \
       yarn
 
-#Point Bundler at /gems. This will cause Bundler to re-use gems that have already been installed on the gems volume
-ENV BUNDLE_PATH /gems
-ENV BUNDLE_HOME /gems 
+# Create and define the node_modules's cache directory.
+RUN mkdir -p /node_cache
+WORKDIR /node_cache
 
-# Increase how many threads Bundler uses when installing. Optional!
-ENV BUNDLE_JOBS 4 
-# How many times Bundler will retry a gem download. Optional!
-ENV BUNDLE_RETRY 3 
-
-# Where Rubygems will look for gems, similar to BUNDLE_ equivalents.
-ENV GEM_HOME /gems
-ENV GEM_PATH /gems 
-
-# Add /gems/bin to the path so any installed gem binaries are runnable from bash.
-ENV PATH /gems/bin:$PATH 
-
-RUN gem install bundler 
-RUN gem install rails
-
-COPY yarn.lock package.json ./
-RUN rm -rf ./node_modules
+# Install the application's dependencies into the node_modules's cache directory.
+COPY package.json ./
 RUN yarn install
 
-COPY Gemfile Gemfile.lock ./
-RUN bundle install
+RUN adduser -D railsuser
+USER railsuser
+# Create and define the application's working directory.
+WORKDIR /app
 
-# Allow SSH keys to be mounted (optional, but nice if you use SSH authentication for git)
-#VOLUME /root/.ssh 
-# Setup the directory where we will mount the codebase from the host
-VOLUME ./:/app
+RUN mkdir -p /home/railsuser/gems
+#Point Bundler at /home/railsuser/gems. This will cause Bundler to re-use gems that have already been installed on the gems volume
+ENV BUNDLE_PATH=/home/railsuser/gems
+ENV BUNDLE_HOME=/home/railsuser/gems
 
-CMD rails s -b 0.0.0.0
+# Increase how many threads Bundler uses when installing. Optional!
+ENV BUNDLE_JOBS=20
+# How many times Bundler will retry a gem download. Optional!
+ENV BUNDLE_RETRY=3
 
+# Where Rubygems will look for gems, similar to BUNDLE_ equivalents.
+ENV GEM_HOME=/home/railsuser/gems
+ENV GEM_PATH=/home/railsuser/gems
 
+RUN gem install bundler -v 2.1.4
+RUN gem install rails
 
+COPY . ./
+
+ENTRYPOINT ["./entrypoint.sh"]
