@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @rule_tag.name %>
+</p>
+
+<p>
+  <strong>Rule:</strong>
+  <%= @rule_tag.rule_id %>
+</p>
+
+<%= link_to 'Edit', edit_rule_tag_path(@rule_tag) %> |
+<%= link_to 'Back', rule_tags_path %>

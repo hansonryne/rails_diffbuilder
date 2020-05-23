@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Language:</strong>
+  <%= @rule.language_id %>
+</p>
+
+<p>
+  <strong>Category:</strong>
+  <%= @rule.category %>
+</p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @rule.title %>
+</p>
+
+<p>
+  <strong>Body:</strong>
+  <%= @rule.body %>
+</p>
+
+<p>
+  <strong>More info links:</strong>
+  <%= @rule.more_info_links %>
+</p>
+
+<p>
+  <strong>Severity:</strong>
+  <%= @rule.severity %>
+</p>
+
+<%= link_to 'Edit', edit_rule_path(@rule) %> |
+<%= link_to 'Back', rules_path %>
