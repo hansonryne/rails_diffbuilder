@@ -42,23 +42,7 @@ class ReviewsController < ApplicationController
 
     respond_to do |format|
       if @review.save
-        @changed_files = Git.open(@review.repository.get_secret_path).diff(@review.old_commit, @review.new_commit).name_status
-        @changed_files.each do |file|
-          case file[1]
-          when "A"
-            Diff.create :path => file[0], :review_id => @review.id, :reason => "Added"
-          when "M"
-            Diff.create :path => file[0], :review_id => @review.id, :reason => "Modified"
-          when "C"
-            Diff.create :path => file[0], :review_id => @review.id, :reason => "Copied"
-          when "R"
-            Diff.create :path => file[0], :review_id => @review.id, :reason => "Renamed"
-          when "D"
-            Diff.create :path => file[0], :review_id => @review.id, :reason => "Deleted"
-          when "U"
-            Diff.create :path => file[0], :review_id => @review.id, :reason => "Unmerged"
-          end
-        end
+        @changed_files = @review.get_changed_files
         format.html { redirect_to @review, notice: 'Review was successfully created.' }
         format.json { render :show, status: :created, location: @review }
       else
