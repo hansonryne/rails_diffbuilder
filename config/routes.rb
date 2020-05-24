@@ -4,7 +4,11 @@ Rails.application.routes.draw do
   resources :rules
   resources :languages
   resources :diffs
-  resources :reviews
+  resources :reviews do
+    collection do
+      resources :diffs
+    end
+  end
   resources :repositories
 
   get :select_repository, to: 'select_repository#index'
