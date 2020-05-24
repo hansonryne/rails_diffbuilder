@@ -6,7 +6,7 @@
   <thead>
     <tr>
       <th>Name</th>
-      <th>Rules</th>
+      <th>Rules Count</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -15,11 +15,7 @@
     <% @tags.each do |tag| %>
       <tr>
         <td><%= tag.name %></td>
-        <td>
-          <% tag.rules.each do |r| %>
-            <%= r.title %>
-          <% end %>
-        </td>
+        <td><%= tag.rules.count %></td>
         <td><%= link_to 'Show', tag %></td>
         <td><%= link_to 'Edit', edit_tag_path(tag) %></td>
         <td><%= link_to 'Destroy', tag, method: :delete, data: { confirm: 'Are you sure?' } %></td>

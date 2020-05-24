@@ -2,7 +2,7 @@
 
 <p>
   <strong>Language:</strong>
-  <%= @rule.language_id %>
+  <%= link_to @rule.language.name, language_path(@rule.language.id) %>
 </p>
 
 <p>
@@ -17,12 +17,7 @@
 
 <p>
   <strong>Body:</strong>
-  <%= @rule.body %>
-</p>
-
-<p>
-  <strong>More info links:</strong>
-  <%= @rule.more_info_links %>
+  <%= sanitize(@rule.body.html_safe) %>
 </p>
 
 <p>

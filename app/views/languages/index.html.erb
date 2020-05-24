@@ -7,6 +7,7 @@
     <tr>
       <th>Repository</th>
       <th>Name</th>
+      <th>URL</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -16,6 +17,7 @@
       <tr>
         <td><%= language.repository_id %></td>
         <td><%= language.name %></td>
+        <td><%= language.url %></td>
         <td><%= link_to 'Show', language %></td>
         <td><%= link_to 'Edit', edit_language_path(language) %></td>
         <td><%= link_to 'Destroy', language, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -27,3 +29,5 @@
 <br>
 
 <%= link_to 'New Language', new_language_path %>
+<%= link_to 'Update Language Options', build_languages_path %>
+

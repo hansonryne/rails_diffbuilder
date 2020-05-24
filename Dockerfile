@@ -4,6 +4,8 @@ RUN apk add --update --no-cache \
       bash \
       binutils-gold \
       build-base \
+      chromium \
+      chromium-chromedriver \
       curl \
       file \
       g++ \
@@ -25,6 +27,7 @@ RUN apk add --update --no-cache \
       postgresql-dev \
       python \
       rsync \
+      sudo \
       tzdata \
       vim \
       yarn
@@ -33,6 +36,8 @@ RUN adduser -D railsuser
 
 USER railsuser
 RUN mkdir /home/railsuser/app
+#RUN mkdir -p /home/railsuser/.webdrivers
+#RUN cp /usr/bin/chromedriver /home/railsuser/.webdrivers/chromedriver
 
 # Create and define the node_modules's cache directory.
 RUN mkdir -p /home/railsuser/node_cache
