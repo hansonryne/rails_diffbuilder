@@ -20,4 +20,7 @@ class ExampleReflex < ApplicationReflex
   #   end
   #
   # Learn more at: https://docs.stimulusreflex.com
+  def message
+    @message = "test message"
+  end
 end

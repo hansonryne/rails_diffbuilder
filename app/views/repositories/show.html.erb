@@ -22,11 +22,15 @@
 
 <p>
 <strong>Languages:</strong>
-<% @repository.languages.each do |l| %>
-  <p>
-  <%= l.name %>
-  </p>
+<p>
+<% ActiveSupport::JSON.decode(@repository.languages).each_with_index do |l, index| %>
+  <% if index == 0 %>
+    <%= l %>
+    <% next %>
+  <% end %>
+  <%= ", " + l %>
 <% end %>
+</p>
 </p>
 
 <p>

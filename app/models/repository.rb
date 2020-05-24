@@ -1,10 +1,12 @@
 class Repository < ApplicationRecord
   has_many :reviews, :dependent => :destroy
-  has_many :languages
+  has_many :greps, :dependent => :destroy
 
   validates :name, :presence => true
   validates :project, :presence => true
   validates :repo_location, :presence => true
+
+  serialize :langauges, Array
 
   def get_commit_message_and_date
     @commits = self.get_commits

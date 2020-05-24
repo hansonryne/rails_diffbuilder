@@ -15,6 +15,7 @@ class RepositoriesController < ApplicationController
   # GET /repositories/new
   def new
     @repository = Repository.new
+    @languages = Language.all.order(:name)
   end
 
   # GET /repositories/1/edit
@@ -82,11 +83,11 @@ class RepositoriesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def repository_params
-    params.require(:repository).permit(:name, :project, :repo_location)
+    params.require(:repository).permit(:name, :project, :repo_location, languages: [])
   end
 
   def update_params
-    params.require(:repository).permit(:secret_path)
+    params.require(:repository).permit(:secret_path, languages: [])
   end
 
 end

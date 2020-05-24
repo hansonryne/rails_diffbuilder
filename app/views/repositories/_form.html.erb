@@ -17,6 +17,11 @@
   </div>
 
   <div class="field">
+    <%= form.label :languages %>
+    <%= form.collection_select :languages, @languages, :name, :name, { include_hidden: false }, { multiple: true } %>
+  </div>
+
+  <div class="field">
     <%= form.label :project %>
     <%= form.text_field :project %>
   </div>

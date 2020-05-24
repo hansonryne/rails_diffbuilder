@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  review: one
+  repository: one
+  rule: one
+  results: MyText
+  custom: false
+  search_value: MyText
+
+two:
+  review: two
+  repository: two
+  rule: two
+  results: MyText
+  custom: false
+  search_value: MyText

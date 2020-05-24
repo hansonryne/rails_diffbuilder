@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Greps</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Review</th>
+      <th>Repository</th>
+      <th>Rule</th>
+      <th>Results</th>
+      <th>Custom</th>
+      <th>Search value</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @greps.each do |grep| %>
+      <tr>
+        <td><%= grep.review_id %></td>
+        <td><%= grep.repository_id %></td>
+        <td><%= grep.rule_id %></td>
+        <td><%= grep.results %></td>
+        <td><%= grep.custom %></td>
+        <td><%= grep.search_value %></td>
+        <td><%= link_to 'Show', grep %></td>
+        <td><%= link_to 'Edit', edit_grep_path(grep) %></td>
+        <td><%= link_to 'Destroy', grep, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Grep', new_grep_path %>
+
+<a href="#" data-reflex="click->ExampleReflex#message" data-message="hello">Message: <%= @message.to_s %></a>

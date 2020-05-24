@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Review:</strong>
+  <%= @grep.review_id %>
+</p>
+
+<p>
+  <strong>Repository:</strong>
+  <%= @grep.repository_id %>
+</p>
+
+<p>
+  <strong>Rule:</strong>
+  <%= @grep.rule_id %>
+</p>
+
+<p>
+  <strong>Results:</strong>
+  <%= @grep.results %>
+</p>
+
+<p>
+  <strong>Custom:</strong>
+  <%= @grep.custom %>
+</p>
+
+<p>
+  <strong>Search value:</strong>
+  <%= @grep.search_value %>
+</p>
+
+<%= link_to 'Edit', edit_grep_path(@grep) %> |
+<%= link_to 'Back', greps_path %>

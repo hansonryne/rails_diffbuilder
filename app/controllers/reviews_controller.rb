@@ -17,6 +17,7 @@ class ReviewsController < ApplicationController
 
   # GET /reviews/new
   def new
+    @grep = Grep.new
     if params[:repo_id]
       @review = Review.new
       @review.repository = Repository.find(params[:repo_id])
