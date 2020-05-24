@@ -1,11 +1,6 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-<strong>Repository:</strong>
-<%= @language.repository_id %>
-</p>
-
-<p>
 <strong>Name:</strong>
 <%= @language.name %>
 </p>
@@ -20,6 +15,5 @@
 </p>
 
 
-<%= link_to 'Edit', edit_language_path(@language) %> |
-<%= link_to 'Back', languages_path %>
-<%= link_to "Update Rules", build_language_rules_path(:lang => @language.id) %>
+<%= link_to 'Back', languages_path %> |
+<%= link_to "Update Rules", build_language_rules_path(:lang => @language.id), data: { confirm: 'This could take a while. Are you sure?' } %>
