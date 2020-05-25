@@ -14,6 +14,7 @@ class RepositoriesController < ApplicationController
     ActiveSupport::JSON.decode(@repository.languages).each do |l|
       @languages << Language.find_by(name: l)
     end
+    @greps_status ||= :default
   end
 
   # GET /repositories/new

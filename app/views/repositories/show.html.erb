@@ -71,7 +71,30 @@
   <br>
   <%= render 'updaterepo', repository: @repository %>
 </div>
-<%= render 'greps/r_form', review: false, grep: @grep, repository: @repository %>
+
+<div>
+  Greps:
+
+  <div data-controller="create_grep_from_selection">
+  <% case @greps_status %>
+  <% when :default %>
+    <em>Nothing new...</em>
+  <% when :running %>
+    <em>Running...</em>
+  <% when :ready %>
+    <strong><%= @greps_response %></strong>
+  <% else %>
+  <% end %>
+</div>
+
+
+  <% @repository.greps.each do |g| %>
+    <p>
+    <%= g.search_value %>: <%= g.results.nil? ? "Waiting..." : "Done!" %>
+    </p>
+  <% end %>
+</div>
+
 <% @languages.each do |l| %>
   <h2><%= l.name %></h2>
   <%= render 'languages/rules', rules: l.rules, repository: @repository %>

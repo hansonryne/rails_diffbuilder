@@ -21,22 +21,51 @@ class CreateGrepFromSelectionReflex < ApplicationReflex
   #
   # Learn more at: https://docs.stimulusreflex.com
   def make_grep
+    @greps_status = :running
     if element.dataset[:repository]
       @new_grep = Grep.create(rule_id: element.dataset[:rule],
-                           search_value: element.dataset[:selection],
-                           repository_id: element.dataset[:repository],
-                           custom: false
-                          )
-      @sr_message = "Sucess"
+                              search_value: element.dataset[:selection],
+                              repository_id: element.dataset[:repository],
+                              custom: false
+                             )
+      @sr_message = "Added"
+      wait_for_it(:success) do
+        sleep 10
+        "Nice"
+      end
     elsif element.dataset[:review]
       @new_grep = Grep.create(rule_id: element.dataset[:rule],
-                           search_value: element.dataset[:selection],
-                           review_id: element.dataset[:review],
-                           custom: false
-                          )
-      @sr_message = "Sucess"
+                              search_value: element.dataset[:selection],
+                              review_id: element.dataset[:review],
+                              custom: false
+                             )
+      @sr_message = "Added"
+      wait_for_it(:success) do
+        sleep 10
+        "Nice"
+      end
     else
       return @sr_message = "Failed"
+    end
+  end
+
+  def success(response)
+    Grep.last.update(results: "info")
+    @greps_status = :ready
+    @greps_response = response
+  end
+
+  def wait_for_it(target)
+    if block_given?
+      Thread.new do
+        @channel.receive({
+          "target" => "#{self.class}##{target}",
+          "args" => [yield],
+          "url" => url,
+          "attrs" => element.attributes.to_s,
+          "selectors" => selectors,
+        })
+      end
     end
   end
 end
