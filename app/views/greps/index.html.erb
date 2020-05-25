@@ -5,8 +5,6 @@
 <table>
   <thead>
     <tr>
-      <th>Review</th>
-      <th>Repository</th>
       <th>Rule</th>
       <th>Results</th>
       <th>Custom</th>
@@ -18,8 +16,6 @@
   <tbody>
     <% @greps.each do |grep| %>
       <tr>
-        <td><%= grep.review_id %></td>
-        <td><%= grep.repository_id %></td>
         <td><%= grep.rule_id %></td>
         <td><%= grep.results %></td>
         <td><%= grep.custom %></td>

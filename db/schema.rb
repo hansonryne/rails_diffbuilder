@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_24_221854) do
+ActiveRecord::Schema.define(version: 2020_05_25_193120) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,16 +27,15 @@ ActiveRecord::Schema.define(version: 2020_05_24_221854) do
   end
 
   create_table "greps", force: :cascade do |t|
-    t.bigint "review_id"
-    t.bigint "repository_id"
     t.bigint "rule_id"
     t.text "results"
     t.boolean "custom"
     t.text "search_value"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["repository_id"], name: "index_greps_on_repository_id"
-    t.index ["review_id"], name: "index_greps_on_review_id"
+    t.string "greppable_type"
+    t.bigint "greppable_id"
+    t.index ["greppable_type", "greppable_id"], name: "index_greps_on_greppable_type_and_greppable_id"
     t.index ["rule_id"], name: "index_greps_on_rule_id"
   end
 
@@ -98,8 +97,6 @@ ActiveRecord::Schema.define(version: 2020_05_24_221854) do
   end
 
   add_foreign_key "diffs", "reviews"
-  add_foreign_key "greps", "repositories"
-  add_foreign_key "greps", "reviews"
   add_foreign_key "greps", "rules"
   add_foreign_key "reviews", "repositories"
   add_foreign_key "rule_tags", "rules"

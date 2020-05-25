@@ -22,6 +22,19 @@ class CreateGrepFromSelectionReflex < ApplicationReflex
   # Learn more at: https://docs.stimulusreflex.com
   def make_grep
     @greps_status = :running
+    @new_grep = Grep.create(rule_id: element.dataset[:rule],
+                            search_value: element.dataset[:selection],
+                            greppable_id: element.dataset[:greppable],
+                            greppable_type: element.dataset[:type],
+                            custom: false
+                           )
+    @sr_message = "Added"
+    wait_for_it(:success) do
+      sleep 10
+      "Nice"
+    end
+  end
+=begin
     if element.dataset[:repository]
       @new_grep = Grep.create(rule_id: element.dataset[:rule],
                               search_value: element.dataset[:selection],
@@ -45,9 +58,7 @@ class CreateGrepFromSelectionReflex < ApplicationReflex
         "Nice"
       end
     else
-      return @sr_message = "Failed"
-    end
-  end
+=end
 
   def success(response)
     Grep.last.update(results: "info")

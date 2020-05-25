@@ -1,6 +1,7 @@
 class Repository < ApplicationRecord
-  has_many :reviews, :dependent => :destroy
-  has_many :greps, :dependent => :destroy
+  has_many :reviews, dependent: :destroy
+  has_many :greps, as: :greppable, dependent: :destroy
+
 
   validates :name, :presence => true
   validates :project, :presence => true

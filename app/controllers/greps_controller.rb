@@ -28,6 +28,7 @@ class GrepsController < ApplicationController
 
     respond_to do |format|
       if @grep.save
+        puts "SAVED"
         format.html { redirect_to @grep, notice: 'Grep was successfully created.' }
         format.json { render :show, status: :created, location: @grep }
       else
@@ -69,6 +70,6 @@ class GrepsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def grep_params
-      params.require(:grep).permit(:review_id, :repository_id, :rule_id, :results, :custom, :search_value)
+      params.require(:grep).permit(:greppable_type, :greppable_id, :rule_id, :results, :custom, :search_value)
     end
 end

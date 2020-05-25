@@ -97,5 +97,5 @@
 
 <% @languages.each do |l| %>
   <h2><%= l.name %></h2>
-  <%= render 'languages/rules', rules: l.rules, repository: @repository %>
+  <%= render 'languages/rules', rules: l.rules, greppable: @repository %>
 <% end %>

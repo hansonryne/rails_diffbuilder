@@ -13,12 +13,9 @@
        data-reflex="click->CreateGrepFromSelectionReflex#make_grep"
        data-selection=""
        data-rule="<%= r.id %>"
-       <% if repository %>
-         data-repository="<%= repository.id %>"
-       <% elsif review %>
-           data-review="<%= review.id %>"
-         <% end %>
-         >Grep Selected Text</a> <%= @sr_message %>
+       data-greppable="<%=greppable.id %>"
+       data-type="Repository"
+       >Grep Selected Text</a> <%= @sr_message %>
   </details>
   </p>
 <% end %>
