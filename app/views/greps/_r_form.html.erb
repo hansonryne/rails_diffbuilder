@@ -1,14 +1,18 @@
 <%= form_with(model: grep, local: true) do |form| %>
 
+  <% if review %>
     <div class="field">
       <%= form.label :review_id %>
-      <%= form.text_field :review_id %>
+      <%= form.text_field :review_id, value: review.id %>
     </div>
+  <% end %>
 
+  <% if repository %>
     <div class="field">
       <%= form.label :repository_id %>
-      <%= form.text_field :repository_id %>
+      <%= form.text_field :repository_id, value: repository.id %>
     </div>
+  <% end %>
 
   <div class="field">
     <%= form.label :rule_id %>

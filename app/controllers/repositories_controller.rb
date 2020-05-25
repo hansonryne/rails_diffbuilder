@@ -10,6 +10,10 @@ class RepositoriesController < ApplicationController
   # GET /repositories/1
   # GET /repositories/1.json
   def show
+    @languages = []
+    ActiveSupport::JSON.decode(@repository.languages).each do |l|
+      @languages << Language.find_by(name: l)
+    end
   end
 
   # GET /repositories/new

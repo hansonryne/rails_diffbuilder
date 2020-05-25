@@ -21,6 +21,7 @@ class ExampleReflex < ApplicationReflex
   #
   # Learn more at: https://docs.stimulusreflex.com
   def message
-    @message = "test message"
+    puts element.dataset[:message]
+    @message = element.dataset[:message].to_s + " more"
   end
 end

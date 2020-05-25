@@ -1,0 +1,24 @@
+<% rules.each do |r| %>
+  <p>
+  <details onmouseup="getSelectedText(this)">
+    <%= r.title %>
+    <%= sanitize(r.body.html_safe) %>
+    </br>
+    <% r.tags.each do |t| %>
+      <%= link_to t.name, tag_path(t) %>
+    <% end %>
+    </br>
+    <a href="#"
+       class="selection-target"
+       data-reflex="click->CreateGrepFromSelectionReflex#make_grep"
+       data-selection=""
+       data-rule="<%= r.id %>"
+       <% if repository %>
+         data-repository="<%= repository.id %>"
+       <% elsif review %>
+           data-review="<%= review.id %>"
+         <% end %>
+         >Grep Selected Text</a> <%= @sr_message %>
+  </details>
+  </p>
+<% end %>

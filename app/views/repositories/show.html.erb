@@ -71,4 +71,8 @@
   <br>
   <%= render 'updaterepo', repository: @repository %>
 </div>
-<%= render 'greps/form', review: false, grep: @grep, repository: @repository %>
+<%= render 'greps/r_form', review: false, grep: @grep, repository: @repository %>
+<% @languages.each do |l| %>
+  <h2><%= l.name %></h2>
+  <%= render 'languages/rules', rules: l.rules, repository: @repository %>
+<% end %>
