@@ -6,7 +6,9 @@ class Language < ApplicationRecord
 
   RULE_TYPES = ['Vulnerability', 'Code Smell', 'Security Hotspot', 'Bug'].freeze
   SEVERITIES = ['Blocker', 'Critical', 'Major', 'Minor'].freeze
-  belongs_to :repository, optional: true
+
+  has_many :repos_langs
+  has_many :repositories, through: :repos_langs, dependent: :destroy
 
   has_many :rules, dependent: :destroy
 

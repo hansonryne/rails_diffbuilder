@@ -1,5 +1,6 @@
 class RepositoriesController < ApplicationController
-  before_action :set_repository, only: [:show, :edit, :update, :destroy]
+  include GreppableController
+  before_action :set_repository, only: [:show, :edit, :update, :destroy, :start_grepping]
 
   # GET /repositories
   # GET /repositories.json
@@ -7,14 +8,16 @@ class RepositoriesController < ApplicationController
     @repositories = Repository.all
   end
 
+  def start_grepping
+    @repository.run_current_greps
+  end
+
   # GET /repositories/1
   # GET /repositories/1.json
   def show
-    @languages = []
-    ActiveSupport::JSON.decode(@repository.languages).each do |l|
-      @languages << Language.find_by(name: l)
-    end
+    @languages = @repository.languages
     @greps_status ||= :default
+    @greps = @repository.greps
   end
 
   # GET /repositories/new

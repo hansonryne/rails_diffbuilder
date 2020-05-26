@@ -1,4 +1,5 @@
 class ReviewsController < ApplicationController
+  include Greppable
   before_action :set_review, only: [:show, :edit, :update, :destroy]
 
   # GET /reviews

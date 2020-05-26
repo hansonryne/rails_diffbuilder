@@ -1,7 +1,6 @@
 class Review < ApplicationRecord
   belongs_to :repository
   has_many :diffs, dependent: :destroy
-  has_many :greps, as: :greppable, dependent: :destroy
 
   validates :start_date, :presence => true
   validates :owner, :presence => true

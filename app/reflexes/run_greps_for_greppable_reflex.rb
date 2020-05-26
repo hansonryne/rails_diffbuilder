@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CreateGrepFromSelectionReflex < ApplicationReflex
+class RunGrepsForGreppableReflex < ApplicationReflex
   # Add Reflex methods in this file.
   #
   # All Reflex instances expose the following properties:
@@ -20,19 +20,21 @@ class CreateGrepFromSelectionReflex < ApplicationReflex
   #   end
   #
   # Learn more at: https://docs.stimulusreflex.com
-  def make_grep
+  def execute
     @greps_status = :running
-    @new_grep = Grep.create(rule_id: element.dataset[:rule],
-                            search_value: element.dataset[:selection],
-                            greppable_id: element.dataset[:greppable],
-                            greppable_type: element.dataset[:type],
-                            custom: false
-                           )
-    @sr_message = "Added"
-    wait_for_it(:success) do
-      sleep 10
-      "Nice"
+
+    @repo = Repository.find(element.dataset[:repository])
+    @repo.greps.each do |g|
+      GrepResult.destroy_by(grep_id: g.id)
     end
+    results = @repo.run_all_greps
+    puts '-----------'
+    puts results
+    results.each do |result|
+      @new_grep_res = GrepResult.new(filename: result[:filename], line_number: result[:line_number], grep_id: result[:grep_id])
+      @new_grep_res.save
+    end
+    @greps_status = :ready
   end
 
   def success(response)

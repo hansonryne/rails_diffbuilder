@@ -23,12 +23,12 @@
 <p>
 <strong>Languages:</strong>
 <p>
-<% ActiveSupport::JSON.decode(@repository.languages).each_with_index do |l, index| %>
+<% @repository.languages.each_with_index do |l, index| %>
   <% if index == 0 %>
-    <%= l %>
+    <%= l.name %>
     <% next %>
   <% end %>
-  <%= ", " + l %>
+  <%= ", " + l.name %>
 <% end %>
 </p>
 </p>
@@ -73,19 +73,23 @@
 </div>
 
 <div>
-  Greps:
+  <%= link_to "ADD WARNING POPUP Run Greps", "#", class: "selection-target", data: { confirm: 'Are you sure?', reflex: "click->RunGrepsForGreppableReflex#execute", repository: @repository.id, type: "Repository" } %>
+  </br>
+  <h2>
+    Greps:
+  </h2>
 
   <div data-controller="create_grep_from_selection">
-  <% case @greps_status %>
-  <% when :default %>
-    <em>Nothing new...</em>
-  <% when :running %>
-    <em>Running...</em>
-  <% when :ready %>
-    <strong><%= @greps_response %></strong>
-  <% else %>
-  <% end %>
-</div>
+    <% case @greps_status %>
+    <% when :default %>
+      <em>Nothing new...</em>
+    <% when :running %>
+      <em>Running...</em>
+    <% when :ready %>
+      <strong><%= @greps_response %></strong>
+    <% else %>
+    <% end %>
+  </div>
 
 
   <% @repository.greps.each do |g| %>
