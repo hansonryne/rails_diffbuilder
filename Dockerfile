@@ -27,7 +27,6 @@ RUN apk add --update --no-cache \
       postgresql-dev \
       python \
       rsync \
-      sudo \
       tzdata \
       vim \
       yarn

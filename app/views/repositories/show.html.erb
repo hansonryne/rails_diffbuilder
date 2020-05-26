@@ -103,3 +103,5 @@
   <h2><%= l.name %></h2>
   <%= render 'languages/rules', rules: l.rules, greppable: @repository %>
 <% end %>
+
+  <%= render 'modal', greppable: @repository %>
