@@ -36,8 +36,6 @@ RUN adduser -D railsuser
 
 USER railsuser
 RUN mkdir /home/railsuser/app
-#RUN mkdir -p /home/railsuser/.webdrivers
-#RUN cp /usr/bin/chromedriver /home/railsuser/.webdrivers/chromedriver
 
 # Create and define the node_modules's cache directory.
 RUN mkdir -p /home/railsuser/node_cache
@@ -69,7 +67,9 @@ RUN gem install rails
 
 COPY . ./
 USER root
+WORKDIR /home
 RUN chown -R railsuser:railsuser ./*
+WORKDIR /home/railsuser/app
 USER railsuser
 
 ENTRYPOINT ["./entrypoint.sh"]
