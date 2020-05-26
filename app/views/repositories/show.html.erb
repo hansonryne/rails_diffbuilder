@@ -9,99 +9,161 @@
     </ul>
   </div>
 <% end %>
+<div data-controller="create_grep_from_selection" data-reflex-root="[greps]">
 
-<p>
-<strong>Name:</strong>
-<%= @repository.name %>
-</p>
+  <div data-controller="tabs" data-tabs-active-tab="-mb-px border-l border-t border-r rounded-t">
+    <ul class="list-reset flex border-b m-2">
+      <li class="-mb-px mr-1" data-target="tabs.tab" data-action="click->tabs#change">
+        <a class="bg-gray-400 inline-block py-2 px-4 text-blue-500 font-semibold no-underline hover:bg-gray-600 hover:text-black focus:bg-indigo-200" href="#">Repository Info</a>
+      </li>
+      <li class="mr-1" data-target="tabs.tab" data-action="click->tabs#change">
+        <a class="bg-gray-400 inline-block py-2 px-4 text-blue-500 font-semibold no-underline hover:bg-gray-600 hover:text-black focus:bg-indigo-200" href="#">Reviews</a>
+      </li>
+      <li class="mr-1" data-target="tabs.tab" data-action="click->tabs#change">
+        <a class="bg-gray-400 inline-block py-2 px-4 text-blue-500 font-semibold no-underline hover:bg-gray-600 hover:text-black focus:bg-indigo-200" href="#">Greps</a>
+      </li>
+      <li class="mr-1" data-target="tabs.tab" data-action="click->tabs#change">
+        <a class="bg-gray-400 inline-block py-2 px-4 text-blue-500 font-semibold no-underline hover:bg-gray-600 hover:text-black focus:bg-indigo-200" href="#">Languages/Rules</a>
+      </li>
+    </ul>
 
-<p>
-<strong>Project:</strong>
-<%= @repository.project %>
-</p>
+    <div class="hidden py-4 px-4 border-l border-b border-r" data-target="tabs.panel" >
+      <p>
+      <strong>Name:</strong>
+      <%= @repository.name %>
+      </p>
 
-<p>
-<strong>Languages:</strong>
-<p>
-<% @repository.languages.each_with_index do |l, index| %>
-  <% if index == 0 %>
-    <%= l.name %>
-    <% next %>
-  <% end %>
-  <%= ", " + l.name %>
-<% end %>
-</p>
-</p>
+      <p>
+      <strong>Project:</strong>
+      <%= @repository.project %>
+      </p>
 
-<p>
-<strong>Repo location:</strong>
-<%= @repository.repo_location %>
-</p>
+      <p>
+      <strong>Languages:</strong>
+      <p>
+      <% @repository.languages.each_with_index do |l, index| %>
+        <% if index == 0 %>
+          <%= l.name %>
+          <% next %>
+        <% end %>
+        <%= ", " + l.name %>
+      <% end %>
+      </p>
+      </p>
 
-<p>
-<strong>Reviews:</strong>
-<table>
-  <thead>
-    <tr>
-      <th>Start date</th>
-      <th>Owner</th>
-      <th>Status</th>
-      <th colspan="1"></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @repository.reviews.each do |r| %>
-      <tr>
-        <td><%= r.start_date %></td>
-        <td><%= r.owner %></td>
-        <td><%= r.get_status %></td>
-        <td><%= link_to 'View', r %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-</p>
+      <p>
+      <strong>Repo location:</strong>
+      <%= @repository.repo_location %>
+      </p>
+      <div>
+        <br>
+        <%= render 'updaterepo', repository: @repository %>
+      </div>
+    </div>
 
-<div>
-  <%= link_to 'Create Review of this Repo', new_review_path(repo_id: @repository.id) %> | 
-  <%= link_to 'Back', repositories_path %> |
-</div>
+    <div class="hidden py-4 px-4 border-l border-b border-r" data-target="tabs.panel">
+      <p>
+      <strong>Reviews:</strong>
+      <table>
+        <thead>
+          <tr>
+            <th>Start date</th>
+            <th>Owner</th>
+            <th>Status</th>
+            <th colspan="1"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @repository.reviews.each do |r| %>
+            <tr>
+              <td><%= r.start_date %></td>
+              <td><%= r.owner %></td>
+              <td><%= r.get_status %></td>
+              <td><%= link_to 'View', r %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      </p>
 
-<div>
-  <br>
-  <%= render 'updaterepo', repository: @repository %>
-</div>
+      <div>
+        <%= button_to 'Create Review of this Repo', new_review_path(repo_id: @repository.id), class: "selection-target bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-6" %> 
+      </div>
 
-<div>
-  <%= link_to "ADD WARNING POPUP Run Greps", "#", class: "selection-target", data: { confirm: 'Are you sure?', reflex: "click->RunGrepsForGreppableReflex#execute", repository: @repository.id, type: "Repository" } %>
-  </br>
-  <h2>
-    Greps:
-  </h2>
+    </div>
 
-  <div data-controller="create_grep_from_selection">
-    <% case @greps_status %>
-    <% when :default %>
-      <em>Nothing new...</em>
-    <% when :running %>
-      <em>Running...</em>
-    <% when :ready %>
-      <strong><%= @greps_response %></strong>
-    <% else %>
-    <% end %>
+    <div class="hidden py-4 px-4 border-l border-b border-r" data-target="tabs.panel">
+
+      <div data-controller="create_grep_from_selection" greps>
+        <% case @greps_status %>
+        <% when :default %>
+          <em>Nothing new...</em>
+        <% when :running %>
+          <em>Running...</em>
+        <% when :ready %>
+          <strong><%= @greps_response %></strong>
+        <% else %>
+        <% end %>
+      </div>
+
+      <div class='my-4'>
+        <% @repository.greps.each do |g| %>
+          <p>
+          <%= g.search_value %>: <%= g.results.nil? ? "Waiting..." : "Done!" %>
+          </p>
+        <% end %>
+      </div>
+
+      <div data-controller="modal" data-modal-allow-background-close="false">
+        <button data-action="click->modal#open" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+          <span>Run All Greps</span>
+        </button>
+
+        <!-- Modal Container -->
+        <div data-target="modal.container" data-action="click->modal#closeBackground keyup@window->modal#closeWithKeyboard" class="hidden animated fadeIn fixed inset-0 overflow-y-auto flex items-center justify-center" style="z-index: 9999;">
+          <!-- Modal Inner Container -->
+          <div class="max-h-screen w-full max-w-lg relative">
+            <!-- Modal Card -->
+            <div class="m-1 bg-white rounded shadow">
+              <div class="p-8">
+                <h2 class="text-xl mb-4">Are you sure?</h2>
+                <p>This may take a minute if there are a lot of files</p>
+                <div class="flex justify-end items-center flex-wrap mt-6">
+                <%= button_to "Do it", "#", class: "selection-target bg-green-500 hover:bg-green-600 text-white font-bold text-white py-2 px-4 rounded mx-6", data: { confirm: 'Are you sure?', reflex: "click->RunGrepsForGreppableReflex#execute", repository: @repository.id, type: "Repository" } %>
+                  <button class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded" data-action="click->modal#close">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hidden py-4 px-4 border-l border-b border-r" data-target="tabs.panel">
+      <% @languages.each do |l| %>
+        <div class="max-w-6xl mx-auto px-4 rounded-lg">
+          <div class="max-w-6xl mx-auto">
+            <p class="w-full px-8 font-bold text-4xl py-6 text-gray-800"><%= l.name %></p>
+            <%= render 'languages/rules', rules: l.rules, greppable: @repository %>
+          </div>
+        </div>
+      <% end %>
+      <script>
+        /* Optional Javascript to close the radio button version by clicking it again */
+        var myRadios = document.getElementsByName('tabs2');
+var setCheck;
+var x = 0;
+for(x = 0; x < myRadios.length; x++){
+  myRadios[x].onclick = function(){
+    if(setCheck != this){
+      setCheck = this;
+    }else{
+      this.checked = false;
+      setCheck = null;
+    }
+  };
+}
+      </script>
+    </div>
   </div>
-
-
-  <% @repository.greps.each do |g| %>
-    <p>
-    <%= g.search_value %>: <%= g.results.nil? ? "Waiting..." : "Done!" %>
-    </p>
-  <% end %>
 </div>
-
-<% @languages.each do |l| %>
-  <h2><%= l.name %></h2>
-  <%= render 'languages/rules', rules: l.rules, greppable: @repository %>
-<% end %>
-
-  <%= render 'modal', greppable: @repository %>

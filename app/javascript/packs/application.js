@@ -18,3 +18,4 @@ require("./custom")
 
 import "controllers"
 import './stylesheets.css'
+import './accordion.css'
