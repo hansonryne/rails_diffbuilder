@@ -18,6 +18,12 @@
 
   <div class="field">
     <%= form.label :languages %>
+    <p>Current:</p>
+    <% @repository.languages.each do |l| %>
+      <p>
+      <%= l.name %>
+      </p>
+    <% end %>
     <%= form.collection_select :languages, @languages, :name, :name, { include_hidden: false }, { multiple: true } %>
   </div>
 

@@ -28,12 +28,17 @@ class RepositoriesController < ApplicationController
 
   # GET /repositories/1/edit
   def edit
+    @languages = Language.all.order(:name)
   end
 
   # POST /repositories
   # POST /repositories.json
   def create
-    @repository = Repository.new(repository_params)
+    languages = Language.where(name: repository_params[:languages])
+    final_params = repository_params
+    final_params[:languages] = languages
+
+    @repository = Repository.new(final_params)
     @uri = URI(@repository.repo_location)
     @repository.secret_path = SecureRandom.hex.to_s + @uri.path.split("/").last.to_s
     @secret_path_to_clone_to = @repository.secret_path
@@ -56,8 +61,12 @@ class RepositoriesController < ApplicationController
     @git = Git.open(Rails.root.join("storage", "repositories", @repository.secret_path))
     @git.pull
 
+    languages = Language.where(name: update_params[:languages])
+    final_params = update_params
+    final_params[:languages] = languages
+
     respond_to do |format|
-      if @repository.update(update_params)
+      if @repository.update(final_params)
         format.html { redirect_to @repository, notice: 'Repository was successfully updated.' }
         format.json { render :show, status: :ok, location: @repository }
       else
@@ -95,7 +104,7 @@ class RepositoriesController < ApplicationController
   end
 
   def update_params
-    params.require(:repository).permit(:secret_path, languages: [])
+    params.require(:repository).permit(:secret_path, :repo_location, :project, :name, languages: [])
   end
 
 end
