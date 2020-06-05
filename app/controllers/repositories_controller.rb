@@ -15,7 +15,10 @@ class RepositoriesController < ApplicationController
   # GET /repositories/1
   # GET /repositories/1.json
   def show
-    @languages = @repository.languages
+    @languages = []
+    @repository.languages.each do |l|
+      @languages << Language.includes(rules: [:tags]).find_by(id: l.id)
+    end
     @greps = @repository.greps
   end
 

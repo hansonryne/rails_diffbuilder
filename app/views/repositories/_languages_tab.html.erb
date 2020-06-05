@@ -2,7 +2,18 @@
   <% languages.each do |l| %>
     <div class="max-w-6xl mx-auto px-4 rounded-lg">
       <div class="max-w-6xl mx-auto">
-        <p class="w-full px-8 font-bold text-4xl py-6 text-gray-800"><%= l.name %></p>
+        <div class="flex">
+          <div class="w-2/3 px-8 font-bold text-4xl py-6 text-gray-800"><%= l.name %></div>
+          <div class="w=1/6 text-gray-800 text-xl flex-auto">Categories:</div>
+          <div class="grid grid-cols-2 flex-auto">
+            <% cats = l.rules.distinct.pluck(:category) %>
+            <% cats.each do |c| %>
+              <div>
+                <%= check_box_tag c.to_s.parameterize, 1, true, { onchange: "toggle_category_vis(this.name)"}  %><%= c.to_s.titleize %>
+              </div>
+            <% end %>
+          </div>
+        </div>
         <%= render 'languages/rules', rules: l.rules, greppable: repository %>
       </div>
     </div>
