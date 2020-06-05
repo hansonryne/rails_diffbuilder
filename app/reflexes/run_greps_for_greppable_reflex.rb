@@ -21,26 +21,27 @@ class RunGrepsForGreppableReflex < ApplicationReflex
   #
   # Learn more at: https://docs.stimulusreflex.com
   def execute
-    @greps_status = :running
-
+    @grep_status = :running
     @repo = Repository.find(element.dataset[:repository])
-    @repo.greps.each do |g|
-      GrepResult.destroy_by(grep_id: g.id)
-    end
+
     results = @repo.run_all_greps
-    puts '-----------'
-    puts results
-    results.each do |result|
-      @new_grep_res = GrepResult.new(filename: result[:filename], line_number: result[:line_number], grep_id: result[:grep_id])
-      @new_grep_res.save
+
+    @repo.greps.each do |g|
+      local_results = results.select {|result| result[:grep_id] == g.id}
+      if local_results.present?
+        g.update(results: "Found")
+        local_results.each do |result|
+          @new_grep_res = GrepResult.new(filename: result[:filename], line_number: result[:line_number], grep_id: result[:grep_id])
+          @new_grep_res.save
+        end
+      else
+        g.update(results: "No matches found")
+      end
     end
-    @greps_status = :ready
   end
 
   def success(response)
-    Grep.last.update(results: "info")
-    @greps_status = :ready
-    @greps_response = response
+    #Placeholder for someday
   end
 
   def wait_for_it(target)

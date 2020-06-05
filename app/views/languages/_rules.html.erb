@@ -1,22 +1,27 @@
 <% rules.each_with_index do |r, index| %>
   <div class="shadow-md">
-      <div class="tab w-full overflow-hidden border-t">
-        <input class="absolute opacity-0" id="tab-single-<%=index%>" type="radio" name="tabs2">
-        <label class="block p-5 leading-normal cursor-pointer font-bold" for="tab-single-<%=index%>"><%= r.title %></label>
-        <div class="tab-content overflow-hidden border-l-2 bg-gray-100 border-indigo-500 leading-normal">
-          <div onmouseup="getSelectedText(this)" class='px-4'>
-            <%= sanitize(r.body.html_safe) %>
-            </br>
-            <% r.tags.each do |t| %>
-              <%= link_to t.name, tag_path(t) %>
-            <% end %>
-            </br>
-            <div class="flex items-center justify-center">
-              <a id="link-to-build-grep-for-<%=greppable.id%>" href="#" class="selection-target button m-8 px-4 bg-indigo-200 p-3 rounded-lg text-white font-bold hover:bg-indigo-400" data-reflex="click->CreateGrepFromSelectionReflex#make_grep" data-selection="" data-rule="<%=r.id%>" data-greppable="<%=greppable.id%>" data-type="Repository" >Grep Selected Text</a>
+    <div class="tab w-full overflow-hidden border-t">
+      <input class="absolute opacity-0" id="tab-single-<%=index%>" type="radio" name="tabs2">
+      <label class="block p-5 leading-normal cursor-pointer font-bold" for="tab-single-<%=index%>"><%= r.title %></label>
+      <div class="tab-content overflow-hidden border-l-2 bg-gray-100 border-indigo-500 leading-normal">
+        <div onmouseup="getSelectedText(this)" class='px-4'>
+          <%= sanitize(r.body.html_safe) %>
+          </br>
+          <% if r.tags.present? %>
+            <div class="text-indigo-500 text-xl">
+              Tags:
             </div>
+            <% r.tags.each do |t| %>
+              <%= link_to t.name, tag_path(t), class: "bg-gray-200 hover:bg-gray-400 hover:text-black" %>
+            <% end %>
+          <% end %>
+          </br>
+          <div class="flex items-center justify-center">
+            <a id="link-to-build-grep-for-<%=greppable.id%>" href="#" class="selection-target button m-8 px-4 bg-indigo-200 p-3 rounded-lg text-white font-bold hover:bg-indigo-400" data-reflex="click->CreateGrepFromSelectionReflex#make_grep" data-selection="" data-rule="<%=r.id%>" data-greppable="<%=greppable.id%>" data-type="Repository" >Grep Selected Text</a>
           </div>
         </div>
       </div>
     </div>
+  </div>
 <% end %>
 

@@ -16,7 +16,6 @@ class RepositoriesController < ApplicationController
   # GET /repositories/1.json
   def show
     @languages = @repository.languages
-    @greps_status ||= :default
     @greps = @repository.greps
   end
 
@@ -34,8 +33,8 @@ class RepositoriesController < ApplicationController
   # POST /repositories
   # POST /repositories.json
   def create
-    languages = Language.where(name: repository_params[:languages])
     final_params = repository_params
+    languages = Language.where(name: repository_params[:languages])
     final_params[:languages] = languages
 
     @repository = Repository.new(final_params)
@@ -61,9 +60,12 @@ class RepositoriesController < ApplicationController
     @git = Git.open(Rails.root.join("storage", "repositories", @repository.secret_path))
     @git.pull
 
-    languages = Language.where(name: update_params[:languages])
     final_params = update_params
-    final_params[:languages] = languages
+    if update_params[:languages]
+      puts update_params
+      languages = Language.where(name: update_params[:languages])
+      final_params[:languages] = languages
+    end
 
     respond_to do |format|
       if @repository.update(final_params)

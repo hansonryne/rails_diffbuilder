@@ -1,0 +1,26 @@
+<div class="hidden py-4 px-4 border-l border-b border-r" data-target="tabs.panel">
+  <% languages.each do |l| %>
+    <div class="max-w-6xl mx-auto px-4 rounded-lg">
+      <div class="max-w-6xl mx-auto">
+        <p class="w-full px-8 font-bold text-4xl py-6 text-gray-800"><%= l.name %></p>
+        <%= render 'languages/rules', rules: l.rules, greppable: repository %>
+      </div>
+    </div>
+  <% end %>
+  <script>
+    /* Optional Javascript to close the radio button version by clicking it again */
+    var myRadios = document.getElementsByName('tabs2');
+var setCheck;
+var x = 0;
+for(x = 0; x < myRadios.length; x++){
+  myRadios[x].onclick = function(){
+    if(setCheck != this){
+      setCheck = this;
+    }else{
+      this.checked = false;
+      setCheck = null;
+    }
+  };
+}
+  </script>
+</div>

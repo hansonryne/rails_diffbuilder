@@ -1,0 +1,29 @@
+<div class="hidden py-4 px-4 border-l border-b border-r" data-target="tabs.panel">
+  <p>
+  <strong>Reviews:</strong>
+  <table>
+    <thead>
+      <tr>
+        <th>Start date</th>
+        <th>Owner</th>
+        <th>Status</th>
+        <th colspan="1"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% repository.reviews.each do |r| %>
+        <tr>
+          <td><%= r.start_date %></td>
+          <td><%= r.owner %></td>
+          <td><%= r.get_status %></td>
+          <td><%= link_to 'View', r %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  </p>
+
+  <div>
+    <%= link_to 'Create Review of this Repo', new_review_path(repo_id: repository.id), class: "selection-target bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-6 button" %>
+  </div>
+</div>

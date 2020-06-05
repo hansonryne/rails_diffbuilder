@@ -2,26 +2,24 @@
 
 class CreateGrepFromSelectionReflex < ApplicationReflex
   def make_grep
-    @greps_status = :running
     @new_grep = Grep.create(rule_id: element.dataset[:rule],
                             search_value: element.dataset[:selection],
                             greppable_id: element.dataset[:greppable],
                             greppable_type: element.dataset[:type],
                             custom: false
                            )
-    @sr_message = "Added"
     wait_for_it(:success) do
-      "Nice"
     end
   end
 
   def success(response)
-    Grep.last.update(results: "info")
-    @greps_status = :ready
-    @greps_response = response
+    Grep.last.update(results: "Run me.")
   end
 
+  private
+
   def wait_for_it(target)
+    return unless respond_to? target
     if block_given?
       Thread.new do
         @channel.receive({

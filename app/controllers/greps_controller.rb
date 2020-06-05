@@ -28,7 +28,7 @@ class GrepsController < ApplicationController
 
     respond_to do |format|
       if @grep.save
-        puts "SAVED"
+        @grep_response = "Done"
         format.html { redirect_to @grep, notice: 'Grep was successfully created.' }
         format.json { render :show, status: :created, location: @grep }
       else

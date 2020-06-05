@@ -1,0 +1,35 @@
+<div class="hidden py-4 px-4 border-l border-b border-r" data-target="tabs.panel" >
+  <p>
+  <strong>Name:</strong>
+  <%= repository.name %>
+  </p>
+
+  <p>
+  <strong>Project:</strong>
+  <%= repository.project %>
+  </p>
+
+  <p>
+  <strong>Languages:</strong>
+  <p>
+  <% repository.languages.each_with_index do |l, index| %>
+    <% if index == 0 %>
+      <%= l.name %>
+      <% next %>
+    <% end %>
+    <%= ", " + l.name %>
+  <% end %>
+  </p>
+  </p>
+
+  <p>
+  <strong>Repo location:</strong>
+  <%= repository.repo_location %>
+  </p>
+
+  <div class="flex m-4">
+    <%= link_to "Edit Info", edit_repository_path, class: "selection-target bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
+    <%= render 'updaterepo', repository: repository %>
+  </div>
+
+</div>

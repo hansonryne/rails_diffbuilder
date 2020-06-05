@@ -7,7 +7,7 @@
 }
 /* :checked - resize to full height */
 .tab input:checked ~ .tab-content {
-    max-height: 100vh;
+    max-height: none;
 }
 /* Label formatting when open */
 .tab input:checked + label{
