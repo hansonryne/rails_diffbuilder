@@ -3,6 +3,7 @@ echo "Installing new gems if needed"
 bundle check || bundle install
 
 echo "Copying node cache"
+rm -rf /home/railsuser/app/node_modules /home/railsuser/app/yarn.lock /home/railsuser/app/package.json
 rsync -q -av --progress /home/railsuser/node_cache/. /home/railsuser/app/
 echo "Waiting for PG to be ready"
 sleep 3
