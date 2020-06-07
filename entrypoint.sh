@@ -3,7 +3,7 @@ echo "Installing new gems if needed"
 bundle check || bundle install
 
 echo "Copying node cache"
-rsync -q -av /home/railsuser/node_cache/. /home/railsuser/app/
+rsync -q -av --progress /home/railsuser/node_cache/. /home/railsuser/app/
 echo "Waiting for PG to be ready"
 sleep 3
 

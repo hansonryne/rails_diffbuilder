@@ -33,7 +33,6 @@ RUN apk add --update --no-cache \
 
 RUN adduser -D railsuser
 
-USER railsuser
 RUN mkdir /home/railsuser/app
 #RUN mkdir -p /home/railsuser/.webdrivers
 #RUN cp /usr/bin/chromedriver /home/railsuser/.webdrivers/chromedriver
@@ -44,7 +43,9 @@ WORKDIR /home/railsuser/node_cache
 
 # Install the application's dependencies into the node_modules's cache directory.
 COPY package.json ./
-RUN yarn install
+RUN yarn install && yarn upgrade
+RUN chown -R railsuser:railsuser /home
+USER railsuser
 
 # Create and define the application's working directory.
 WORKDIR /home/railsuser/app
