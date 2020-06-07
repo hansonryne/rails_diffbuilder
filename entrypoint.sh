@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 echo "Installing new gems if needed"
 bundle check || bundle install
 
@@ -20,4 +20,5 @@ echo "Removing any old server pids"
 rm -f /home/railsuser/app/tmp/pids/server.pid
 
 echo "Starting rails server"
-bundle exec rails s -b 0.0.0.0
+/home/railsuser/gems/bin/foreman start
+#bundle exec rails s -b 0.0.0.0

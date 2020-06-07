@@ -66,6 +66,7 @@ ENV GEM_PATH=/home/railsuser/gems
 
 RUN gem install bundler -v 2.1.4
 RUN gem install rails
+RUN gem install foreman
 
 COPY . ./
 USER root
