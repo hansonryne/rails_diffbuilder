@@ -50,7 +50,7 @@
             <%= g.results %>
           </li>
         <% else %>
-          <% g.grep_results.each do |res| %>
+          <% g.grep_results.reverse.each do |res| %>
             <li class='bg-yellow-200'>
               <%= "#{res.filename}: #{res.line_number.to_s}" %>
             </li>
