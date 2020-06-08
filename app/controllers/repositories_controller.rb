@@ -20,6 +20,11 @@ class RepositoriesController < ApplicationController
       @languages << Language.includes(rules: [:tags]).find_by(id: l.id)
     end
     @greps = @repository.greps
+    if Delayed::Job.any?
+      @grep_status = :running
+    else
+      @grep_status ||= :default
+    end
   end
 
   # GET /repositories/new

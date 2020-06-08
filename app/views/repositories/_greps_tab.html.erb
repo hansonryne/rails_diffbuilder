@@ -1,10 +1,49 @@
-<div class="hidden py-4 px-4 border-l border-b border-r" data-target="tabs.panel" greplist>
+<div class="hidden py-4 px-4 border-l border-b border-r" data-target="tabs.panel">
 
-  <div class='my-4'>
+  <div data-controller="modal" data-modal-allow-background-close="true">
+    <button data-action="click->modal#open" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+      <span>Run All Greps</span>
+    </button>
+    <div data-controller="RunGrepsForGreppableReflex" data-reflex-root="[statuslist]">
+      <div statuslist>
+        <% case grep_status %>
+        <% when :default %>
+          No jobs running
+        <% when :running %>
+          Grepping for strings
+        <% when :complete %>
+          Search complete. <%=link_to "Refresh", "#greps" %> the page to see results.
+        <% end %>
+      </div>
+      <!-- Modal Container -->
+      <div data-target="modal.container" data-action="click->modal#closeBackground keyup@window->modal#closeWithKeyboard" class="hidden animated fadeIn fixed inset-0 overflow-y-auto flex items-center justify-center" style="z-index: 9999;">
+        <!-- Modal Inner Container -->
+        <div class="max-h-screen w-full max-w-lg relative">
+          <!-- Modal Card -->
+          <div class="m-1 bg-white rounded shadow">
+            <div class="p-8">
+              <h2 class="text-xl mb-4">Are you sure?</h2>
+              <p>This may take a minute if there are a lot of files</p>
+              <div class="flex justify-end items-center flex-wrap mt-6">
+                <%= button_to "Do it", "#", class: "selection-target bg-green-500 hover:bg-green-600 text-white font-bold text-white py-2 px-4 rounded mx-6", data: { reflex: "click->RunGrepsForGreppableReflex#execute", repository: repository.id, type: "Repository", action: "click->modal#close" } %>
+                <button class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded" data-action="click->modal#close">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class='my-4' greplist>
     <% repository.greps.each do |g| %>
       <ul class='py-2'>
         <li class='font-bold'>
           <%= g.search_value %>:
+        </li>
+        <li>
+          <%= button_to "Remove this search value", "#", class: "bg-red-500 hover:bg-red-600 text-white text-xs px-1 rounded mx-2", data: { reflex: "click->DeleteGrepReflex#execute", grep: g.id } %>
         </li>
         <% if g.results != "Found" %>
           <li>
@@ -21,27 +60,4 @@
     <% end %>
   </div>
 
-  <div data-controller="modal" data-modal-allow-background-close="true">
-    <button data-action="click->modal#open" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-      <span>Run All Greps</span>
-    </button>
-
-    <!-- Modal Container -->
-    <div data-target="modal.container" data-action="click->modal#closeBackground keyup@window->modal#closeWithKeyboard" class="hidden animated fadeIn fixed inset-0 overflow-y-auto flex items-center justify-center" style="z-index: 9999;">
-      <!-- Modal Inner Container -->
-      <div class="max-h-screen w-full max-w-lg relative">
-        <!-- Modal Card -->
-        <div class="m-1 bg-white rounded shadow">
-          <div class="p-8">
-            <h2 class="text-xl mb-4">Are you sure?</h2>
-            <p>This may take a minute if there are a lot of files</p>
-            <div class="flex justify-end items-center flex-wrap mt-6">
-              <%= button_to "Do it", "#", class: "selection-target bg-green-500 hover:bg-green-600 text-white font-bold text-white py-2 px-4 rounded mx-6", data: { reflex: "click->RunGrepsForGreppableReflex#execute", repository: repository.id, type: "Repository", action: "click->modal#close" } %>
-              <button class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded" data-action="click->modal#close">Close</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 </div>
