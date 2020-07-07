@@ -56,6 +56,12 @@ docker-compose down
 
 Database should remain in docker volumes
 
+If you get errors after building or want to start from scratch, make sure you delete the old database volume in docker with
+```
+docker volume rm rails_diffbuilder_db_data
+```
+to remove the old database and clear any access errors
+
 # Basic Use
 ## Creating a repository
 Repositories can be either on the local machine or accessible via a remote git service (Github/Gitlab/etc.).
