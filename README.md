@@ -21,29 +21,25 @@ Add the following environment variables to .env
 # These values should be changed to a more secure value and then updated to match in the init.sql file in this repository
 DATABASE_USER=sammy
 DATABASE_PASSWORD=shark
-
 DATABASE_NAME=diffbuilder_db
 DATABASE_HOST=database
-
-REDIS_HOST=redis #not currently being used
-
-#RAILS_ENV=production
 RAILS_ENV=development
-
 RAILS_SERVE_STATIC_FILES=true
-
 # You should make this better too
 SECRET_KEY_BASE=supers3cr3tpassword
-```
-
-Run build script
-```
-./build_containers.sh
-```
-
-Build databases
-```
-./db_build.sh
+#Point Bundler at /gems. This will cause Bundler to re-use gems that have already been installed on the gems volume
+#BUNDLE_PATH=/gems
+#BUNDLE_HOME=/gems
+# Increase how many threads Bundler uses when installing. Optional!
+BUNDLE_JOBS=4
+# How many times Bundler will retry a gem download. Optional!
+BUNDLE_RETRY=3
+# Where Rubygems will look for gems, similar to BUNDLE_ equivalents.
+#GEM_HOME=/gems
+#GEM_PATH=/gems
+POSTGRES_DB=diffbuilder_db
+POSTGRES_USER=sammy
+POSTGRES_PASSWORD=shark
 ```
 
 Run containers in daemon mode
@@ -59,6 +55,12 @@ docker-compose down
 ```
 
 Database should remain in docker volumes
+
+If you get errors after building or want to start from scratch, make sure you delete the old database volume in docker with
+```
+docker volume rm rails_diffbuilder_db_data
+```
+to remove the old database and clear any access errors
 
 # Basic Use
 ## Creating a repository
