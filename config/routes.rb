@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   # Routes for scraping languages of sonarsource
   get :build_languages, to:'languages#build_languages'
   get :build_language_rules, to:'languages#build_rules_for_language'
+  get :build_rules_for_all_langs, to:'languages#build_rules_for_all_langs'
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   root 'repositories#index'
