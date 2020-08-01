@@ -39,77 +39,14 @@ class LanguagesController < ApplicationController
     end
   end
 
-  def build_rules_for_language
-    @language = Language.find(params["lang"])
-    rules_links = Rule.get_rules_urls(@language.url)
-
-    rules_links.each do |l|
-      new_rule_object = Rule.build_rule_object(l)
-      @new_rule = Rule.new(:title => new_rule_object[:title],
-                           :category => new_rule_object[:type],
-                           :body => new_rule_object[:body],
-                           :more_info_links => new_rule_object[:resources],
-                           :severity => new_rule_object[:severity],
-                           :language_id => params["lang"]
-                          )
-      if @new_rule.save
-        if new_rule_object[:tags].count > 0
-          #all_tag_names = Tag.pluck(:name)
-          new_rule_object[:tags].each do |t|
-            begin @new_rule.tags.create!(:name => t)
-            rescue ActiveRecord::RecordInvalid => invalid
-              Tag.where(:name => t).take.rules << @new_rule
-            end
-          end
-        end
-      end
-    end
-
-    redirect_to language_path(@language)
-  end
-
-  def build_rules_for_all_langs
-    @languages = Language.all
-
-    l = @languages.last
-    rules_links = Rule.get_rules_urls(l.url)
-    puts rules_links.count
-    puts l.rules.count
-
-
-    @languages.each do |lang|
-      rules_links = Rule.get_rules_urls(lang.url)
-      if rules_links.count == lang.rules.count
-
-        rules_links.each do |l|
-          new_rule_object = Rule.build_rule_object(l)
-          @new_rule = Rule.new(:title => new_rule_object[:title],
-                               :category => new_rule_object[:type],
-                               :body => new_rule_object[:body],
-                               :more_info_links => new_rule_object[:resources],
-                               :severity => new_rule_object[:severity],
-                               :language_id => params["lang"]
-                              )
-          if @new_rule.save
-            if new_rule_object[:tags].count > 0
-              #all_tag_names = Tag.pluck(:name)
-              new_rule_object[:tags].each do |t|
-                begin @new_rule.tags.create!(:name => t)
-                rescue ActiveRecord::RecordInvalid => invalid
-                  Tag.where(:name => t).take.rules << @new_rule
-                end
-              end
-            end
-          end
-        end
-      end
-    end
-    redirect_to languages_path
-  end
-
   # GET /languages/1
   # GET /languages/1.json
   def show
+    if Delayed::Job.any?
+      @lang_update_status = :running
+    else
+      @lang_update_status ||= :default
+    end
   end
 
   # GET /languages/new

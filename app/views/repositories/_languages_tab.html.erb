@@ -3,7 +3,7 @@
     <div class="max-w-6xl mx-auto px-4 rounded-lg">
       <div class="max-w-6xl mx-auto">
         <div class="flex">
-          <div class="w-2/3 px-8 font-bold text-4xl py-6 text-gray-800"><%= l.name %></div>
+          <div class="w-2/3 px-8 font-bold text-4xl py-6 text-gray-800"><%= link_to l.name, language_path(l) %></div>
           <div class="w=1/6 text-gray-800 text-xl flex-auto">Categories:</div>
           <div class="grid grid-cols-2 flex-auto">
             <% cats = l.rules.distinct.pluck(:category) %>

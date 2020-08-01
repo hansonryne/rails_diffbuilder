@@ -78,6 +78,7 @@ class Rule < ApplicationRecord
       rule_object[:references] << ref[:href]
     end
     session.quit
+    puts "Rule.rb:    Rule to be built: #{rule_object}"
     return rule_object
   end
 
