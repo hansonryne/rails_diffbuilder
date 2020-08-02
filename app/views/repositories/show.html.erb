@@ -19,11 +19,14 @@
       <li id="reviews" class="mr-1" data-target="tabs.tab" data-action="click->tabs#change">
         <a class="bg-gray-400 inline-block py-2 px-4 text-blue-500 font-semibold no-underline hover:bg-gray-600 hover:text-black focus:bg-indigo-200" href="#reviews">Reviews</a>
       </li>
+      <li id="rules" class="mr-1" data-target="tabs.tab" data-action="click->tabs#change">
+        <a class="bg-gray-400 inline-block py-2 px-4 text-blue-500 font-semibold no-underline hover:bg-gray-600 hover:text-black focus:bg-indigo-200" href="#rules">Languages/Rules</a>
+      </li>
       <li id="greps" class="mr-1" data-target="tabs.tab" data-action="click->tabs#change">
         <a class="bg-gray-400 inline-block py-2 px-4 text-blue-500 font-semibold no-underline hover:bg-gray-600 hover:text-black focus:bg-indigo-200" href="#greps">Greps</a>
       </li>
-      <li id="rules" class="mr-1" data-target="tabs.tab" data-action="click->tabs#change">
-        <a class="bg-gray-400 inline-block py-2 px-4 text-blue-500 font-semibold no-underline hover:bg-gray-600 hover:text-black focus:bg-indigo-200" href="#rules">Languages/Rules</a>
+      <li id="grep_results" class="mr-1" data-target="tabs.tab" data-action="click->tabs#change">
+        <a class="bg-gray-400 inline-block py-2 px-4 text-blue-500 font-semibold no-underline hover:bg-gray-600 hover:text-black focus:bg-indigo-200" href="#grep_results">Grep Results</a>
       </li>
     </ul>
 
@@ -31,8 +34,10 @@
 
     <%= render 'reviews_tab', repository: @repository %>
 
+    <%= render 'languages_tab', repository: @repository, languages: @languages %>
+
     <%= render 'greps_tab', repository: @repository, grep_status: @grep_status, modal_hidden: @modal_hidden %>
 
-    <%= render 'languages_tab', repository: @repository, languages: @languages %>
+    <%= render 'grep_results_tab', repository: @repository, grep_status: @grep_status, flagged_files: @flagged_files, modal_hidden: @modal_hidden %>
   </div>
 </div>

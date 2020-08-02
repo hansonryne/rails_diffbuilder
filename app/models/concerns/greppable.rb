@@ -4,7 +4,6 @@ module Greppable
     has_many :greps, as: :greppable, dependent: :destroy
   end
 
-
   def run_all_greps
     repo_path = Rails.root.join('storage', 'repositories', self.secret_path)
     files = self.get_files_for_grep(repo_path)
@@ -30,4 +29,3 @@ module Greppable
     end
   end
 end
-

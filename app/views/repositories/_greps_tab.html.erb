@@ -45,17 +45,6 @@
         <li>
           <%= button_to "Remove this search value", "#", class: "bg-red-500 hover:bg-red-600 text-white text-xs px-1 rounded mx-2", data: { reflex: "click->DeleteGrepReflex#execute", grep: g.id } %>
         </li>
-        <% if g.results != "Found" %>
-          <li>
-            <%= g.results %>
-          </li>
-        <% else %>
-          <% g.grep_results.reverse.each do |res| %>
-            <li class='bg-yellow-200'>
-              <%= "#{res.filename}: #{res.line_number.to_s}" %>
-            </li>
-          <% end %>
-        <% end %>
       </ul>
     <% end %>
   </div>

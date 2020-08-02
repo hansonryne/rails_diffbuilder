@@ -1,0 +1,23 @@
+<div class="hidden py-4 px-4 border-l border-b border-r" data-target="tabs.panel">
+
+  <div class='my-4'>
+    <ul class='py-2'>
+      <% if flagged_files.length > 0 %>
+        <% flagged_files.each do |f| %>
+          <li>
+            <strong><%= f[0]%></strong>
+          </li>
+          <% f[1].each_pair do |k, v| %>
+            <li>
+            <%= link_to k.search_value, rule_path(k.rule_id) %>
+              <%= " is on the lines: #{v[:locations]}"%>
+          </li>
+          <% end %>
+          <br>
+        <% end %>
+      <% else %>
+        No Files Have Been Flagged Yet.
+      <% end %>
+    </ul>
+  </div>
+</div>
