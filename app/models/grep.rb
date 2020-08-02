@@ -5,8 +5,10 @@ class Grep < ApplicationRecord
   
   validate :custom_or_derived
   validates :source_rule, presence: true, allow_blank: true
+  validates :search_value, uniqueness: { scope: [:source_rule, :greppable_id] }
+
   def custom_or_derived
-    errors.add(:base, "A rule must either have a valid source rule or be marked custom.") unless custom ^ source_rule.present?
+    errors.add(:base, "A grep must either have a valid source rule or be marked custom.") unless custom ^ source_rule.present?
   end
   
   def flag_files(file_hash)
