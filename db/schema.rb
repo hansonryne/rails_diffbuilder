@@ -10,10 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_07_194219) do
+ActiveRecord::Schema.define(version: 2020_08_04_032940) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "checklists", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "checklists_searchterms", force: :cascade do |t|
+    t.bigint "checklist_id", null: false
+    t.bigint "searchterm_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["checklist_id"], name: "index_checklists_searchterms_on_checklist_id"
+    t.index ["searchterm_id"], name: "index_checklists_searchterms_on_searchterm_id"
+  end
 
   create_table "delayed_jobs", force: :cascade do |t|
     t.integer "priority", default: 0, null: false
@@ -59,8 +74,10 @@ ActiveRecord::Schema.define(version: 2020_06_07_194219) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "greppable_type"
     t.bigint "greppable_id"
+    t.bigint "searchterm_id"
     t.index ["greppable_type", "greppable_id"], name: "index_greps_on_greppable_type_and_greppable_id"
     t.index ["rule_id"], name: "index_greps_on_rule_id"
+    t.index ["searchterm_id"], name: "index_greps_on_searchterm_id"
   end
 
   create_table "languages", force: :cascade do |t|
@@ -122,19 +139,31 @@ ActiveRecord::Schema.define(version: 2020_06_07_194219) do
     t.index ["language_id"], name: "index_rules_on_language_id"
   end
 
+  create_table "searchterms", force: :cascade do |t|
+    t.string "value"
+    t.bigint "rule_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["rule_id"], name: "index_searchterms_on_rule_id"
+  end
+
   create_table "tags", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "checklists_searchterms", "checklists"
+  add_foreign_key "checklists_searchterms", "searchterms"
   add_foreign_key "diffs", "reviews"
   add_foreign_key "grep_results", "greps"
   add_foreign_key "greps", "rules"
+  add_foreign_key "greps", "searchterms"
   add_foreign_key "repos_langs", "languages"
   add_foreign_key "repos_langs", "repositories"
   add_foreign_key "reviews", "repositories"
   add_foreign_key "rule_tags", "rules"
   add_foreign_key "rule_tags", "tags"
   add_foreign_key "rules", "languages"
+  add_foreign_key "searchterms", "rules"
 end

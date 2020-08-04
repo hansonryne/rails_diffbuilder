@@ -1,6 +1,7 @@
 class Grep < ApplicationRecord
   belongs_to :greppable, polymorphic: true
   belongs_to :source_rule, class_name: "Rule", foreign_key: "rule_id", optional: true
+  belongs_to :searchterm
   has_many :grep_results, dependent: :destroy
   
   validate :custom_or_derived
