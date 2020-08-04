@@ -35,6 +35,9 @@
     </div>
   </div>
 
+  <%= button_to "Save Grep Checklist", "#", class: "selection-target bg-green-500 hover:bg-green-600 text-white font-bold text-white py-2 px-4 rounded mx-6", data: { reflex: "click->ChecklistReflex#save_checklist", repository: repository.id } %>
+  <br>
+  <%= button_to "Load Grep Checklist", "#", class: "selection-target bg-green-500 hover:bg-green-600 text-white font-bold text-white py-2 px-4 rounded mx-6", data: { reflex: "click->ChecklistReflex#load_checklist", repository: repository.id, type: "Repository" } %>
 
   <div class='my-4' greplist>
     <% repository.greps.each do |g| %>
