@@ -10,6 +10,9 @@ class Language < ApplicationRecord
   has_many :repos_langs
   has_many :repositories, through: :repos_langs, dependent: :destroy
 
+  has_many :checklists_languages, dependent: :destroy
+  has_many :checklists, through: :checklists_languages
+
   has_many :rules, dependent: :destroy
 
   def self.get_all_languages

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_04_032940) do
+ActiveRecord::Schema.define(version: 2020_08_05_201410) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,6 +19,15 @@ ActiveRecord::Schema.define(version: 2020_08_04_032940) do
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "checklists_languages", force: :cascade do |t|
+    t.bigint "checklist_id", null: false
+    t.bigint "language_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["checklist_id"], name: "index_checklists_languages_on_checklist_id"
+    t.index ["language_id"], name: "index_checklists_languages_on_language_id"
   end
 
   create_table "checklists_searchterms", force: :cascade do |t|
@@ -153,6 +162,8 @@ ActiveRecord::Schema.define(version: 2020_08_04_032940) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "checklists_languages", "checklists"
+  add_foreign_key "checklists_languages", "languages"
   add_foreign_key "checklists_searchterms", "checklists"
   add_foreign_key "checklists_searchterms", "searchterms"
   add_foreign_key "diffs", "reviews"

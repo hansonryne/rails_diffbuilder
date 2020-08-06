@@ -2,6 +2,7 @@
 
 class CreateGrepFromSelectionReflex < ApplicationReflex
   def make_grep
+    puts element.dataset
     @new_grep = Grep.create(rule_id: element.dataset[:rule],
                             search_value: element.dataset[:selection],
                             greppable_id: element.dataset[:greppable],

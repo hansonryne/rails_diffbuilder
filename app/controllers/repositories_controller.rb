@@ -29,6 +29,7 @@ class RepositoriesController < ApplicationController
     @greps.each do |g|
       g.flag_files(@flagged_files)
     end
+    @checklists = Checklist.all
   end
   
   # GET /repositories/new

@@ -17,6 +17,7 @@ class Rule < ApplicationRecord
   has_many :rule_tags, dependent: :destroy
   has_many :tags, through: :rule_tags
   has_many :greps, foreign_key: 'source_rule_id', dependent: :destroy
+  has_many :searchterms, dependent: :destroy
 
   validates :title, uniqueness: {scope: :language_id}
 
