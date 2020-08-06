@@ -1,37 +1,42 @@
 <div class="hidden py-4 px-4 border-l border-b border-r" data-target="tabs.panel">
-  <% languages.each do |l| %>
+    <% if languages.count == 0 %>
+    <h2 class="py-3">You need to add a language</h2>
+    <%= link_to "Edit Repository Info", edit_repository_path, class: "selection-target bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
+    <% else %>
+    <% languages.each do |l| %>
     <div class="max-w-6xl mx-auto px-4 rounded-lg">
-      <div class="max-w-6xl mx-auto">
-        <div class="flex">
-          <div class="w-2/3 px-8 font-bold text-4xl py-6 text-gray-800"><%= link_to l.name, language_path(l) %></div>
-          <div class="w=1/6 text-gray-800 text-xl flex-auto">Categories:</div>
-          <div class="grid grid-cols-2 flex-auto">
-            <% cats = l.rules.distinct.pluck(:category) %>
-            <% cats.each do |c| %>
-              <div>
-                <%= check_box_tag c.to_s.parameterize, 1, true, { onchange: "toggle_category_vis(this.name)"}  %><%= c.to_s.titleize %>
-              </div>
-            <% end %>
-          </div>
+        <div class="max-w-6xl mx-auto">
+            <div class="flex">
+                <div class="w-2/3 px-8 font-bold text-4xl py-6 text-gray-800"><%= link_to l.name, language_path(l) %></div>
+                <div class="w=1/6 text-gray-800 text-xl flex-auto">Categories:</div>
+                <div class="grid grid-cols-2 flex-auto">
+                    <% cats = l.rules.distinct.pluck(:category) %>
+                    <% cats.each do |c| %>
+                    <div>
+                        <%= check_box_tag c.to_s.parameterize, 1, true, { onchange: "toggle_category_vis(this.name)"}  %><%= c.to_s.titleize %>
+                    </div>
+                    <% end %>
+                </div>
+            </div>
+            <%= render 'languages/rules', rules: l.rules, greppable: repository %>
         </div>
-        <%= render 'languages/rules', rules: l.rules, greppable: repository %>
-      </div>
     </div>
-  <% end %>
-  <script>
-    /* Optional Javascript to close the radio button version by clicking it again */
-    var myRadios = document.getElementsByName('tabs2');
-var setCheck;
-var x = 0;
-for(x = 0; x < myRadios.length; x++){
-  myRadios[x].onclick = function(){
-    if(setCheck != this){
-      setCheck = this;
-    }else{
-      this.checked = false;
-      setCheck = null;
-    }
-  };
-}
-  </script>
+    <% end %>
+    <script>
+        /* Optional Javascript to close the radio button version by clicking it again */
+        var myRadios = document.getElementsByName('tabs2');
+        var setCheck;
+        var x = 0;
+        for (x = 0; x < myRadios.length; x++) {
+            myRadios[x].onclick = function() {
+                if (setCheck != this) {
+                    setCheck = this;
+                } else {
+                    this.checked = false;
+                    setCheck = null;
+                }
+            };
+        }
+    </script>
+    <% end %>
 </div>
