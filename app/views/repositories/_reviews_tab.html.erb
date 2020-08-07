@@ -1,7 +1,7 @@
 <div class="hidden py-4 px-4 border-l border-b border-r" data-target="tabs.panel">
   <p>
   <strong>Reviews:</strong>
-  <table>
+  <table class="my-4">
     <thead>
       <tr>
         <th>Start date</th>
@@ -24,6 +24,6 @@
   </p>
 
   <div>
-    <%= link_to 'Create Review of this Repo', new_review_path(repo_id: repository.id), class: "selection-target bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-6 button" %>
+    <%= link_to 'Create Review of this Repo', new_review_path(repo_id: repository.id), class: "selection-target border border-teal-700 hover:bg-teal-700 hover:text-white text-teal-700 font-bold py-1 px-2 my-4 rounded" %>
   </div>
 </div>

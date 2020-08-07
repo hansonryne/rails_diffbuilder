@@ -1,15 +1,22 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <title>Diffbuilder</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
+</head>
 
-  <body class="bg-gray-200">
-    <%= yield %>
-  </body>
+<body class="bg-gray-200">
+    <%= render 'layouts/nav' %>
+    <div class="flex justify-center">
+    <div class="w-2/3">
+        <%= yield %>
+    </div>
+    </div>
+</body>
+
 </html>

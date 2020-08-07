@@ -9,7 +9,7 @@
           </li>
           <% f[1].each_pair do |k, v| %>
             <li>
-            <span class="text-blue-500 font-bold"><%= link_to k.search_value, rule_path(k.rule_id), target: :_blank, rel: "noopener noreferrer" %></span>
+            <span class="text-teal-700 font-bold"><%= link_to k.search_value, rule_path(k.rule_id), target: :_blank, rel: "noopener noreferrer" %></span>
               <%= " is on the lines: #{v[:locations].reverse}"%>
           </li>
           <% end %>
