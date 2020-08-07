@@ -1,0 +1,37 @@
+<div class="p-4">
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @checklist.name %>
+</p>
+
+<div>
+  <strong>Languages:</strong>
+  <% @checklist.languages.each do |l| %>
+    <%= l.name %>
+  <% end %>
+</div>
+
+<div>
+  <strong>Search Terms:</strong><br />
+  <table class="table-auto">
+  <thead>
+  <tr>
+  <th>Source Rule</th>
+  <th>Value</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @checklist.searchterms.each_with_index do |s, i| %>
+  <tr>
+  <td class="border <%= "bg-gray-400" if i.odd? %>"><%= link_to s.rule_id, rule_path(s.rule_id), class: "text-blue-500 font-bold" %></td>
+  <td class="border <%= "bg-gray-400" if i.odd? %>"><%= s.value %>
+  </tr>
+  <% end %>
+  </tbody>
+  </table>
+</div>
+
+<%= link_to 'Back', checklists_path %>
+</div>

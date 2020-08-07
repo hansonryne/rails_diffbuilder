@@ -12,7 +12,10 @@
                 <!-- Modal Card -->
                 <div class="m-1 bg-white rounded shadow">
                     <div class="p-8">
-                        <h2 class="text-xl mb-4">Save Checklist</h2>
+                    <div class="flex">
+                        <h2 class="text-xl mb-4 flex-auto">Save Checklist</h2>
+                        <a href="<%= checklists_path %>"><button class="selection-target bg-gray-600 hover:bg-gray-800 text-white font-bold text-white py-1 px-1 rounded mx-1">Manage Checklists</button></a>
+                    </div>
                         <p>Add a name:</p>
                         <input type="text" class="border border-black" id="checklist-name">
                         <div class="flex justify-end items-center flex-wrap mt-6">
@@ -45,7 +48,10 @@
                 <!-- Modal Card -->
                 <div class="m-1 bg-white rounded shadow">
                     <div class="p-8">
-                        <h2 class="text-xl mb-4">Load Checklist:</h2>
+                    <div class="flex">
+                        <h2 class="text-xl w-1/2 flex-auto">Load Checklist:</h2>
+                        <a href="<%= checklists_path %>"><button class="selection-target bg-gray-600 hover:bg-gray-800 text-white font-bold text-white py-1 px-1 rounded mx-1">Manage Checklists</button></a>
+                    </div>
                         <div>
                             <%= collection_select(:user, :role_id, @checklists, :id, :name, {prompt: "Select Checklist"}, id: "checklist-select", class: "w-full border border-black my-4") %>
                         </div>
@@ -122,6 +128,9 @@
             <ul class='py-2'>
                 <li class='font-bold'>
                     <%= g.searchterm.value %>
+                </li>
+                <li class=''>
+                    <%= g.results %>
                 </li>
                 <li>
                     <%= button_to "Remove this grep", "#", class: "bg-red-500 hover:bg-red-600 text-white text-xs px-1 rounded mx-2", data: { reflex: "click->SearchtermReflex#delete", searchterm: g.searchterm.id } %>

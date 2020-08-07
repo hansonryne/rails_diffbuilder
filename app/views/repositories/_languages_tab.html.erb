@@ -4,10 +4,12 @@
     <%= link_to "Edit Repository Info", edit_repository_path, class: "selection-target bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
     <% else %>
     <% languages.each do |l| %>
-    <div class="max-w-6xl mx-auto px-4 rounded-lg">
-        <div class="max-w-6xl mx-auto">
+    <details open class="w-full">
+        <summary class="font-bold text-4xl text-gray-800">
+            <%= link_to l.name, language_path(l), target: "_blank", rel: "noopener noreferrer" %>
+        </summary>
             <div class="flex">
-                <div class="w-2/3 px-8 font-bold text-4xl py-6 text-gray-800"><%= link_to l.name, language_path(l) %></div>
+                <div class="w-2/3 px-8 font-bold text-xl py-6 text-gray-800"><%= link_to "View Language Page", language_path(l) %></div>
                 <div class="w=1/6 text-gray-800 text-xl flex-auto">Categories:</div>
                 <div class="grid grid-cols-2 flex-auto">
                     <% cats = l.rules.distinct.pluck(:category) %>
@@ -18,9 +20,12 @@
                     <% end %>
                 </div>
             </div>
-            <%= render 'languages/rules', rules: l.rules, greppable: repository %>
+        <div class="max-w-6xl mx-auto px-4 rounded-lg">
+            <div class="max-w-6xl mx-auto">
+                <%= render 'languages/rules', rules: l.rules, greppable: repository %>
+            </div>
         </div>
-    </div>
+    </details>
     <% end %>
     <script>
         /* Optional Javascript to close the radio button version by clicking it again */

@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   resources :greps
+  resources :checklists
   resources :rule_tags
   resources :tags
   resources :rules
