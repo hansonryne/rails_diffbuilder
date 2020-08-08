@@ -1,29 +1,22 @@
 <div class="hidden py-4 px-4 border-l border-b border-r" data-target="tabs.panel">
-  <p>
-  <strong>Reviews:</strong>
-  <table class="my-4">
-    <thead>
-      <tr>
-        <th>Start date</th>
-        <th>Owner</th>
-        <th>Status</th>
-        <th colspan="1"></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% repository.reviews.each do |r| %>
-        <tr>
-          <td><%= r.start_date %></td>
-          <td><%= r.owner %></td>
-          <td><%= r.get_status %></td>
-          <td><%= link_to 'View', r %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-  </p>
+    <%= link_to 'Start A New Review', new_review_path(repo_id: repository.id), class: "selection-target border border-teal-700 hover:bg-teal-700 hover:text-white text-teal-700 font-bold py-1 px-2 rounded" %>
+    <div class="flex justify-center">
+        <div class="table w-11/12 m-4">
+            <div class="table-row-group">
+                <div class="table-row">
+                    <div class="table-cell bg-teal-700 text-white px-4 py-2 text-sm border">Start Date</div>
+                    <div class="table-cell bg-teal-700 text-white px-4 py-2 text-sm border">Owner</div>
+                    <div class="table-cell bg-teal-700 text-white px-4 py-2 text-sm border">Status</div>
+                </div>
+                <% repository.reviews.each_with_index do |r, index| %>
+                <div class="table-row">
+                    <div class="table-cell bg-<%= index.even? ? 'gray-200 ' : 'white ' %>text-gray-700 px-4 py-2 text-sm border underline"><%= link_to r.start_date, review_path(r) %></div>
+                    <div class="table-cell bg-<%= index.even? ? 'gray-200 ' : 'white ' %>text-gray-700 px-4 py-2 text-sm border"><%= r.owner %></div>
+                    <div class="table-cell bg-<%= index.even? ? 'gray-200 ' : 'white ' %>text-gray-700 px-4 py-2 text-sm border"><%= r.get_status %></div>
+                </div>
+                <% end %>
+            </div>
+        </div>
+    </div>
 
-  <div>
-    <%= link_to 'Create Review of this Repo', new_review_path(repo_id: repository.id), class: "selection-target border border-teal-700 hover:bg-teal-700 hover:text-white text-teal-700 font-bold py-1 px-2 my-4 rounded" %>
-  </div>
 </div>

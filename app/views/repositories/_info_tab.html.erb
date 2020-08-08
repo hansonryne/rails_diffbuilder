@@ -1,35 +1,26 @@
-<div class="hidden p-4" data-target="tabs.panel" >
-  <p>
-  <strong>Name:</strong>
-  <%= repository.name %>
-  </p>
-
-  <p>
-  <strong>Project:</strong>
-  <%= repository.project %>
-  </p>
-
-  <p>
-  <strong>Languages:</strong>
-  <p>
-  <% repository.languages.each_with_index do |l, index| %>
-    <% if index == 0 %>
-      <%= l.name %>
-      <% next %>
-    <% end %>
-    <%= ", " + l.name %>
-  <% end %>
-  </p>
-  </p>
-
-  <p>
-  <strong>Repo location:</strong>
-  <%= repository.repo_location %>
-  </p>
-
-  <div class="flex m-4">
-    <%= link_to "Edit Info", edit_repository_path, class: "selection-target border border-teal-700 hover:bg-teal-700 hover:text-white text-teal-700 font-bold py-1 px-2 rounded" %>
-    <%= render 'updaterepo', repository: repository %>
-  </div>
+<div class="hidden py-4 px-4 border-l border-b border-r" data-target="tabs.panel">
+    <div class="flex justify-center">
+        <div class="w-5/6 rounded overflow-hidden shadow-lg">
+            <div class="px-4 py-2">
+                <div class="font-bold text-xl text-teal-700 mb-2"><%= repository.name %></div>
+                <p class="text-gray-700 text-lg">
+                    <%= repository.project %>
+                </p>
+                <p class="text-gray-700 text-xs">
+                    <br />
+                    <%= repository.repo_location %>
+                </p>
+            </div>
+            <div class="px-6 py-4">
+                <% repository.languages.each_with_index do |l, index| %>
+                <span class="inline-block bg-teal-700 rounded-full px-3 py-1 text-sm font-semibold text-white mr-2"><%= l.name %></span>
+                <% end %>
+            </div>
+            <div class="flex justify-end mr-4 mb-4">
+                <%= link_to "Edit Info", edit_repository_path, class: "selection-target border border-teal-700 hover:bg-teal-700 hover:text-white text-teal-700 font-bold py-1 px-2 rounded" %>
+                <%= render 'updaterepo', repository: repository %>
+            </div>
+        </div>
+    </div>
 
 </div>

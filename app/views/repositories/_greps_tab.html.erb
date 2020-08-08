@@ -129,10 +129,10 @@
 
     <div class='my-4 grid grid-cols-3 gap-4' greplist>
         <% repository.greps.each do |g| %>
-        <ul class='px-4 border'>
+        <ul class='px-4 border shadow-md'>
             <li class='m-2'>
                 <div class="flex">
-                    <span class="flex-auto font-bold px-2"><%= g.searchterm.value %></span>
+                    <span class="flex-auto font-bold px-2"><%= g.searchterm.nil? ? g.search_value : g.searchterm.value %></span>
                     <span class="float-right px-2"><%= g.results %></span>
                 </div>
             </li>
