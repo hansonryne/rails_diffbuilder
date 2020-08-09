@@ -1,50 +1,45 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-<strong>Repository:</strong>
-<%= link_to "#{@review.repository.name} - #{@review.repository.project}", repository_path(@review.repository_id) %>
-</p>
+<div class="py-4 px-4 border-l border-r" data-target="tabs.panel">
+    <div class="flex justify-center">
+        <div class="w-11/12 rounded overflow-hidden shadow-lg">
+            <div class="flex justify-between px-4 py-2">
+                <div class="font-bold text-xl text-teal-700 my-2">Review of: <%= link_to @review.repository.name, repository_path(@review.repository), class: "underline" %></div>
+                <div class="font-bold text-md text-teal-700 my-2">Status: <%= @review.get_status %></div>
+            </div>
+            <div class="flex justify-between">
+                <div class="grid grid-cols-1 gap-2">
+                    <div class="text-gray-700 text-lg mx-4">As of: <%= @review.start_date %></div>
+                    <div class="text-gray-700 text-xs mx-4 mb-1">Primary reviewer: <%= @review.owner %></div>
+                </div>
+                <div class="grid grid-cols-1 gap-2">
+                    <div class="text-gray-700 text-xs mx-4">Starting commit hash: <%= @review.old_commit.first(10) %></div>
+                    <div class="text-gray-700 text-xs mx-4 mb-1">Ending commit hash: <%= @review.new_commit.first(10) %></div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<p>
-<strong>Start date:</strong>
-<%= @review.start_date %>
-</p>
+</div>
 
-<p>
-<strong>Status:</strong>
-<%= @review.get_status %>
-</p>
+<div class="flex justify-center border-l border-r mt-4">
+    <div class="font-bold text-md text-teal-700">Diffs:</div>
+    <div class="flex justify-end">
+        Show by file status:
+        <div class="grid grid-cols-2">
+        <button name="Ignored" onclick="toggle_file_vis(this)" class="border border-teal-700 hover:bg-teal-700 bg-gray-200 text-black hover:text-white text-xs px-2 rounded">Ignored</button>
+        <button name="Complete" onclick="toggle_file_vis(this)" class="border border-teal-700 hover:bg-teal-700 bg-gray-200 text-black hover:text-white text-xs px-2 rounded">Complete</button>
+        <button name="Vulnerable" onclick="toggle_file_vis(this)" class="border border-teal-700 hover:bg-teal-700 bg-gray-200 text-black hover:text-white text-xs px-2 rounded">Vulnerable</button>
+        <button name="Incomplete" onclick="toggle_file_vis(this)" class="border border-teal-700 hover:bg-teal-700 bg-gray-200 text-black hover:text-white text-xs px-2 rounded">Incomplete</button>
+        </div>
+    </div>
+</div>
 
-<p>
-<strong>Owner:</strong>
-<%= @review.owner %>
-</p>
-
-<p>
-<strong>Old commit:</strong>
-<%= @review.old_commit %>
-</p>
-
-<p>
-<strong>New commit:</strong>
-<%= @review.new_commit %>
-</p>
-
-<p>
-<strong>Diffs:</strong>
-<br>
-Show by file status:
-<br>
-<%= check_box_tag "Ignored", 1, false, { onchange: "toggle_file_vis(this.name)"}  %>Ignored
-<%= check_box_tag "Complete", 1, false, { onchange: "toggle_file_vis(this.name)"}  %>Complete
-<%= check_box_tag "Vulnerable", 1, false, { onchange: "toggle_file_vis(this.name)"}  %>Vulnerable
-<%= check_box_tag "Incomplete", 1, true, { onchange: "toggle_file_vis(this.name)"}  %>Incomplete
-<% ["Added", "Modified", "Deleted", "Copied", "Renamed", "Unmerged"].each do |reason| %>
-  <%= render 'files', reason: reason, files: @review.diffs.select{|d| d.reason == reason} %>
-<% end %>
-</p>
-
-<%= link_to 'Back', reviews_path %>
+<div>
+    <% ["Added", "Modified", "Deleted", "Copied", "Renamed", "Unmerged"].each do |reason| %>
+    <%= render 'files', reason: reason, files: @review.diffs.select{|d| d.reason == reason} %>
+    <% end %>
+</div>
 
 <!-- TODO: Evaluate refactoring this diff status filtering to Stimulus-->
 <%= javascript_include_tag 'reviews' %>

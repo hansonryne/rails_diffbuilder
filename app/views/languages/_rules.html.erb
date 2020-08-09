@@ -5,17 +5,17 @@
       <label class="block p-5 leading-normal cursor-pointer font-bold text-teal-700" for="tab-single-<%=r.id%>-<%=index%>"><%= r.title %></label>
       <div class="tab-content overflow-hidden border-l-2 bg-gray-100 border-teal-700 leading-normal">
         <div onmouseup="getSelectedText(this)" class='px-4'>
+        <div class="bg-white p-2 shadow-md">
           <%= sanitize(r.body.html_safe) %>
-          </br>
+        </div>
           <% if r.tags.any? %>
-            <div class="text-teal-700 text-xl">
+            <div class="text-teal-700 text-xl my-2">
               Tags:
             </div>
             <% r.tags.each do |t| %>
-              <%= link_to t.name, tag_path(t), class: "bg-gray-200 hover:bg-gray-400 hover:text-black" %>
+              <%= link_to t.name, tag_path(t), class: "selection-target button rounded-lg hover:text-teal-700 hover:bg-gray-200 font-bold border-teal-700 border bg-teal-700 text-white px-2 py-1" %>
             <% end %>
           <% end %>
-          </br>
           <div class="flex items-center justify-center">
             <a id="link-to-build-grep-for-<%=greppable.id%>" href="#" class="selection-target button m-8 px-4 p-3 rounded-lg text-teal-700 font-bold border-teal-700 border hover:bg-teal-700 hover:text-white" data-reflex="click->SearchtermReflex#build" data-selection="" data-rule="<%=r.id%>" data-greppable="<%=greppable.id%>" data-type="Repository" >Grep Selected Text</a>
           </div>

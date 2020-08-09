@@ -1,26 +1,21 @@
-<details open><summary><%= reason %></summary>
-  <table>
-  <% files.each do |file| %>
-    <tr class="file-<%= file.status.parameterize(preserve_case: true) %>" <%=raw file.status == "Incomplete" ? '' : 'style="display: none"' %>>
-      <td>
-    <%= form_with(model: file, local: true) do |form| %>
+    <div class="py-4 px-4 border-r border-l" data-target="tabs.panel">
+        <div class="flex justify-center">
+            <div class="table w-11/12 m-4">
+                <div class="table-row-group">
+                    <div class="table-row">
+                        <div class="table-cell bg-teal-700 text-white px-4 py-2 text-sm border"><%= reason %></div>
+                        <div class="table-cell bg-teal-700 text-white px-4 py-2 text-sm border">Status</div>
+                        <div class="table-cell bg-teal-700 text-white px-4 py-2 text-sm border">Filename</div>
+                    </div>
+                    <% files.each_with_index do |file, index| %>
+                    <div class="table-row file-<%= file.status.parameterize(preserve_case: true) %>" <%=raw file.status == 'Incomplete' ? '' : 'style="display: none"' %>>
+                        <div class="table-cell bg-<%= index.even? ? 'gray-200 ' : 'white ' %>text-gray-700 px-4 py-2 text-xs border"><%= button_to "Ignore File", "#", class: "border border-gray-500 hover:bg-gray-500 bg-gray-200 text-black hover:text-white text-xs px-2 rounded #{file.status == "Ignored" ? 'hidden' : ''}", data: { reflex: "click->IgnoreFileReflex#ignore", file: file.id} %></div>
+                        <div class="table-cell bg-<%= index.even? ? 'gray-200 ' : 'white ' %>text-gray-700 px-4 py-2 text-xs border"><%= file.status %></div>
+                        <div class="table-cell bg-<%= index.even? ? 'gray-200 ' : 'white ' %>text-gray-700 px-4 py-2 text-xs border underline"><%= link_to file.path, diff_path(file.id) %></div>
+                    </div>
+                    <% end %>
+                </div>
+            </div>
+        </div>
 
-  <div class="field" hidden>
-    <%= form.text_field :status, value: "Ignored" %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit 'Ignore' %>
-  </div>
-<% end %>
-      </td>
-      <td>
-    <%= file.status %>
-      </td>
-      <td>
-        <%= link_to file.path, diff_path(file.id) %>
-      </td>
-    </tr>
-  <% end %>
-  </table>
-</details>
+    </div>

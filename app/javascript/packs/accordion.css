@@ -50,11 +50,11 @@
 /* Icon formatting - open */
 .tab input[type=checkbox]:checked + label::after {
     transform: rotate(315deg);
-    background-color: #6574cd; /*.bg-indigo*/
+    background-color: #2c7a7b; /*.bg-indigo*/
     color: #f8fafc; /*.text-grey-lightest*/
 }
 .tab input[type=radio]:checked + label::after {
     transform: rotateX(180deg);
-    background-color: #6574cd; /*.bg-indigo*/
+    background-color: #2c7a7b; /*.bg-indigo*/
     color: #f8fafc; /*.text-grey-lightest*/
 }
