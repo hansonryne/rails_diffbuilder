@@ -1,36 +1,31 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Language:</strong>
-  <%= link_to @rule.language.name, language_path(@rule.language.id) %>
-</p>
+<div class="flex justify-between">
+    <div class="font-bold text-xl mt-4 text-teal-700">
+        <%= @rule.title %>
+    </div>
+    <div class="text-lg mt-4 text-teal-700">
+    <span class="font-bold">
+        <%= @rule.language.name %>:
+        <%= @rule.category %>
+        </span>
+    <span class="text-<%= @severity_color %>"><%= @rule.severity %></span>
+    </div>
+</div>
+<div class="flex justify-end py-2">
+</div>
 
-<p>
-  <strong>Category:</strong>
-  <%= @rule.category %>
-</p>
+<div class="flex justify-center bg-white shadow-lg px-4">
+        <pre>
+        <%= sanitize(@rule.body.html_safe) %>
+       </pre>
+</div>
 
-<p>
-  <strong>Title:</strong>
-  <%= @rule.title %>
-</p>
-
-<p>
-  <strong>Body:</strong>
-  <%= sanitize(@rule.body.html_safe) %>
-</p>
-
-<p>
-  <strong>Severity:</strong>
-  <%= @rule.severity %>
-</p>
-
-<p>
-  <strong>Tags:</strong>
-  <% @rule.tags.each do |t| %>
-    <%= link_to t.name, tag_path(t) %>
-  <% end %>
-</p>
-
-<%= link_to 'Edit', edit_rule_path(@rule) %> |
-<%= link_to 'Back', rules_path %>
+<div class="my-4 flex">
+<div class="text-xl p-2">
+Tags: 
+</div>
+    <% @rule.tags.each do |t| %>
+    <%= link_to t.name, tag_path(t), class: "inline-block bg-teal-700 border border-teal-700 rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 hover:text-teal-700 hover:bg-gray-200" %>
+    <% end %>
+</div>

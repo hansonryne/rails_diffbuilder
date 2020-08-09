@@ -1,8 +1,8 @@
 <% rules.each_with_index do |r, index| %>
   <div class="shadow-md category-<%= r.category.parameterize %>">
     <div class="tab w-full overflow-hidden border-t">
-      <input class="absolute opacity-0" id="tab-single-<%=index%>" type="radio" name="tabs2">
-      <label class="block p-5 leading-normal cursor-pointer font-bold text-teal-700" for="tab-single-<%=index%>"><%= r.title %></label>
+      <input class="absolute opacity-0" id="tab-single-<%=r.id%>-<%=index%>" type="radio" name="tabs2">
+      <label class="block p-5 leading-normal cursor-pointer font-bold text-teal-700" for="tab-single-<%=r.id%>-<%=index%>"><%= r.title %></label>
       <div class="tab-content overflow-hidden border-l-2 bg-gray-100 border-teal-700 leading-normal">
         <div onmouseup="getSelectedText(this)" class='px-4'>
           <%= sanitize(r.body.html_safe) %>

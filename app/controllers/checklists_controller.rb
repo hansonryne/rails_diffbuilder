@@ -5,11 +5,13 @@ class ChecklistsController < ApplicationController
   # GET /checklists.json
   def index
     @checklists = Checklist.all
+    @path_checkl = request.path.starts_with? '/checkl'
   end
 
   # GET /checklists/1
   # GET /checklists/1.json
   def show
+    @path_checkl = request.path.starts_with? '/checkl'
   end
 
   # GET /checklists/new

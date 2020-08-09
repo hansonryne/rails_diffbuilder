@@ -7,16 +7,16 @@
   </div>
   <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
     <div class="text-sm lg:flex-grow">
-      <a href="/repositories" class="text-xl block mt-4 lg:inline-block lg:mt-0 text-teal-700 hover:text-teal-900 mr-4">
+      <a href="/repositories" class="text-xl inline-block mt-0 mr-4 <%= @path_repos ? 'rounded-lg bg-teal-600 text-white border py-1 px-2' : 'text-teal-700 hover:text-teal-900' %>">
         Repositories
       </a>
-      <a href="/reviews" class="text-xl block mt-4 lg:inline-block lg:mt-0 text-teal-700 hover:text-teal-900 mr-4">
+      <a href="/reviews" class="text-xl inline-block mt-0 mr-4 <%= @path_revi ? 'rounded-lg bg-teal-600 text-white border py-1 px-2' : 'text-teal-700 hover:text-teal-900' %>">
         Reviews
       </a>
-      <a href="/languages" class="text-xl block mt-4 lg:inline-block lg:mt-0 text-teal-700 hover:text-teal-900 mr-4">
+      <a href="/languages" class="text-xl inline-block mt-0 mr-4 <%= @path_langu ? 'rounded-lg bg-teal-600 text-white border py-1 px-2' : 'text-teal-700 hover:text-teal-900' %>">
         Languages
       </a>
-      <a href="/checklists" class="text-xl block mt-4 lg:inline-block lg:mt-0 text-teal-700 hover:text-teal-900">
+      <a href="/checklists" class="text-xl inline-block mt-0 mr-4 <%= @path_checkl ? 'rounded-lg bg-teal-600 text-white border py-1 px-2' : 'text-teal-700 hover:text-teal-900' %>">
         Checklists
       </a>
     </div>

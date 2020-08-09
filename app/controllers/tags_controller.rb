@@ -10,6 +10,9 @@ class TagsController < ApplicationController
   # GET /tags/1
   # GET /tags/1.json
   def show
+    puts request.path
+    puts "here"
+    @path_langu = request.path.starts_with? '/tag'
   end
 
   # GET /tags/new

@@ -13,7 +13,7 @@
             </div>
             <div class="px-6 py-4">
                 <% repository.languages.each_with_index do |l, index| %>
-                <span class="inline-block bg-teal-700 rounded-full px-3 py-1 text-sm font-semibold text-white mr-2"><%= l.name %></span>
+                <span class="inline-block bg-teal-700 border border-teal-700 rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 hover:text-teal-700 hover:bg-gray-200"><%= link_to l.name, language_path(l) %></span>
                 <% end %>
             </div>
             <div class="flex justify-end mr-4 mb-4">

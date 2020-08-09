@@ -1,37 +1,26 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Reviews</h1>
+<div class="py-4 px-4 border-l border-b border-r">
+    <%= link_to 'Start A New Review', new_review_path, class: "selection-target border border-teal-700 hover:bg-teal-700 hover:text-white text-teal-700 font-bold py-1 px-2 rounded" %>
+    <div class="flex justify-center">
+        <div class="table w-11/12 m-4">
+            <div class="table-row-group">
+                <div class="table-row">
+                    <div class="table-cell bg-teal-700 text-white px-4 py-2 text-sm border">Start Date</div>
+                    <div class="table-cell bg-teal-700 text-white px-4 py-2 text-sm border">Repository</div>
+                    <div class="table-cell bg-teal-700 text-white px-4 py-2 text-sm border">Creator</div>
+                    <div class="table-cell bg-teal-700 text-white px-4 py-2 text-sm border">Status</div>
+                </div>
+                <% @reviews.each_with_index do |r, index| %>
+                <div class="table-row">
+                    <div class="table-cell bg-<%= index.even? ? 'gray-200 ' : 'white ' %>text-gray-700 px-4 py-2 text-sm border underline"><%= link_to r.start_date, review_path(r) %></div>
+                    <div class="table-cell bg-<%= index.even? ? 'gray-200 ' : 'white ' %>text-gray-700 px-4 py-2 text-sm border"><%= r.repository.name %></div>
+                    <div class="table-cell bg-<%= index.even? ? 'gray-200 ' : 'white ' %>text-gray-700 px-4 py-2 text-sm border"><%= r.owner %></div>
+                    <div class="table-cell bg-<%= index.even? ? 'gray-200 ' : 'white ' %>text-gray-700 px-4 py-2 text-sm border"><%= r.get_status %></div>
+                </div>
+                <% end %>
+            </div>
+        </div>
+    </div>
 
-<table>
-  <thead>
-    <tr>
-      <th>Repository</th>
-      <th>Start date</th>
-      <th>Status</th>
-      <th>Owner</th>
-      <th>Old commit</th>
-      <th>New commit</th>
-      <th colspan="2"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @reviews.each do |review| %>
-      <tr>
-        <td><%= "#{review.repository.name} - #{review.repository.project}" %></td>
-        <td><%= review.start_date %></td>
-        <td><%= review.status %></td>
-        <td><%= review.owner %></td>
-        <td><%= review.old_commit %></td>
-        <td><%= review.new_commit %></td>
-        <td><%= link_to 'Show', review %></td>
-        <td><%= link_to 'Delete', review, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Review', new_review_path %> | 
-<%= link_to 'Repositories', repositories_path %>
+</div>

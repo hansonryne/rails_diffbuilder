@@ -3,7 +3,7 @@
 class UpdateLanguageRulesReflex < ApplicationReflex
   def execute
     @lang_update_status = :running
-    @lang = element.dataset[:language] ? [] << Language.find(element.dataset[:language]) : Language.all.first(2)
+    @lang = element.dataset[:language] ? [] << Language.find(element.dataset[:language]) : Language.all
     #TESTING @lang = element.dataset[:language] ? [] << Language.find(element.dataset[:language]) : Language.where(name: %w[XML CSS])
     wait_for_it(:success) do
       jobs = []

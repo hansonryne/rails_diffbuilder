@@ -3,23 +3,24 @@
     <h2 class="py-3">You need to add a language</h2>
     <%= link_to "Edit Repository Info", edit_repository_path, class: "selection-target bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
     <% else %>
-    <% languages.each do |l| %>
+    <div class="flex justify-end float-right">
+        <div class="w=1/6 px-4 text-gray-700 text-xl font-medium">Categories:</div>
+        <div class="grid grid-cols-2">
+            <% @categories.each do |c| %>
+            <div>
+                <%= check_box_tag c.to_s.parameterize, 1, true, { onchange: "toggle_category_vis(this.name)"}  %><span class="text-gray-700 ml-1"><%= c.to_s.titleize %></span>
+            </div>
+    <% end %>
+        </div>
+    </div>
+    <% languages.each.with_index do |l, index| %>
     <details class="w-full my-4">
         <summary class="font-bold text-4xl text-gray-700">
-            <%= link_to l.name, language_path(l), target: "_blank", rel: "noopener noreferrer" %>
+            <%= l.name %>
         </summary>
-            <div class="flex">
-                <div class="w-1/2 px-8 font-bold text-md py-6 text-gray-700 underline"><%= link_to "View Language Page", language_path(l) %></div>
-                <div class="w=1/6 text-gray-700 text-xl font-medium flex-auto">Categories:</div>
-                <div class="grid grid-cols-2 flex-auto">
-                    <% cats = l.rules.distinct.pluck(:category) %>
-                    <% cats.each do |c| %>
-                    <div>
-                        <%= check_box_tag c.to_s.parameterize, 1, true, { onchange: "toggle_category_vis(this.name)"}  %><span class="text-gray-700 ml-1"><%= c.to_s.titleize %></span>
-                    </div>
-                    <% end %>
-                </div>
-            </div>
+        <div class="flex">
+            <div class="w-1/2 px-8 font-bold text-md py-6 text-gray-700 underline"><%= link_to "View Language Page", language_path(l), target: "_blank", rel: "noopener noreferrer" %></div>
+        </div>
         <div class="max-w-6xl mx-auto px-4 rounded-lg">
             <div class="max-w-6xl mx-auto">
                 <%= render 'languages/rules', rules: l.rules, greppable: repository %>

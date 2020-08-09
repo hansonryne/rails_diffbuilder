@@ -10,6 +10,20 @@ class RulesController < ApplicationController
   # GET /rules/1
   # GET /rules/1.json
   def show
+    case @rule.severity
+    when "Critical"
+      @severity_color = "red-500 font-bold"
+    when "Major"
+      @severity_color = "orange-500"
+    when "Minor"
+      @severity_color = "yellow-500"
+    when "Blocker"
+      @severity_color = "red-500"
+    else
+      @severity_color = "black"
+    end
+
+    @path_langu = request.path.starts_with? '/rule'
   end
 
   # GET /rules/new

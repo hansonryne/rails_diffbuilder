@@ -1,37 +1,28 @@
-<div class="p-4">
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @checklist.name %>
-</p>
-
-<div>
-  <strong>Languages:</strong>
-  <% @checklist.languages.each do |l| %>
-    <%= l.name %>
-  <% end %>
+<div class="flex justify-center font-bold text-xl mt-4 text-teal-700">
+    <%= @checklist.name %>
 </div>
 
-<div>
-  <strong>Search Terms:</strong><br />
-  <table class="table-auto">
-  <thead>
-  <tr>
-  <th>Source Rule</th>
-  <th>Value</th>
-  </tr>
-  </thead>
-  <tbody>
-  <% @checklist.searchterms.each_with_index do |s, i| %>
-  <tr>
-  <td class="border <%= "bg-gray-400" if i.odd? %>"><%= link_to s.rule_id, rule_path(s.rule_id), class: "text-blue-500 font-bold" %></td>
-  <td class="border <%= "bg-gray-400" if i.odd? %>"><%= s.value %>
-  </tr>
-  <% end %>
-  </tbody>
-  </table>
+<div class="flex justify-center items-center">
+    <div class="table w-11/12 m-4 shadow-lg">
+        <div class="table-row-group">
+            <div class="table-row">
+                <div class="table-cell bg-teal-700 text-white px-4 py-2 text-sm border w-1/4">Search Term</div>
+                <div class="table-cell bg-teal-700 text-white px-4 py-2 text-sm border">Source Rule</div>
+                <div class="table-cell bg-teal-700 text-white px-4 py-2 text-sm border w-1/4">Source Language</div>
+            </div>
+            <% @checklist.searchterms.each_with_index do |searchterm, index| %>
+            <div class="table-row">
+                <div class="table-cell bg-<%= index.even? ? 'gray-200 ' : 'white ' %>text-teal-700 font-semibold px-4 py-2 text-sm border"><%= searchterm.value %></div>
+                <div class="table-cell bg-<%= index.even? ? 'gray-200 ' : 'white ' %>text-gray-700 px-4 py-2 text-sm border"><%= searchterm.rule.title %></div>
+                <div class="table-cell bg-<%= index.even? ? 'gray-200 ' : 'white ' %>text-gray-700 px-4 py-2 text-sm border"><%= searchterm.rule.language.name %></div>
+            </div>
+            <% end %>
+        </div>
+    </div>
 </div>
 
-<%= link_to 'Back', checklists_path %>
+<div class="flex justify-end w-11/12">
+    <%= link_to 'Delete This List', @checklist, method: :delete, data: { confirm: 'Are you sure?' }, class: "border border-red-500 bg-red-500 hover:bg-gray-200 hover:text-red-500 text-gray-200 px-2 py-1 fond-bold rounded" %>
 </div>

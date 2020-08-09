@@ -5,6 +5,7 @@ class LanguagesController < ApplicationController
   # GET /languages.json
   def index
     @languages = Language.all.order(:name)
+    @path_langu = request.path.starts_with? '/langu'
   end
 
   def build_languages
@@ -47,6 +48,7 @@ class LanguagesController < ApplicationController
     else
       @lang_update_status ||= :default
     end
+    @path_langu = request.path.starts_with? '/langu'
   end
 
   # GET /languages/new

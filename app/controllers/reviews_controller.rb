@@ -9,11 +9,13 @@ class ReviewsController < ApplicationController
     @reviews.each do |r|
       r.status = r.get_status
     end
+    @path_revi = request.path.starts_with? '/revi'
   end
 
   # GET /reviews/1
   # GET /reviews/1.json
   def show
+    @path_revi = request.path.starts_with? '/revi'
   end
 
   # GET /reviews/new
@@ -31,10 +33,12 @@ class ReviewsController < ApplicationController
     else 
       redirect_to(select_repository_path)
     end
+    @path_revi = request.path.starts_with? '/revi'
   end
 
   # GET /reviews/1/edit
   def edit
+    @path_revi = request.path.starts_with? '/revi'
   end
 
   # POST /reviews

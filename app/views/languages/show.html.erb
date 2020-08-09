@@ -1,55 +1,53 @@
-<%= link_to 'Back to all languages', languages_path %>
-
 <p id="notice"><%= notice %></p>
 
-<p>
-<strong>Name:</strong>
-<%= @language.name %>
-</p>
-<p>
-<strong>Source:</strong>
-<%= link_to @language.url, @language.url %>
-</p>
-
-<p>
-<strong>Rules:</strong>
-<% @language.rules.each do |r| %>
-  <p>
-  <%= link_to r.title, rule_path(r)  %>
-  </p>
-<% end %>
-</p>
-
-<div data-controller="modal" data-modal-allow-background-close="true">
-  <button data-action="click->modal#open" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-    <span>Update Language Rules</span>
-  </button>
-  <div data-controller="UpdateLanguageRulesReflex" data-reflex-root="[statuslist]">
-    <div statuslist>
-      <% case @lang_update_status %>
-      <% when :default %>
-        No jobs running
-      <% when :running %>
-        Updating language
-      <% when :complete %>
-        Update complete. <%=link_to "Refresh", language_path(@language) %> the page to see results.
-      <% end %>
+<div class="flex justify-between w-11/12 font-bold text-xl text-teal-700 mt-4 mx-4 p-4">
+    <div class="py-1 px-2">
+        <%= @language.name %> Rules
     </div>
-    <!-- Modal Container -->
-    <div data-target="modal.container" data-action="click->modal#closeBackground keyup@window->modal#closeWithKeyboard" class="hidden animated fadeIn fixed inset-0 overflow-y-auto flex items-center justify-center" style="z-index: 9999;">
-      <!-- Modal Inner Container -->
-      <div class="max-h-screen w-full max-w-lg relative">
-        <!-- Modal Card -->
-        <div class="m-1 bg-white rounded shadow">
-          <div class="p-8">
-            <h2 class="text-xl mb-4">Are you sure?</h2>
-            <p>This may take a minute if there are a lot of rules</p>
-            <div class="flex justify-end items-center flex-wrap mt-6">
-              <%= button_to "Do it", "#", class: "selection-target bg-green-500 hover:bg-green-600 text-white font-bold text-white py-2 px-4 rounded mx-6", data: { reflex: "click->UpdateLanguageRulesReflex#execute", language: @language.id, type: "Language", action: "click->modal#close" } %>
-              <button class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded" data-action="click->modal#close">Close</button>
+    <div data-controller="modal" data-modal-allow-background-close="true">
+        <div data-controller="UpdateLanguageRulesReflex" data-reflex-root="[statuslist]">
+            <div statuslist>
+                <% case @lang_update_status %>
+                <% when :default %>
+                <button data-action="click->modal#open" class="selection-target border border-teal-700 hover:bg-teal-700 hover:text-white text-teal-700 font-bold py-1 px-2 rounded">
+                    <span>Update Language Rules</span>
+                </button>
+                <% when :running %>
+                <button data-action="click->modal#open" class="selection-target border border-teal-700 hover:bg-teal-700 hover:text-white text-teal-700 font-bold py-1 px-2 rounded">
+                    <span>Updating Rules</span>
+                </button>
+                <% when :complete %>
+                <button data-action="click->modal#open" class="selection-target border border-teal-700 hover:bg-teal-700 hover:text-white text-teal-700 font-bold py-1 px-2 rounded">
+                    <span>Update Complete</span>
+                </button>
+                <% end %>
             </div>
-          </div>
+            <!-- Modal Container -->
+            <div data-target="modal.container" data-action="click->modal#closeBackground keyup@window->modal#closeWithKeyboard" class="hidden animated fadeIn fixed inset-0 overflow-y-auto flex items-center justify-center" style="z-index: 9999;">
+                <!-- Modal Inner Container -->
+                <div class="max-h-screen w-full max-w-lg relative">
+                    <!-- Modal Card -->
+                    <div class="m-1 bg-white rounded shadow">
+                        <div class="p-8 text-black">
+                            <h2 class="text-xl mb-4">Are you sure?</h2>
+                            <p>This may take a minute if there are a lot of rules</p>
+                            <div class="flex justify-end items-center flex-wrap mt-6">
+                                <%= button_to "Do it", "#", class: "selection-target bg-green-500 hover:bg-green-600 text-white font-bold text-white py-2 px-4 rounded mx-6", data: { reflex: "click->UpdateLanguageRulesReflex#execute", language: @language.id, type: "Language", action: "click->modal#close" } %>
+                                <button class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded" data-action="click->modal#close">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
+</div>
+<div class="table w-11/12 mx-4 mb-4">
+    <div class="table-row-group">
+        <% @language.rules.each_with_index do |r, index| %>
+        <div class="table-row">
+            <div class="table-cell bg-<%= index.odd? ? 'gray-200 ' : 'white ' %>text-teal-700 px-4 py-2 text-sm border"><%= link_to r.title, rule_path(r) %></div>
+        </div>
+        <% end %>
+    </div>
+</div>

@@ -6,6 +6,7 @@ class RepositoriesController < ApplicationController
   # GET /repositories.json
   def index
     @repositories = Repository.all
+    @path_repos = request.path.starts_with? '/repos'
   end
   
   def start_grepping
@@ -30,17 +31,21 @@ class RepositoriesController < ApplicationController
       g.flag_files(@flagged_files)
     end
     @checklists = Checklist.all
+    @categories = Rule.distinct.pluck(:category)
+    @path_repos = request.path.starts_with? '/repos'
   end
   
   # GET /repositories/new
   def new
     @repository = Repository.new
     @languages = Language.all.order(:name)
+    @path_repos = request.path.starts_with? '/repos'
   end
   
   # GET /repositories/1/edit
   def edit
     @languages = Language.all.order(:name)
+    @path_repos = request.path.starts_with? '/repos'
   end
   
   # POST /repositories
