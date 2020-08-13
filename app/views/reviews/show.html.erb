@@ -19,18 +19,18 @@
             </div>
         </div>
     </div>
-
 </div>
 
-<div class="flex justify-center border-l border-r mt-4">
-    <div class="font-bold text-md text-teal-700">Diffs:</div>
-    <div class="flex justify-end">
-        Show by file status:
-        <div class="grid grid-cols-2">
-        <button name="Ignored" onclick="toggle_file_vis(this)" class="border border-teal-700 hover:bg-teal-700 bg-gray-200 text-black hover:text-white text-xs px-2 rounded">Ignored</button>
-        <button name="Complete" onclick="toggle_file_vis(this)" class="border border-teal-700 hover:bg-teal-700 bg-gray-200 text-black hover:text-white text-xs px-2 rounded">Complete</button>
-        <button name="Vulnerable" onclick="toggle_file_vis(this)" class="border border-teal-700 hover:bg-teal-700 bg-gray-200 text-black hover:text-white text-xs px-2 rounded">Vulnerable</button>
-        <button name="Incomplete" onclick="toggle_file_vis(this)" class="border border-teal-700 hover:bg-teal-700 bg-gray-200 text-black hover:text-white text-xs px-2 rounded">Incomplete</button>
+<div class="flex justify-evenly border-l border-r mt-4">
+    <div>
+        <div class="font-bold text-md text-teal-700">Files by status:</div>
+    </div>
+    <div>
+        <div class="grid grid-cols-4 gap-2">
+            <button name="Ignored" onclick="toggle_file_vis(this)" class="border border-teal-700 hover:bg-teal-700 bg-gray-200 text-black hover:text-white text-xs px-2 rounded">Ignored</button>
+            <button name="Complete" onclick="toggle_file_vis(this)" class="border border-teal-700 hover:bg-teal-700 bg-gray-200 text-black hover:text-white text-xs px-2 rounded">Complete</button>
+            <button name="Vulnerable" onclick="toggle_file_vis(this)" class="border border-teal-700 hover:bg-teal-700 bg-gray-200 text-black hover:text-white text-xs px-2 rounded">Vulnerable</button>
+            <button name="Incomplete" onclick="toggle_file_vis(this)" class="border border-teal-700 hover:bg-teal-700 bg-gray-200 text-black hover:text-white text-xs px-2 rounded">Incomplete</button>
         </div>
     </div>
 </div>

@@ -2,34 +2,34 @@
 
 <p id="notice"><%= notice %></p>
 
-<p>
-<strong>Review:</strong>
-<%= link_to @diff.review.start_date, review_path(@diff.review_id) %>
-</p>
+<div data-controller="diff" data-reflex-root="[diffinfo]" class="">
+    <div diffinfo>
+        <div class="py-4 px-4 border-l border-r" data-target="tabs.panel">
+            <div class="flex justify-center">
+                <div class="flex justify-center w-11/12 rounded overflow-hidden shadow-lg">
+                    <div class="w-5/6">
+                        <div class="flex justify-between mx-4 my-2">
+                            <div class="font-bold text-xl text-teal-700 my-2">Diff from: <%= link_to "#{@diff.review.repository.name + ' on ' + @diff.review.start_date.to_s}", review_path(@diff.review), class: "underline" %></div>
+                            <div class="grid grid-cols-1 font-bold text-teal-700">
+                                <div class="">Review Status: </div>
+                                <div class="<%= @diff.status == "Vulnerable" ? "text-red-600 " : "text-black " %>text-xs"><%= @diff.status %></div>
+                            </div>
+                        </div>
+                        <div class="flex justify-between">
+                            <div class="grid grid-cols-1 gap-2">
+                                <div class="text-gray-700 text-lg mx-4">Path: /<%= @diff.path %></div>
+                                <div class="text-gray-700 text-xs mx-4 mb-1">Reason: <%= @diff.reason %></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-<p>
-<strong>Status:</strong>
-<%= @diff.status %>
-</p>
+        <%= render 'statusupdate', diff: @diff %>
+    </div>
+</div>
 
-<%= render 'statusupdate', diff: @diff %>
-
-<p>
-<strong>Path:</strong>
-<%= @diff.path %>
-</p>
-
-<p>
-<strong>Reason:</strong>
-<%= @diff.reason %>
-</p>
-
-<p>
-<strong>Notes:</strong>
-<%= render 'notesform', diff: @diff %>
-</p>
-
-<h2>Side-by-Side Patch Viewer v0.4</h2>
 <form id="form_diff">
     <div style="padding-top:.3em" hidden><textarea rows="8" id="diffText">
         <%= @difftext %>
@@ -37,10 +37,9 @@
 </form>
 <div id="diffResult" class="context"><strong style="color: red;">If you can see this, please <button onclick='location.reload()'>reload</button> the page.</strong></div>
 
-<%= link_to 'Back to Review', review_path(@diff.review_id) %>
-
+<h2>Side-by-Side Patch Viewer v0.4</h2>
 <script>
-  document.addEventListener("turbolinks:load", function() {
-    diffRender(document.getElementById('diffText').value,document.getElementById('diffResult'));
-  })
+    document.addEventListener("turbolinks:load", function() {
+        diffRender(document.getElementById('diffText').value, document.getElementById('diffResult'));
+    })
 </script>

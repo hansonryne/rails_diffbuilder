@@ -12,6 +12,7 @@ class DiffsController < ApplicationController
   def show
     @repository = @diff.review.repository
     @difftext = Git.open(@repository.get_secret_path).diff(@diff.review.old_commit, @diff.review.new_commit).path(@diff.path).to_s
+    @diff ||= Diff.find(params[:id])
   end
 
   # GET /diffs/new
