@@ -36,7 +36,7 @@ class ChecklistReflex < ApplicationReflex
       Grep.destroy(Grep.where(greppable_id: greppable, greppable_type: type).pluck :id)
 
       searchterms.each do |s|
-        @new_grep = Grep.new(searchterm_id: s.id,
+        @new_grep = Grep.create(searchterm_id: s.id,
           search_value: s.value,
           rule_id: s.custom != true ? s.rule_id : nil,
           greppable_type: element.dataset.type,

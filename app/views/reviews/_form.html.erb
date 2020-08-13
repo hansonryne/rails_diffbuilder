@@ -1,41 +1,58 @@
-<%= form_with(model: review, local: true) do |form| %>
-  <% if review.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(review.errors.count, "error") %> prohibited this review from being saved:</h2>
+<div class="flex justify-center">
+    <div class="p-4 rounded bg-white shadow-md">
+        <%= form_with(model: review, local: true) do |form| %>
+        <% if review.errors.any? %>
+        <div id="error_explanation">
+            <h2><%= pluralize(review.errors.count, "error") %> prohibited this review from being saved:</h2>
 
-      <ul>
-        <% review.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
+            <ul>
+                <% review.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+                <% end %>
+            </ul>
+        </div>
         <% end %>
-      </ul>
+        <div class="flex justify-around">
+            <div class="">
+                <%= form.label :start_date %>
+                <%= form.date_field :start_date, class: "rounded border border-teal-700 py-1 px-2" %>
+            </div>
+
+            <div class="">
+                <%= form.label :owner %>
+                <%= form.text_field :owner, class: "rounded border border-teal-700 py-1 px-2" %>
+            </div>
+        </div>
+
+        <div class="flex mt-4">
+            <div class="relative mx-4">
+                <%= form.collection_select :old_commit, review.get_repository.get_commits.reverse_each, :sha, ->(c){ "#{c.date.strftime("%m/%d/%Y")}: #{c.message}" }, { prompt: "Select starting commit" }, { class: "block appearance-none w-full bg-white border border-teal-700 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" } %>
+                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                        <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
+                </div>
+            </div>
+        </div>
+        <div class="flex mt-4">
+            <div class="relative mx-4">
+                <%= form.collection_select :new_commit, review.get_repository.get_commits.reverse_each, :sha, ->(c){ "#{c.date.strftime("%m/%d/%Y")}: #{c.message}" }, { prompt: "Select ending commit" }, { class: "block appearance-none w-full bg-white border border-teal-700 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" } %>
+                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                        <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
+                </div>
+            </div>
+
+            <div class="field" hidden>
+                <%= form.text_field :repository_id, value: repo_id, class: "resize-none border border-teal-700 rounded shadow-sm" %>
+            </div>
+        </div>
+
+        <div class="flex justify-end">
+            <div class="actions">
+                <%= form.submit "Create Review", class: "selection-target bg-white border border-teal-700 hover:bg-teal-700 hover:text-white text-teal-700 font-bold rounded px-4 py-2 mt-4" %>
+            </div>
+        </div>
+        <% end %>
+
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= form.label :start_date %>
-    <%= form.date_field :start_date %>
-  </div>
-
-  <div class="field">
-    <%= form.label :owner %>
-    <%= form.text_field :owner %>
-  </div>
-
-  <div class="field">
-    <%= form.label "Previous Commit" %>
-    <%= form.collection_select :old_commit, review.get_repository.get_commits.reverse_each, :sha, ->(c){ "#{c.date.strftime("%m/%d/%Y")}: #{c.message}" } %>
-  </div>
-
-  <div class="field">
-    <%= form.label "Current Commit" %>
-    <%= form.collection_select :new_commit, review.get_repository.get_commits.reverse_each, :sha, ->(c){ "#{c.date.strftime("%m/%d/%Y")}: #{c.message}" } %>
-  </div>
-
-  <div class="field" hidden>
-    <%= form.text_field :repository_id, :value => repo_id %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>
+</div>
