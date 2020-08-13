@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_05_201410) do
+ActiveRecord::Schema.define(version: 2020_08_13_151001) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -150,9 +150,10 @@ ActiveRecord::Schema.define(version: 2020_08_05_201410) do
 
   create_table "searchterms", force: :cascade do |t|
     t.string "value"
-    t.bigint "rule_id", null: false
+    t.bigint "rule_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "custom"
     t.index ["rule_id"], name: "index_searchterms_on_rule_id"
   end
 

@@ -33,6 +33,7 @@ class RepositoriesController < ApplicationController
     @checklists = Checklist.all
     @categories = Rule.distinct.pluck(:category)
     @path_repos = request.path.starts_with? '/repos'
+    @grep = Grep.new
   end
   
   # GET /repositories/new

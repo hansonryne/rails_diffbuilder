@@ -6,10 +6,12 @@ class ChecklistReflex < ApplicationReflex
     greps = Grep.where(greppable_id: element.dataset.greppable_id)
     if checklist.save
       greps.each do |grep|
+        if grep.custom != true
         language = Rule.find(grep.rule_id).language
+        checklist.languages << language unless checklist.languages.include? language
+        end
         searchterm = Searchterm.find(grep.searchterm_id)
         checklist.searchterms << searchterm
-        checklist.languages << language unless checklist.languages.include? language
       end
     else
       Rails.logger.info(checklist.errors.inspect)
@@ -34,13 +36,13 @@ class ChecklistReflex < ApplicationReflex
       Grep.destroy(Grep.where(greppable_id: greppable, greppable_type: type).pluck :id)
 
       searchterms.each do |s|
-        Grep.create(searchterm_id: s.id,
+        @new_grep = Grep.new(searchterm_id: s.id,
           search_value: s.value,
-          rule_id: s.rule_id,
+          rule_id: s.custom != true ? s.rule_id : nil,
           greppable_type: element.dataset.type,
           greppable_id: greppable.id,
           results: "Run me",
-          custom: false
+          custom: s.custom != true ? false : true
         )
       end
     else

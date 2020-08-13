@@ -4,7 +4,13 @@ class Searchterm < ApplicationRecord
 
   has_one :grep, dependent: :destroy
 
-  belongs_to :rule
+  belongs_to :rule, optional: true
 
-  validates :value, uniqueness: { scope: [:rule_id] }
+  validate :custom_or_derived
+
+  #validates :value, uniqueness: { scope: [:rule_id] }
+
+  def custom_or_derived
+    errors.add(:base, "A searchterm must either have a valid source rule or be marked custom.") unless custom ^ rule.present?
+  end
 end

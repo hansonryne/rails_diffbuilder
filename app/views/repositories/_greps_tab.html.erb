@@ -1,110 +1,27 @@
 <div class="hidden py-4 px-4 border-l border-b border-r" data-target="tabs.panel">
-
-    <div class="flex justify-center">
-
-        <div data-controller="modal" data-modal-allow-background-close="true" class="w-1/6 py-1 px-3">
-            <button data-action="click->modal#open" class="selection-target border border-teal-700 hover:bg-teal-700 hover:text-white text-teal-700 font-bold py-1 px-2 w-full rounded">
-                <span>Save Grep Checklist</span>
-            </button>
-            <!-- Modal Container -->
-            <div data-target="modal.container" data-action="click->modal#closeBackground keyup@window->modal#closeWithKeyboard" class="hidden animated fadeIn fixed inset-0 overflow-y-auto flex items-center justify-center" style="z-index: 9999;">
-                <!-- Modal Inner Container -->
-                <div class="max-h-screen w-full max-w-lg relative">
-                    <!-- Modal Card -->
-                    <div class="m-1 bg-white rounded shadow">
-                        <div class="p-8">
-                            <div class="flex">
-                                <h2 class="text-xl mb-4 flex-auto font-bold">Save Checklist</h2>
-                            </div>
-                            <div class="flex justify-center px-8">
-                                <p class="pr-2">Add a name:</p>
-                                <input type="text" class="border border-black flex-auto" id="checklist-name">
-                            </div>
-                            <div class="flex justify-end items-center flex-wrap mt-6">
-                                <%= button_to "Save Grep Checklist", "#", class: "selection-target bg-white border border-teal-700 hover:bg-teal-700 hover:text-white text-teal-700 font-bold py-2 px-4 rounded mx-6", data: { reflex: "click->ChecklistReflex#save_checklist", greppable_id: repository.id, name: "", action: "click->modal#close" }, id: "checklist-saver" %>
-                                <button class="border border-red-500 hover:bg-red-500 text-red-500 hover:text-white font-bold py-2 px-4 rounded" data-action="click->modal#close">Close</button>
+        <div class="flex justify-center">
+            <div data-controller="modal" data-modal-allow-background-close="true" class="w-1/6 py-1 px-3">
+                <button data-action="click->modal#open" class="selection-target border border-teal-700 hover:bg-teal-700 hover:text-white text-teal-700 font-bold py-1 px-2 w-full rounded">
+                    <span>Add Custom Grep</span>
+                </button>
+                <!-- Modal Container -->
+                <div data-target="modal.container" data-action="click->modal#closeBackground keyup@window->modal#closeWithKeyboard" class="hidden animated fadeIn fixed inset-0 overflow-y-auto flex items-center justify-center" style="z-index: 9999;">
+                    <!-- Modal Inner Container -->
+                    <div class="max-h-screen w-full max-w-lg relative">
+                        <!-- Modal Card -->
+                        <div class="m-1 bg-white rounded shadow">
+                            <div class="p-4">
+                                <%= render 'greps/form', grep: @grep, greppable_id: repository.id %>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <script>
-                document.getElementById("checklist-name").addEventListener("blur", updateChecklistName);
 
-                function updateChecklistName() {
-                    var name = document.getElementById("checklist-name").value;
-                    var saver = document.getElementById("checklist-saver");
-                    saver.setAttribute("data-name", name);
-                }
-            </script>
-        </div>
-
-        <div data-controller="modal" data-modal-allow-background-close="true" class="w-1/6 py-1 px-3">
-            <button data-action="click->modal#open" class="selection-target border border-teal-700 hover:bg-teal-700 hover:text-white text-teal-700 font-bold py-1 px-2 w-full rounded">
-                <span>Load Grep Checklist</span>
-            </button>
-            <!-- Modal Container -->
-            <div data-target="modal.container" data-action="click->modal#closeBackground keyup@window->modal#closeWithKeyboard" class="hidden animated fadeIn fixed inset-0 overflow-y-auto flex items-center justify-center" style="z-index: 9999;">
-                <!-- Modal Inner Container -->
-                <div class="max-h-screen w-full max-w-lg relative">
-                    <!-- Modal Card -->
-                    <div class="m-1 bg-white rounded shadow">
-                        <div class="p-8">
-                            <div class="flex">
-                                <h2 class="text-xl w-1/2 flex-auto font-bold">Load Checklist:</h2>
-                            </div>
-                            <div>
-                                <%= collection_select(:user, :role_id, @checklists, :id, :name, {prompt: "Select Checklist"}, id: "checklist-select", class: "w-full border border-black my-4") %>
-                            </div>
-                            <div class="text-red-600">
-                                WARNING: This will destroy your current list of greps and any results based on them. To avoid losing any of your progress:
-                                <ol class="list-decimal px-6">
-                                    <li>Save the grep checklist.</li>
-                                    <li>Save the results offline.</li>
-                                </ol>
-                                <div class="flex justify-end items-center flex-wrap mt-6">
-                                    <%= button_to "Load Grep Checklist", "#", class: "selection-target bg-white border border-teal-700 hover:bg-teal-700 hover:text-white text-teal-700 font-bold py-2 px-4 rounded mx-6", data: { reflex: "click->ChecklistReflex#load_checklist", greppable_id: repository.id, type: "Repository", checklist: "0", action: "click->modal#close" }, id: "checklist-loader" %>
-                                    <button class="border border-red-500 hover:bg-red-500 text-red-500 hover:text-white font-bold py-2 px-4 rounded" data-action="click->modal#close">Close</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <script>
-                    selectChecklist();
-
-                    document.getElementById("checklist-select").addEventListener("change", selectChecklist);
-
-                    function selectChecklist() {
-                        var selector = document.getElementById("checklist-select");
-                        var checklist_id = selector.options[selector.selectedIndex].value;
-                        var loader = document.getElementById("checklist-loader");
-                        if (checklist_id == "") {
-                            loader.setAttribute("data-checklist", 0);
-                        } else {
-                            loader.setAttribute("data-checklist", checklist_id);
-                        }
-                    }
-                </script>
-            </div>
-        </div>
-
-        <div data-controller="modal" data-modal-allow-background-close="true" class="w-1/6 py-1 px-3">
-            <div data-controller="RunGrepsForGreppableReflex" data-reflex-root="[statuslist]">
-                <div statuslist>
-                    <% case grep_status %>
-                    <% when :default %>
-                    <button data-action="click->modal#open" class="selection-target border border-teal-700 hover:bg-teal-700 hover:text-white text-teal-700 font-bold py-1 px-2 w-full rounded">
-                        <span>Run All Greps</span>
-                    </button>
-                    <% when :running %>
-                    <button class="selection-target border border-teal-700 hover:bg-teal-700 hover:text-white text-teal-700 font-bold py-1 px-2 w-full rounded">
-                    Grepping for strings
-                    </button>
-                    <% when :complete %>
-                    <%=link_to "<button class='selection-target border border-teal-700 hover:bg-teal-700 hover:text-white text-teal-700 font-bold py-1 px-2 w-full rounded'>See Results</button>".html_safe, "#grep_results" %>
-                    <% end %>
-                </div>
+            <div data-controller="modal" data-modal-allow-background-close="true" class="w-1/6 py-1 px-3">
+                <button data-action="click->modal#open" class="selection-target border border-teal-700 hover:bg-teal-700 hover:text-white text-teal-700 font-bold py-1 px-2 w-full rounded">
+                    <span>Save Grep Checklist</span>
+                </button>
                 <!-- Modal Container -->
                 <div data-target="modal.container" data-action="click->modal#closeBackground keyup@window->modal#closeWithKeyboard" class="hidden animated fadeIn fixed inset-0 overflow-y-auto flex items-center justify-center" style="z-index: 9999;">
                     <!-- Modal Inner Container -->
@@ -112,35 +29,134 @@
                         <!-- Modal Card -->
                         <div class="m-1 bg-white rounded shadow">
                             <div class="p-8">
-                                <h2 class="text-xl mb-4 font-bold">Are you sure?</h2>
-                                <p>This may take a minute if there are a lot of files</p>
+                                <div class="flex">
+                                    <h2 class="text-xl mb-4 flex-auto font-bold">Save Checklist</h2>
+                                </div>
+                                <div class="flex justify-center px-8">
+                                    <p class="pr-2">Add a name:</p>
+                                    <input type="text" class="border border-black flex-auto" id="checklist-name">
+                                </div>
                                 <div class="flex justify-end items-center flex-wrap mt-6">
-                                    <%= button_to "Do it", "#", class: "selection-target bg-white border border-teal-700 hover:bg-teal-700 hover:text-white text-teal-700 font-bold py-2 px-4 rounded mx-6", data: { reflex: "click->RunGrepsForGreppableReflex#execute", repository: repository.id, type: "Repository", action: "click->modal#close" } %>
+                                    <%= button_to "Save Grep Checklist", "#", class: "selection-target bg-white border border-teal-700 hover:bg-teal-700 hover:text-white text-teal-700 font-bold py-2 px-4 rounded mx-6", data: { reflex: "click->ChecklistReflex#save_checklist", greppable_id: repository.id, name: "", action: "click->modal#close" }, id: "checklist-saver" %>
                                     <button class="border border-red-500 hover:bg-red-500 text-red-500 hover:text-white font-bold py-2 px-4 rounded" data-action="click->modal#close">Close</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <script>
+                    document.getElementById("checklist-name").addEventListener("blur", updateChecklistName);
 
+                    function updateChecklistName() {
+                        var name = document.getElementById("checklist-name").value;
+                        var saver = document.getElementById("checklist-saver");
+                        saver.setAttribute("data-name", name);
+                    }
+                </script>
+            </div>
+
+            <div data-controller="modal" data-modal-allow-background-close="true" class="w-1/6 py-1 px-3">
+                <button data-action="click->modal#open" class="selection-target border border-teal-700 hover:bg-teal-700 hover:text-white text-teal-700 font-bold py-1 px-2 w-full rounded">
+                    <span>Load Grep Checklist</span>
+                </button>
+                <!-- Modal Container -->
+                <div data-target="modal.container" data-action="click->modal#closeBackground keyup@window->modal#closeWithKeyboard" class="hidden animated fadeIn fixed inset-0 overflow-y-auto flex items-center justify-center" style="z-index: 9999;">
+                    <!-- Modal Inner Container -->
+                    <div class="max-h-screen w-full max-w-lg relative">
+                        <!-- Modal Card -->
+                        <div class="m-1 bg-white rounded shadow">
+                            <div class="p-8">
+                                <div class="flex">
+                                    <h2 class="text-xl w-1/2 flex-auto font-bold">Load Checklist:</h2>
+                                </div>
+                                <div>
+                                    <%= collection_select(:user, :role_id, @checklists, :id, :name, {prompt: "Select Checklist"}, id: "checklist-select", class: "w-full border border-black my-4") %>
+                                </div>
+                                <div class="text-red-600">
+                                    WARNING: This will destroy your current list of greps and any results based on them. To avoid losing any of your progress:
+                                    <ol class="list-decimal px-6">
+                                        <li>Save the grep checklist.</li>
+                                        <li>Save the results offline.</li>
+                                    </ol>
+                                    <div class="flex justify-end items-center flex-wrap mt-6">
+                                        <%= button_to "Load Grep Checklist", "#", class: "selection-target bg-white border border-teal-700 hover:bg-teal-700 hover:text-white text-teal-700 font-bold py-2 px-4 rounded mx-6", data: { reflex: "click->ChecklistReflex#load_checklist", greppable_id: repository.id, type: "Repository", checklist: "0", action: "click->modal#close" }, id: "checklist-loader" %>
+                                        <button class="border border-red-500 hover:bg-red-500 text-red-500 hover:text-white font-bold py-2 px-4 rounded" data-action="click->modal#close">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <script>
+                        selectChecklist();
+
+                        document.getElementById("checklist-select").addEventListener("change", selectChecklist);
+
+                        function selectChecklist() {
+                            var selector = document.getElementById("checklist-select");
+                            var checklist_id = selector.options[selector.selectedIndex].value;
+                            var loader = document.getElementById("checklist-loader");
+                            if (checklist_id == "") {
+                                loader.setAttribute("data-checklist", 0);
+                            } else {
+                                loader.setAttribute("data-checklist", checklist_id);
+                            }
+                        }
+                    </script>
+                </div>
+            </div>
+
+            <div data-controller="modal" data-modal-allow-background-close="true" class="w-1/6 py-1 px-3">
+                <div data-controller="RunGrepsForGreppableReflex" data-reflex-root="[statuslist]">
+                    <div statuslist>
+                        <% case grep_status %>
+                        <% when :default %>
+                        <button data-action="click->modal#open" class="selection-target border border-teal-700 hover:bg-teal-700 hover:text-white text-teal-700 font-bold py-1 px-2 w-full rounded">
+                            <span>Run All Greps</span>
+                        </button>
+                        <% when :running %>
+                        <button class="selection-target border border-teal-700 hover:bg-teal-700 hover:text-white text-teal-700 font-bold py-1 px-2 w-full rounded">
+                            Grepping for strings
+                        </button>
+                        <% when :complete %>
+                        <%=link_to "<button class='selection-target border border-teal-700 hover:bg-teal-700 hover:text-white text-teal-700 font-bold py-1 px-2 w-full rounded'>See Results</button>".html_safe, "#grep_results" %>
+                        <% end %>
+                    </div>
+                    <!-- Modal Container -->
+                    <div data-target="modal.container" data-action="click->modal#closeBackground keyup@window->modal#closeWithKeyboard" class="hidden animated fadeIn fixed inset-0 overflow-y-auto flex items-center justify-center" style="z-index: 9999;">
+                        <!-- Modal Inner Container -->
+                        <div class="max-h-screen w-full max-w-lg relative">
+                            <!-- Modal Card -->
+                            <div class="m-1 bg-white rounded shadow">
+                                <div class="p-8">
+                                    <h2 class="text-xl mb-4 font-bold">Are you sure?</h2>
+                                    <p>This may take a minute if there are a lot of files</p>
+                                    <div class="flex justify-end items-center flex-wrap mt-6">
+                                        <%= button_to "Do it", "#", class: "selection-target bg-white border border-teal-700 hover:bg-teal-700 hover:text-white text-teal-700 font-bold py-2 px-4 rounded mx-6", data: { reflex: "click->RunGrepsForGreppableReflex#execute", repository: repository.id, type: "Repository", action: "click->modal#close" } %>
+                                        <button class="border border-red-500 hover:bg-red-500 text-red-500 hover:text-white font-bold py-2 px-4 rounded" data-action="click->modal#close">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class='my-4 grid grid-cols-3 gap-4' greplist>
-        <% repository.greps.each do |g| %>
-        <ul class='px-4 border shadow-md'>
-            <li class='m-2'>
-                <div class="flex">
-                    <span class="flex-auto font-bold px-2"><%= g.searchterm.nil? ? g.search_value : g.searchterm.value %></span>
-                    <span class="float-right px-2"><%= g.results %></span>
-                </div>
-            </li>
-            <li class='flex justify-center m-2'>
-                <%= button_to "Delete", "#", class: "border border-red-500 hover:bg-red-500 bg-gray-200 text-red-500 hover:text-white text-xs px-2 rounded", data: { reflex: "click->SearchtermReflex#delete", searchterm: g.searchterm.id } %>
-            </li>
-        </ul>
-        <% end %>
-    </div>
+        <div class='my-4 grid grid-cols-3 gap-4' greplist>
+            <% repository.greps.each do |g| %>
+            <ul class='px-4 border shadow-md'>
+                <li class='m-2'>
+                    <div class="flex">
+                        <span class="flex-auto font-bold px-2"><%= g.searchterm.nil? ? g.search_value : g.searchterm.value %></span>
+                        <span class="float-right px-2"><%= g.results %></span>
+                    </div>
+                </li>
+                <li class='flex justify-center m-2'>
+                    <%= button_to "Delete", "#", class: "border border-red-500 hover:bg-red-500 bg-gray-200 text-red-500 hover:text-white text-xs px-2 rounded", data: { reflex: "click->SearchtermReflex#delete", searchterm: g.searchterm.id } %>
+                </li>
+            </ul>
+            <% end %>
+        </div>
 
 </div>

@@ -6,4 +6,5 @@ class Checklist < ApplicationRecord
     has_many :languages, through: :checklists_languages
 
     validates :name, presence: true
+    validates :name, uniqueness: true
 end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class SearchtermReflex < ApplicationReflex
+class GrepReflex < ApplicationReflex
   # Add Reflex methods in this file.
   #
   # All Reflex instances expose the following properties:
@@ -21,35 +21,38 @@ class SearchtermReflex < ApplicationReflex
   #   end
   #
   # Learn more at: https://docs.stimulusreflex.com
-  def build
-    @searchterm = Searchterm.new(
-      value: element.dataset.selection,
-      rule_id: element.dataset.rule,
-      custom: false
+  def create_custom
+    puts "here"
+    puts "here"
+    puts "here"
+    puts "here"
+    puts "here"
+    safe_params = grep_params
+    @new_search = Searchterm.new(
+      value: safe_params[:search_value],
+      custom: true
+    )
+    puts @new_search.inspect
+
+    if @new_search.save!
+    @new_grep = Grep.new(
+      search_value: safe_params[:search_value],
+      searchterm_id: @new_search.id,
+      greppable_id: safe_params[:greppable_id],
+      greppable_type: safe_params[:greppable_type],
+      custom: true,
+      rule_id: "",
+      results: "Run me"
     )
 
-    if @searchterm.save
-    else
-      @searchterm = Searchterm.find_by(value: element.dataset.selection, rule_id: element.dataset.rule)
+     if @new_grep.save
+     else
+      @new_search.destroy
+     end
     end
-
-    Grep.create(
-      rule_id: element.dataset.rule,
-      search_value: @searchterm.value,
-      searchterm_id: @searchterm.id,
-      greppable_id: element.dataset.greppable,
-      greppable_type: element.dataset.type,
-      custom: false,
-      results: "Run me"
-     )
   end
 
-  def delete
-    # If searchterm is saved to a checklist, only delete the grep.
-    unless ChecklistsSearchterm.find_by(searchterm_id: element.dataset.searchterm)
-      Searchterm.find(element.dataset.searchterm).destroy
-    else
-      Grep.find_by(searchterm_id: element.dataset.searchterm).destroy
-    end
+  def grep_params
+    params.require(:grep).permit(:search_value, :greppable_id, :greppable_type)
   end
 end

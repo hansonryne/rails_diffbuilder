@@ -1,36 +1,17 @@
-<%= form_with(model: grep, local: true) do |form| %>
+<div class="py-2 px-4">
+    <%= form_with model: grep, data: { reflex: "submit->GrepReflex#create_custom" } do |form| %>
 
-  <div class="field">
-    <%= form.label :greppable_id %>
-    <%= form.number_field :greppable_id, {value: 7}  %>
-  </div>
+    <%# form.check_box :custom, {checked: true, class: "hidden" } %>
+    <%= form.hidden_field :greppable_type, value: "Repository", class: "hidden" %>
+    <%= form.hidden_field :greppable_id, value: greppable_id, class: "hidden" %>
 
-  <div class="field">
-    <%= form.label :greppable_type %>
-    <%= form.text_field :greppable_type, {value: "Repository"} %>
-  </div>
+    <%= form.label "Grep value", class: "font-bold text-teal-700 text-2xl mb-4" %>
+    <%= form.text_area :search_value, {id: 'grep-search-value', placeholder: "Enter search term here...", class: "resize-none border border-teal-700 rounded shadow-sm" } %>
 
-  <div class="field">
-    <%= form.label :rule_id %>
-    <%= form.text_field :rule_id %>
-  </div>
+    <div class="flex justify-end">
+        <%= form.submit "Create", class: "selection-target bg-white border border-teal-700 hover:bg-teal-700 hover:text-white text-teal-700 font-bold rounded px-4 py-2 mt-4", data: { reflex: "click->GrepReflex#create_custom", action: "click->modal#close" } %>
+        <button class="border border-red-500 hover:bg-red-500 text-red-500 hover:text-white font-bold py-2 px-4 mt-4 mx-2 rounded" data-action="click->modal#close">Close</button>
+    </div>
 
-  <div class="field">
-    <%= form.label :results %>
-    <%= form.text_area :results %>
-  </div>
-
-  <div class="field">
-    <%= form.label :custom %>
-    <%= form.check_box :custom, {checked: true} %>
-  </div>
-
-  <div class="field">
-    <%= form.label :search_value %>
-    <%= form.text_area :search_value, {id: 'grep-search-value', value: "Extension for Burp Suite"} %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>
+    <% end %>
+</div>
