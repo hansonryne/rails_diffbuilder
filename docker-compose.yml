@@ -17,10 +17,6 @@ services:
     environment:
      - PATH=/home/railsuser/gems/bin:$PATH
     command: /app/entrypoint.sh
-    limits:
-      memory: 4g
-    reservations:
-      memory: 2g
 
   database:
     image: postgres:11.2-alpine
