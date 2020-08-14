@@ -9,15 +9,15 @@
             <div statuslist>
                 <% case @lang_update_status %>
                 <% when :default %>
-                <button data-action="click->modal#open" class="selection-target border border-teal-700 hover:bg-teal-700 hover:text-white text-teal-700 font-bold py-1 px-2 rounded">
+                <button data-action="click->modal#open" class="border border-teal-700 hover:bg-teal-700 hover:text-white text-teal-700 font-bold py-1 px-2 rounded">
                     <span>Update Language Rules</span>
                 </button>
                 <% when :running %>
-                <button data-action="click->modal#open" class="selection-target border border-teal-700 hover:bg-teal-700 hover:text-white text-teal-700 font-bold py-1 px-2 rounded">
+                <button data-action="click->modal#open" class="border border-teal-700 hover:bg-teal-700 hover:text-white text-teal-700 font-bold py-1 px-2 rounded">
                     <span>Updating Rules</span>
                 </button>
                 <% when :complete %>
-                <button data-action="click->modal#open" class="selection-target border border-teal-700 hover:bg-teal-700 hover:text-white text-teal-700 font-bold py-1 px-2 rounded">
+                <button data-action="click->modal#open" class="border border-teal-700 hover:bg-teal-700 hover:text-white text-teal-700 font-bold py-1 px-2 rounded">
                     <span>Update Complete</span>
                 </button>
                 <% end %>
@@ -32,7 +32,7 @@
                             <h2 class="text-xl mb-4">Are you sure?</h2>
                             <p>This may take a minute if there are a lot of rules</p>
                             <div class="flex justify-end items-center flex-wrap mt-6">
-                                <%= button_to "Do it", "#", class: "selection-target bg-green-500 hover:bg-green-600 text-white font-bold text-white py-2 px-4 rounded mx-6", data: { reflex: "click->UpdateLanguageRulesReflex#execute", language: @language.id, type: "Language", action: "click->modal#close" } %>
+                                <%= button_to "Do it", "#", class: "bg-green-500 hover:bg-green-600 text-white font-bold text-white py-2 px-4 rounded mx-6", data: { reflex: "click->UpdateLanguageRulesReflex#execute", language: @language.id, type: "Language", action: "click->modal#close" } %>
                                 <button class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded" data-action="click->modal#close">Close</button>
                             </div>
                         </div>

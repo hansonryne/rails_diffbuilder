@@ -19,7 +19,7 @@
             <span class="text-teal-700 font-bold"><%= k.search_value %></span>
               <%= " is on the lines: #{v[:locations].reverse}"%>
               <div class="mt-1">
-            <%= button_to "See Rule", rule_path(k.rule_id), class: "selection-target border border-teal-700 bg-teal-700 text-white hover:bg-gray-200 hover:text-teal-700 text-xs font-bold px-2 rounded", target: :_blank, rel: "noopener noreferrer" %>
+            <%= button_to "See Rule", rule_path(k.rule_id), class: "border border-teal-700 bg-teal-700 text-white hover:bg-gray-200 hover:text-teal-700 text-xs font-bold px-2 rounded", target: :_blank, rel: "noopener noreferrer" %>
               </div>
           <% end %>
           </li>
