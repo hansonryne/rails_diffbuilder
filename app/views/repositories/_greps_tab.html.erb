@@ -1,5 +1,5 @@
 <div class="hidden py-4 px-4 border-l border-b border-r" data-target="tabs.panel">
-    <div class="flex justify-center">
+    <div class="flex">
         <div data-controller="modal" data-modal-allow-background-close="true" class="w-1/6 py-1 px-3">
             <button data-action="click->modal#open" class="border border-teal-700 hover:bg-teal-700 hover:text-white text-teal-700 font-bold py-1 px-2 w-full rounded">
                 <span>Add Custom Grep</span>
@@ -145,7 +145,7 @@
 
     <div class='my-4 grid grid-cols-3 gap-4' greplist>
         <% repository.greps.each do |g| %>
-        <ul class='px-4 border shadow-md'>
+        <ul class='bg-white px-4 border shadow-md'>
             <li class='m-2'>
                 <div data-controller="searchterm" data-reflex-root="[edit-<%= g.id %>]">
                     <div edit-<%= g.id %>>
