@@ -1,24 +1,29 @@
 <p id="notice"><%= notice %></p>
 <div class="py-4 px-4 border-l border-b border-r">
+    <div class="my-1">
+        <span class="border-teal-700 hover:bg-teal-700 hover:text-white text-teal-700 font-bold py-1 px-2 rounded"></span>
+    </div>
     <div class="flex justify-center">
-        <div class="grid grid-cols-2 gap-4 w-full">
-            <% @checklists.each do |c| %>
-            <div class='p-4 border shadow-sm bg-gray-100'>
-                <div class="flex justify-center text-xl mb-2">
-                    <%= link_to c.name, checklist_path(c), class: "underline font-bold text-teal-700" %>
+        <div class="table w-11/12 m-4 shadow-md">
+            <div class="table-row-group">
+                <div class="table-row">
+                    <div class="table-cell bg-teal-700 text-white px-4 py-2 text-sm border">Name</div>
+                    <div class="table-cell bg-teal-700 text-white px-4 py-2 text-sm border">Search Terms</div>
+                    <div class="table-cell bg-teal-700 text-white px-4 py-2 text-sm border">Languages</div>
                 </div>
-                <div class="flex justify-between content-center py-2">
-                    <div>
-                        <span class="font-semibold px-2"><%= c.searchterms.count %></span>search terms
-                    </div>
-                    <div>
+                <% @checklists.each_with_index do |c, index| %>
+                <div class="table-row">
+                    <div class="table-cell bg-<%= index.even? ? 'gray-200 ' : 'white ' %>text-gray-700 px-4 py-2 text-sm border underline"><%= link_to c.name, checklist_path(c) %></div>
+                    <div class="table-cell bg-<%= index.even? ? 'gray-200 ' : 'white ' %>text-gray-700 px-4 py-2 text-sm border"><%= c.searchterms.count %></div>
+                    <div class="table-cell bg-<%= index.even? ? 'gray-200 ' : 'white ' %>text-gray-700 px-4 py-2 text-sm border">
                         <% c.languages.each do |l| %>
                         <span class="inline-block border border-teal-700 rounded-full px-3 text-sm font-semibold text-teal-700 mr-2 hover:bg-teal-700 hover:text-white"><%= link_to l.name, language_path(l) %></span>
                         <% end %>
                     </div>
                 </div>
+                <% end %>
             </div>
-            <% end %>
         </div>
     </div>
+
 </div>
