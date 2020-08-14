@@ -44,6 +44,14 @@ class SearchtermReflex < ApplicationReflex
      )
   end
 
+  def edit
+    params = grep_params
+    @grep = Grep.find(element.dataset.grep)
+    @searchterm = @grep.searchterm
+    @searchterm.update(value: params[:search_value])
+    @grep.update(search_value: params[:search_value])
+  end
+
   def delete
     # If searchterm is saved to a checklist, only delete the grep.
     unless ChecklistsSearchterm.find_by(searchterm_id: element.dataset.searchterm)
@@ -52,4 +60,8 @@ class SearchtermReflex < ApplicationReflex
       Grep.find_by(searchterm_id: element.dataset.searchterm).destroy
     end
   end
+end
+
+def grep_params
+  params.require(:grep).permit(:search_value)
 end

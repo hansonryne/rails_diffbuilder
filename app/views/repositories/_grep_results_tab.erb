@@ -9,8 +9,19 @@
           </li>
           <% f[1].each_pair do |k, v| %>
             <li>
-            <span class="text-teal-700 font-bold"><%= link_to k.search_value, rule_path(k.rule_id), target: :_blank, rel: "noopener noreferrer" %></span>
+            <% if k.rule_id.nil? %>
+            <span class="text-teal-700 font-bold"><%= k.search_value %></span>
               <%= " is on the lines: #{v[:locations].reverse}"%>
+              <div class="font-bold text-xs">
+            Custom Rule
+              </div>
+            <% else %>
+            <span class="text-teal-700 font-bold"><%= k.search_value %></span>
+              <%= " is on the lines: #{v[:locations].reverse}"%>
+              <div class="mt-1">
+            <%= button_to "See Rule", rule_path(k.rule_id), class: "selection-target border border-teal-700 bg-teal-700 text-white hover:bg-gray-200 hover:text-teal-700 text-xs font-bold px-2 rounded", target: :_blank, rel: "noopener noreferrer" %>
+              </div>
+          <% end %>
           </li>
           <% end %>
           <br>
