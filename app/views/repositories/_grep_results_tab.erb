@@ -3,7 +3,7 @@
   <% if flagged_files.length > 0 %>
     <% flagged_files.each do |f| %>
       <div class="rounded bg-white overflow-hidden shadow-lg my-4">
-        <div class="m-4 text-2xl">
+        <div class="m-4 text-lg leading-relaxed">
           <strong><%= f[0]%></strong>
         </div>
         <% f[1].each_pair do |k, v| %>
