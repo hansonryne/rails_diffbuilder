@@ -1,31 +1,66 @@
 <div class="hidden px-4 border-l border-b border-r" data-target="tabs.panel">
 
-  <% if flagged_files.length > 0 %>
-    <% flagged_files.each do |f| %>
-      <div class="rounded bg-white overflow-hidden shadow-lg my-4">
-        <div class="m-4 text-lg leading-relaxed">
-          <strong><%= f[0]%></strong>
-        </div>
-        <% f[1].each_pair do |k, v| %>
-          <div class="m-4">
-            <% if k.rule_id.nil? %>
-              <span class="text-lg text-teal-700 font-bold"><%= k.search_value %></span>
-              <%= " is on the lines: #{v[:locations].reverse}"%>
-              <div class="font-bold text-xs">
-                Custom Rule
-              </div>
-            <% else %>
-              <span class="text-lg text-teal-700 font-bold"><%= k.search_value %></span>
-              <%= " is on the lines: #{v[:locations].reverse}"%>
-              <div class="mt-1">
-                <%= link_to "See Rule", rule_path(k.rule_id), class: "border border-teal-700 bg-white text-teal-700 hover:bg-teal-700 hover:text-white text-xs font-bold px-2 rounded", target: :_blank, rel: "noopener noreferrer" %>
-              </div>
-            <% end %>
+  <div data-controller="modal" data-modal-allow-background-close="true" class="w-5/6 py-1 px-3">
+    <% if flagged_files.length > 0 %>
+      <% flagged_files.each do |f| %>
+        <div class="rounded bg-white overflow-hidden shadow-lg my-4">
+          <div class="m-4 text-lg leading-relaxed">
+            <strong><%= f[0]%></strong>
           </div>
-        <% end %>
-      </div>
+          <% f[1].each_pair do |k, v| %>
+            <div class="m-4">
+              <span class="text-lg text-teal-700 font-bold"><%= k.search_value %></span>
+              is on the lines: 
+              <div data-controller="FileViewerReflex" data-reflex-root="[fileviewer]">
+                <% v[:locations].reverse.each do |line| %>
+                  <button class="inline-block bg-teal-700 border border-teal-700 rounded-lg px-1 my-1 text-xs text-white mr-1 hover:text-teal-700 hover:bg-gray-200" data-action="click->modal#open" data-reflex="click->FileViewerReflex#show_file" data-line="<%= line %>" data-filename="<%= f[0] %>" data-repository="<%= repository.id %>"><%= line %></button>
+                <% end %>
+              </div>
+              <% if k.rule_id.nil? %>
+                <div class="font-bold text-xs">
+                  Custom Rule
+                </div>
+              <% else %>
+                <div class="mt-1">
+                  <%= link_to "See Rule", rule_path(k.rule_id), class: "border border-teal-700 bg-white text-teal-700 hover:bg-teal-700 hover:text-white text-xs font-bold px-2 rounded", target: :_blank, rel: "noopener noreferrer" %>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    <% else %>
+      No Files Have Been Flagged Yet.
     <% end %>
-  <% else %>
-    No Files Have Been Flagged Yet.
-  <% end %>
+    <!-- Modal Container -->
+              <div data-controller="FileViewerReflex" data-reflex-root="[filereset], [fileviewer]">
+    <div data-target="modal.container" data-action="click->modal#closeBackground keyup@window->modal#closeWithKeyboard" data-reflex="click->FileViewerReflex#reset_preview" class="hidden animated fadeIn fixed inset-0 overflow-y-auto flex items-center justify-center" style="z-index: 9999;">
+      <!-- Modal Inner Container -->
+      <div class="max-h-screen h-1/2 w-5/6 relative">
+        <!-- Modal Card -->
+        <div class="m-1 bg-white rounded shadow">
+          <div class="p-8">
+          <div class="font-bold text-teal-700 text-xl mb-4">
+          File previewer:
+          </div>
+          <div class="flex justify-center border-teal-700 rounded shadow-md bg-gray-200">
+            <div fileviewer class="overflow-x-auto border-black rounded bg-gray-200 p-2 mx-4">
+                          <% @file_content.each do |line| %>
+ <pre class="whitespace-no-wrap"><%= line %></pre>
+                          <% end %>
+            </div>
+            </div>
+            <div class="flex justify-end items-center flex-wrap mt-6">
+              <div filereset>
+              <button class="border border-red-500 hover:bg-red-500 text-red-500 hover:text-white font-bold py-2 px-4 rounded" data-reflex="click->FileViewerReflex#reset_preview" data-action="click->modal#close">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+              </div>
+    </div>
+
+  </div>
+
 </div>

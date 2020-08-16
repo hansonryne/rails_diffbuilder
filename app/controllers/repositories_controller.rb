@@ -34,6 +34,7 @@ class RepositoriesController < ApplicationController
     @categories = Rule.distinct.pluck(:category)
     @path_repos = request.path.starts_with? '/repos'
     @new_grep = Grep.new
+    @file_content ||= ["<div class='w-2/3 font-bold text-teal-700 text-xl mb-4'>Loading file...</div>".html_safe]
   end
   
   # GET /repositories/new
