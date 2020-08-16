@@ -11,6 +11,7 @@ class RunGrepsForGreppableReflex < ApplicationReflex
       while not status.completed? do
         sleep 1
       end
+      @greps = @repo.greps
     end
   end
 

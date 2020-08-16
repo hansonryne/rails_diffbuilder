@@ -25,6 +25,7 @@ class RunAllGrepsJob < ApplicationJob
     end
     
     repository.greps.each do |g|
+      if g.results == "Run me"
       local_results = results.select {|result| result[:grep_id] == g.id}
       if local_results.present?
         g.update(results: "Found")
@@ -34,6 +35,7 @@ class RunAllGrepsJob < ApplicationJob
         end
       else
         g.update(results: "No matches found")
+      end
       end
     end
   end

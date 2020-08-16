@@ -20,7 +20,7 @@ class RepositoriesController < ApplicationController
     @repository.languages.each do |l|
       @languages << Language.includes(rules: [:tags]).find_by(id: l.id)
     end
-    @greps = @repository.greps
+    @greps ||= @repository.greps
     if Delayed::Job.any?
       @grep_status = :running
     else
@@ -33,7 +33,7 @@ class RepositoriesController < ApplicationController
     @checklists = Checklist.all
     @categories = Rule.distinct.pluck(:category)
     @path_repos = request.path.starts_with? '/repos'
-    @grep = Grep.new
+    @new_grep = Grep.new
   end
   
   # GET /repositories/new
