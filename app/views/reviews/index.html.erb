@@ -11,6 +11,7 @@
                     <div class="table-cell bg-teal-700 text-white px-4 py-2 text-sm border">Repository</div>
                     <div class="table-cell bg-teal-700 text-white px-4 py-2 text-sm border">Creator</div>
                     <div class="table-cell bg-teal-700 text-white px-4 py-2 text-sm border">Status</div>
+                    <div class="table-cell bg-teal-700 text-white px-4 py-2 text-sm border">Delete</div>
                 </div>
                 <% @reviews.each_with_index do |r, index| %>
                 <div class="table-row">
@@ -18,6 +19,7 @@
                     <div class="table-cell bg-<%= index.even? ? 'gray-200 ' : 'white ' %>text-gray-700 px-4 py-2 text-sm border"><%= r.repository.name %></div>
                     <div class="table-cell bg-<%= index.even? ? 'gray-200 ' : 'white ' %>text-gray-700 px-4 py-2 text-sm border"><%= r.owner %></div>
                     <div class="table-cell bg-<%= index.even? ? 'gray-200 ' : 'white ' %>text-gray-700 px-4 py-2 text-sm border"><%= r.get_status %></div>
+                    <div class="table-cell bg-<%= index.even? ? 'gray-200 ' : 'white ' %>text-red-700 px-4 py-2 text-sm border"><div class="flex justify-center"><%= link_to 'X', review_path(r), method: :delete, data: { confirm: 'Are you sure?' } %></div></div>
                 </div>
                 <% end %>
             </div>
