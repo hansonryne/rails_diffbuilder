@@ -22,17 +22,11 @@ class GrepReflex < ApplicationReflex
   #
   # Learn more at: https://docs.stimulusreflex.com
   def create_custom
-    puts "here"
-    puts "here"
-    puts "here"
-    puts "here"
-    puts "here"
     safe_params = grep_params
     @new_search = Searchterm.new(
       value: safe_params[:search_value],
       custom: true
     )
-    puts @new_search.inspect
 
     if @new_search.save!
     @new_grep = Grep.new(
