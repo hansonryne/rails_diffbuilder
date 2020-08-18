@@ -82,7 +82,6 @@ class RepositoriesController < ApplicationController
     
     final_params = update_params
     if update_params[:languages]
-      puts update_params
       languages = Language.where(name: update_params[:languages])
       final_params[:languages] = languages
     end
@@ -126,7 +125,7 @@ class RepositoriesController < ApplicationController
   end
   
   def update_params
-    params.require(:repository).permit(:secret_path, :repo_location, :project, :name, languages: [])
+    params.require(:repository).permit(:id, :repo_location, :project, :name, languages: [])
   end
   
 end

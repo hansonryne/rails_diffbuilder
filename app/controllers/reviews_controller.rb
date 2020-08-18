@@ -27,6 +27,7 @@ class ReviewsController < ApplicationController
       begin
         @commits = @review.repository.get_commits
       rescue ArgumentError => e
+        puts "Error: Git repository does not exist."
         flash[:alert] = "Error: Git repository does not exist."
         redirect_to repository_path(@review.repository.id)      
       end

@@ -1,7 +1,7 @@
 <%= form_with(model: repository, local: true) do |form| %>
 
   <div class="field" hidden>
-    <%= form.text_field :secret_path,  value: repository.secret_path %>
+    <%= form.text_field :id,  value: repository.id %>
   </div>
 
   <div class="actions">

@@ -16,30 +16,32 @@ class Review < ApplicationRecord
 
   def get_status
     if self.diffs.count == 0
-      return "Nothing"
+      return "Nothing to review"
     else
       total_diffs = self.diffs.count.to_f
     end
     completed = self.diffs.select { |d| d.status.in? ["Complete", "Vulnerable", "Ignored"] }.count
-    (completed / total_diffs * 100).round.to_s + '%' + " (#{completed}/#{total_diffs.round.to_s})"
+    (completed/total_diffs * 100).round.to_s + '%' + " (#{completed}/#{total_diffs.round.to_s})"
   end
 
   def get_changed_files
     changed_files = Git.open(self.repository.get_secret_path).diff(self.old_commit, self.new_commit).name_status
     changed_files.each do |file|
-      case file[1]
+      case file[1].to_s
       when "A"
         Diff.create :path => file[0], :review_id => self.id, :reason => "Added"
       when "M"
         Diff.create :path => file[0], :review_id => self.id, :reason => "Modified"
       when "C"
         Diff.create :path => file[0], :review_id => self.id, :reason => "Copied"
-      when "R"
-        Diff.create :path => file[0], :review_id => self.id, :reason => "Renamed"
       when "D"
         Diff.create :path => file[0], :review_id => self.id, :reason => "Deleted"
       when "U"
         Diff.create :path => file[0], :review_id => self.id, :reason => "Unmerged"
+      when /^R\d\d\d$/
+        Diff.create :path => file[0], :review_id => self.id, :reason => "Renamed"
+      else
+        Diff.create :path => file[0], :review_id => self.id, :reason => "Other"
       end
     end
   end

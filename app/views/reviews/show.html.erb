@@ -36,7 +36,7 @@
 </div>
 
 <div>
-    <% ["Added", "Modified", "Deleted", "Copied", "Renamed", "Unmerged"].each do |reason| %>
+    <% ["Added", "Modified", "Deleted", "Copied", "Renamed", "Unmerged", "Other"].each do |reason| %>
     <%= render 'files', reason: reason, files: @review.diffs.select{|d| d.reason == reason} %>
     <% end %>
 </div>
