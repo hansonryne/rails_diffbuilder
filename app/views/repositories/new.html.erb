@@ -1,15 +1,25 @@
 <%= stylesheet_link_tag 'loading_animation' %>
 <%= javascript_include_tag 'loading_animation' %>
 
-<h1>New Repository</h1>
+<div class="text-teal-700 font-bold text-2xl my-4">New Repository</div>
 
-<%= render 'form', repository: @repository %>
+<%= render 'new_form', repository: @repository %>
 
-<%= link_to 'Back', repositories_path %>
-
-<div id="loading-animation" class="loading-animation-centered" hidden>
-  If this is a large project this might take a minute or two.
-  <br>
-  Please wait and do not click back or close the window.
-  <div class="loading-animation"></div>
+<div class="w-1/6 py-1 px-3">
+    <div id="loading-animation" class="hidden animated fadeIn fixed inset-0 overflow-y-auto flex items-center justify-center" style="z-index: 9999;">
+        <div class="max-h-screen w-full max-w-lg bg-white relative rounded shadow p-4">
+            <div class="flex justify-center m-1">
+                <div class="mb-4 font-bold">
+                    If this is a large project this might take a minute or two.
+                </div>
+            </div>
+            <div class="loading-animation"></div>
+            <div class="flex justify-center m-1">
+                <div class="mt-4 font-bold">
+                    Please wait and do not click back or close the window.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </div>
