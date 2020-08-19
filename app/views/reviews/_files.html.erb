@@ -8,7 +8,7 @@
                         <div class="table-cell bg-teal-700 text-white px-4 py-2 text-sm border">Filename</div>
                     </div>
                     <% files.each_with_index do |file, index| %>
-                    <div class="table-row file-<%= file.status.parameterize(preserve_case: true) %>" <%=raw file.status == 'Incomplete' ? '' : 'style="display: none"' %>>
+                    <div class="table-row reason-<%= reason %> file-<%= file.status.parameterize(preserve_case: true) %>" <%=raw file.status == 'Incomplete' ? '' : 'style="display: none"' %>>
                         <div class="table-cell bg-<%= index.even? ? 'gray-200 ' : 'white ' %>text-gray-700 px-4 py-2 text-xs border"><%= button_to "Ignore File", "#", class: "border border-gray-500 hover:bg-gray-500 bg-gray-200 text-black hover:text-white text-xs px-2 rounded #{file.status == "Ignored" ? 'hidden' : ''}", data: { reflex: "click->IgnoreFileReflex#ignore", file: file.id} %></div>
                         <div class="table-cell bg-<%= index.even? ? 'gray-200 ' : 'white ' %>text-gray-700 px-4 py-2 text-xs border"><%= file.status %></div>
                         <div class="table-cell bg-<%= index.even? ? 'gray-200 ' : 'white ' %>text-gray-700 px-4 py-2 text-xs border underline"><%= link_to file.path, diff_path(file.id) %></div>
