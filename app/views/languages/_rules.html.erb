@@ -1,5 +1,5 @@
 <% rules.each_with_index do |r, index| %>
-  <div class="shadow-md category-<%= r.category.parameterize %>">
+  <div class="shadow-md category-<%= r.category.parameterize unless r.category.nil? %>">
     <div class="tab w-full overflow-hidden border-t">
       <input class="absolute opacity-0" id="tab-single-<%=r.id%>-<%=index%>" type="radio" name="tabs2">
       <label class="block p-5 leading-normal cursor-pointer font-bold text-teal-700" for="tab-single-<%=r.id%>-<%=index%>"><%= r.title %></label>
