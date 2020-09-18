@@ -5,18 +5,20 @@ class Rule < ApplicationRecord
   require 'nokogiri'
 
   RULE_TYPES = ['Vulnerability', 'Code Smell', 'Security Hotspot', 'Bug'].freeze
-  SEVERITIES = ['Blocker', 'Critical', 'Major', 'Minor'].freeze
-  MAIN_SECTION_CSS_PATH = 'div > div > div > main > div > section'.freeze
-  TITLE_CSS_PATH = 'h1'
-  SEVERITY_AND_TYPE_CSS_PATH = 'div > text()'
-  TAGS_CSS_PATH = 'nav > ul > li > a[href^="/"]'
-  REFERENCE_LINKS_CSS_PATH= 'ul > li > a'
+  SEVERITIES = ['Blocker', 'Critical', 'Major', 'Minor', 'Info'].freeze
+  #MAIN_SECTION_CSS_PATH = 'div > div > div > main > div > section'.freeze
+  MAIN_SECTION_CSS_PATH = 'div > div > div > main > div'.freeze
+  BODY_CSS_PATH = 'section'.freeze
+  TITLE_CSS_PATH = 'section > h1'.freeze
+  SEVERITY_AND_TYPE_CSS_PATH = 'div > text()'.freeze
+  TAGS_CSS_PATH = 'nav > ul > li > a[href^="/"]'.freeze
+  REFERENCE_LINKS_CSS_PATH= 'section > ul > li > a'.freeze
 
   belongs_to :language
 
   has_many :rule_tags, dependent: :destroy
   has_many :tags, through: :rule_tags
-  has_many :greps, foreign_key: 'source_rule_id', dependent: :destroy
+  #has_many :greps, foreign_key: 'source_rule_id', dependent: :destroy
   has_many :searchterms, dependent: :destroy
 
   validates :title, uniqueness: {scope: :language_id}
@@ -62,7 +64,7 @@ class Rule < ApplicationRecord
     main_content_section = Nokogiri::HTML(session.body).css(MAIN_SECTION_CSS_PATH)
     
     rule_object[:title] = main_content_section.css(TITLE_CSS_PATH).first.text
-    rule_object[:body] = main_content_section.last.children.to_html
+    rule_object[:body] = main_content_section.css(BODY_CSS_PATH).last.children.to_html
 
     main_content_section.css(SEVERITY_AND_TYPE_CSS_PATH).each do |info|
       rule_object[:type] = info.text.strip if RULE_TYPES.include? info.text.strip

@@ -16,7 +16,7 @@ class UpdateOneLanguageRulesJob < ApplicationJob
         @new_rule = Rule.new(title: new_rule_object[:title],
           category: new_rule_object[:type],
           body: new_rule_object[:body],
-          more_info_links: new_rule_object[:resources],
+          more_info_links: new_rule_object[:references],
           severity: new_rule_object[:severity],
           language_id: language.id)
         if @new_rule.save
