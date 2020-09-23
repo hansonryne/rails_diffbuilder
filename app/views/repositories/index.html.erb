@@ -1,24 +1,30 @@
 <p id="notice"><%= notice %></p>
 <div class="py-4 px-4 border-l border-b border-r">
-    <div class="my-1">
-        <%= link_to 'Load a New Project', new_repository_path, class: "border border-teal-700 hover:bg-teal-700 hover:text-white text-teal-700 font-bold py-1 px-2 rounded" %>
-    </div>
-    <div class="flex justify-center">
-        <div class="table w-11/12 m-4 shadow-md">
-            <div class="table-row-group">
-                <div class="table-row">
-                    <div class="table-cell bg-teal-700 text-white px-4 py-2 text-sm border">Project</div>
-                    <div class="table-cell bg-teal-700 text-white px-4 py-2 text-sm border">Customer</div>
-                    <div class="table-cell bg-teal-700 text-white px-4 py-2 text-sm border">Location</div>
-                </div>
-                <% @repositories.each_with_index do |r, index| %>
-                <div class="table-row">
-                    <div class="table-cell bg-<%= index.even? ? 'gray-200 ' : 'white ' %>text-gray-700 px-4 py-2 text-sm border underline"><%= link_to r.name, repository_path(r) %></div>
-                    <div class="table-cell bg-<%= index.even? ? 'gray-200 ' : 'white ' %>text-gray-700 px-4 py-2 text-sm border"><%= r.project %></div>
-                    <div class="table-cell bg-<%= index.even? ? 'gray-200 ' : 'white ' %>text-gray-700 px-4 py-2 text-sm border"><%= r.repo_location %></div>
-                </div>
-                <% end %>
-            </div>
+  <div class="my-1">
+    <%= link_to 'Load a New Project', new_repository_path, class: "border border-teal-700 hover:bg-teal-700 hover:text-white text-teal-700 font-bold py-1 px-2 rounded" %>
+  </div>
+  <div class="flex justify-center">
+    <div class="table w-11/12 m-4 shadow-md">
+      <div class="table-row-group">
+        <div class="table-row">
+          <div class="table-cell bg-teal-700 text-white px-4 py-2 text-sm border">Project</div>
+          <div class="table-cell bg-teal-700 text-white px-4 py-2 text-sm border">Customer</div>
+          <div class="table-cell bg-teal-700 text-white px-4 py-2 text-sm border">Location</div>
+          <div class="table-cell bg-teal-700 text-white px-4 py-2 text-sm border">Languages</div>
         </div>
+        <% @repositories.each_with_index do |r, index| %>
+          <div class="table-row">
+            <div class="table-cell bg-<%= index.even? ? 'gray-200 ' : 'white ' %>text-gray-700 px-4 py-2 text-sm border underline"><%= link_to r.name, repository_path(r) %></div>
+            <div class="table-cell bg-<%= index.even? ? 'gray-200 ' : 'white ' %>text-gray-700 px-4 py-2 text-sm border"><%= r.project %></div>
+            <div class="table-cell bg-<%= index.even? ? 'gray-200 ' : 'white ' %>text-gray-700 px-4 py-2 text-sm border"><%= r.repo_location %></div>
+            <div class="table-cell bg-<%= index.even? ? 'gray-200 ' : 'white ' %>text-gray-700 px-4 py-2 text-sm border">
+              <% r.languages.each do |l| %>
+                <span class="inline-block bg-teal-700 border border-teal-700 rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 hover:text-teal-700 hover:bg-gray-200"><%= link_to l.name, language_path(l) %></span>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
     </div>
+  </div>
 </div>
