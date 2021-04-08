@@ -7,7 +7,8 @@ class Rule < ApplicationRecord
   RULE_TYPES = ['Vulnerability', 'Code Smell', 'Security Hotspot', 'Bug'].freeze
   SEVERITIES = ['Blocker', 'Critical', 'Major', 'Minor', 'Info'].freeze
   #MAIN_SECTION_CSS_PATH = 'div > div > div > main > div > section'.freeze
-  MAIN_SECTION_CSS_PATH = 'div > div > div > main > div'.freeze
+  #MAIN_SECTION_CSS_PATH = 'div > div > div > main > div'.freeze
+  MAIN_SECTION_CSS_PATH = 'div > div > div > nav > main > div'.freeze
   BODY_CSS_PATH = 'section'.freeze
   TITLE_CSS_PATH = 'section > h1'.freeze
   SEVERITY_AND_TYPE_CSS_PATH = 'div > text()'.freeze
