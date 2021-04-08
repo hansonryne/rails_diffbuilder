@@ -8,6 +8,9 @@ rsync -q -av --progress /home/railsuser/node_cache/. /home/railsuser/app/
 echo "Waiting for PG to be ready"
 sleep 3
 
+echo "Enabling cache..."
+bundle exec rails dev:cache
+
 echo "Creating database..."
 bundle exec rake db:create
 echo "Running database migrations..."
